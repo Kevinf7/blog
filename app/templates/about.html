@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}About Me{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>About Me</h1>
+    <p>Hi my name is Kevin and I have over 20 years of working experience in a
+        variety of IT related areas including software development, web design
+        and information management. The latter in the area of library and information
+        science. I recently started learning Python, at first because I wanted to get into data science,
+        but then found Flask along the way. I now consider myself to be a Python and Flask enthusiast
+        and am interested in sharing my knowledge and learning from others.</p>
+    <p>This website was coded entirely from scratch by hand using the following technologies:</p>
+    <ul>
+        <li>Python</li>
+        <li>Flask. Libraries include:</li>
+        <ul>
+            <li>Flask-Login</li>
+            <li>Flask-SQLAlchemy</li>
+            <li>Flask-Mail</li>
+            <li>Flask-Migrate</li>
+            <li>Flask-Moment</li>
+            <li>Flask-WTF</li>    
+        </ul>
+        <li>mySQL</li>
+        <li>Bootstrap CSS</li>
+    </ul>
+    <p>It includes admin features such as blog post management, managing tags and is also
+        a mini content-management system, allowing you to manage various parts of the
+        website without needing to go into the backend.</p>
+    <p>Feel free to <a href="{{ url_for('contact') }}">drop me a line!</a></p>
+</div>
+{% endblock %}

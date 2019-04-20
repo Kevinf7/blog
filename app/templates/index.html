@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
+{% endblock %}
+
+{% block app_content %}
+<div class="col-md-10">
+    {% for post in posts.items %}
+
+        <h4><a href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h4>
+        <p><small>{{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
+        <p>{{ post.post|safe }}</p>
+        {% if post.getTagNames() %}
+            <p>
+            {% for tag_name in post.getTagNames() %}
+                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-info btn-sm" role="button">{{ tag_name }}</a>
+            {% endfor %}
+            </p>
+        {% endif %}
+        {% if current_user.is_authenticated and current_user == post.author %}
+            <p>
+            <a href="{{ url_for('edit_post',id=post.id) }}" class="btn btn-secondary btn-sm" role="button"/>edit</a>
+            <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-secondary btn-sm" role="button"/>delete</a>
+            </p>
+        {% endif %}
+        <hr/>
+    {% endfor %}
+
+    {% if posts.pages > 1 %}
+        <nav aria-label="...">
+          <ul class="pagination">
+            {% if posts.has_prev %}
+            <li class="page-item">
+                <span class="page-link"><a href="{{ url_for('index', page=posts.prev_num) }}">Previous</a></span>
+            </li>
+            {% endif %}
+
+            {% for page_num in posts.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
+                {% if page_num %}
+                    {% if page_num != posts.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+            <li class="page-item">
+                <span class="page-link"><a href="{{ url_for('index',page=posts.next_num) }}">Next</a></span>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+    {% endif %}
+</div>
+
+<div class="col-md-2">
+    <div class="row">
+        <div class="col-12 m-2 p-2 bg-light border rounded">
+            <h5>Tags</h5>
+            {% for tag_tup in tag_list %}
+                <a href="{{ url_for('index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> ({{ tag_tup[1] }})<br/>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 m-2 p-2 bg-light border rounded">
+            <h5>Test</h5>
+            <p>abc</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

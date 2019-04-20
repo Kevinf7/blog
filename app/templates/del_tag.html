@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Delete Tag{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>Delete Tag</h1>
+
+    <form action="{{ url_for('del_tag',id=tag.id) }}"  method="post">
+        {{ form.csrf_token }}
+        <p>Are you sure you want to delete the tag <strong>{{ tag.name }}</strong>?</p>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

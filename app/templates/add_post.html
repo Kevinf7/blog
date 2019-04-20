@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Add Post{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>Add Post</h1>
+
+    <form action="{{ url_for('add_post') }}"  method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.heading.label }}
+            {% for error in form.heading.errors %}
+                <span style="color: red;">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {{ form.heading(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.post.label }}
+            {% for error in form.post.errors %}
+                <span style="color:red">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {{ form.post(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.tags.label }}
+            {% for error in form.tags.errors %}
+                <span style="color:red">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {{ form.tags(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-primary") }}
+        </div>
+    </form>
+
+    {% if current_user.is_admin() %}
+        {{ ckeditor.load() }}
+    {% else %}
+        {{ ckeditor.load(pkg_type="basic") }}
+    {% endif %}
+    {{ ckeditor.config(name='post') }}
+</div>
+{% endblock %}

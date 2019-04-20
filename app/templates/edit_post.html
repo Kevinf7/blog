@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Edit Post{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>Edit Post</h1>
+    <form action="{{ url_for('edit_post',id=post.id) }}"  method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.heading.label }}
+            {% for error in form.heading.errors %}
+                <span style="color: red;">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {% set h = form.heading.process_data(post.heading) %}
+            {{ form.heading(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.post.label }}
+            {% for error in form.post.errors %}
+                <span style="color:red">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {% set p = form.post.process_data(post.post) %}
+            {{ form.post(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.tags.label }}
+            {% for error in form.tags.errors %}
+                <span style="color:red">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {% set t = form.tags.process_data(tags) %}
+            {{ form.tags(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-primary") }}
+        </div>
+    </form>
+
+    {% if current_user.is_admin() %}
+        {{ ckeditor.load() }}
+    {% else %}
+        {{ ckeditor.load(pkg_type="basic") }}
+    {% endif %}
+    {{ ckeditor.config(name='post') }}
+</div>
+{% endblock %}

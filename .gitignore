@@ -1,0 +1,11 @@
+*.pyc
+*.db
+env
+secret.bat
+secret.txt
+.zip
+.sql
+.tar.gz
+runenv.bat
+uploads
+test.py
