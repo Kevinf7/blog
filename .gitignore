@@ -9,3 +9,4 @@ secret.txt
 runenv.bat
 uploads
 test.py
+**/static/uploads

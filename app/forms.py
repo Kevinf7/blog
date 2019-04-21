@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import InputRequired, Email, EqualTo, ValidationError, Length
 from flask_login import UserMixin
 from app.models import User
-from flask_ckeditor import CKEditorField
 
 # usermixin provides some handy functions for user class
 class LoginForm(FlaskForm, UserMixin):
@@ -29,7 +28,6 @@ class RegistrationForm(FlaskForm):
 
 class PostForm(FlaskForm):
     heading = StringField('Title', validators=[InputRequired(), Length(max=100)])
-    #post = CKEditorField('Write something', validators=[InputRequired(), Length(max=2000)])
     post = TextAreaField('Write something')
     tags = StringField('Tags')
     submit = SubmitField('Submit')
