@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Add Post{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    {% include '_tinymce.html' %}
+{% endblock %}
 
 {% block app_content %}
 <div class="col-12">
@@ -19,7 +23,7 @@
             {% for error in form.post.errors %}
                 <span style="color:red">[ {{ error }} ]</span><br/>
             {% endfor %}
-            {{ form.post(class="form-control") }}
+            {{ form.post(class="form-control",rows=12) }}
         </div>
         <div class="form-group">
             {{ form.tags.label }}
@@ -32,12 +36,5 @@
             {{ form.submit(class="btn btn-md btn-primary") }}
         </div>
     </form>
-
-    {% if current_user.is_admin() %}
-        {{ ckeditor.load() }}
-    {% else %}
-        {{ ckeditor.load(pkg_type="basic") }}
-    {% endif %}
-    {{ ckeditor.config(name='post') }}
 </div>
 {% endblock %}

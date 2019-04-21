@@ -1,10 +1,9 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash, request, send_from_directory
+from flask import render_template, redirect, url_for, flash, request, send_from_directory, jsonify
 from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import *
 from datetime import datetime
-from flask_ckeditor import upload_fail, upload_success
 import os
 from app.email import send_password_reset_email
 from werkzeug.urls import url_parse
@@ -57,12 +56,6 @@ def index():
                         .join(Tagged).group_by(Tagged.tag_id).all()
 
     return render_template('index.html',posts=posts,tag_list=tag_list)
-
-@app.route('/post_detail/<id>', methods=['GET','POST'])
-def post_detail(id):
-    post = Post.query.filter_by(id=id).first()
-    form = CommentForm()
-    return render_template('post_det.html',post=post, form=form)
 
 @app.route('/about', methods=['GET'])
 def about():
@@ -259,6 +252,25 @@ def del_post(id):
     tags = post.getTagNamesStr()
     return render_template('del_post.html',form=form,post=post,tags=tags)
 
+@app.route('/post_detail/<id>', methods=['GET','POST'])
+def post_detail(id):
+    post = Post.query.filter_by(id=id).first()
+    form = CommentForm()
+    if form.validate_on_submit():
+        # maybe also need to double check if user logged in...............
+        if form.name.data == '':
+            comment = Comment(comment=form.comment.data,commenter=current_user,\
+                                post=post)
+        else:
+            comment = Comment(comment=form.comment.data,name=form.name.data,\
+                                email=form.email.data,post=post)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comments have been posted')
+    comments = post.comments.all()
+    return render_template('post_det.html',post=post, form=form, comments=comments)
+
+
 ##############################################################################
 # Tags admin routes
 ##############################################################################
@@ -304,9 +316,28 @@ def del_tag(id):
     return render_template('del_tag.html',form=form,tag=tag)
 
 ##############################################################################
-# CKEditor file upload routes
+# tinyMCE file upload routes
 ##############################################################################
 
+@app.route('/imageuploader', methods=['POST'])
+@login_required
+def imageuploader():
+    # Handles javascript image uploads from tinyMCE on the help pages.
+    file = request.files.get('file')
+    if file:
+        filename = file.filename
+        extension = filename.split('.')[1].lower()
+        if extension in ['jpg', 'gif', 'png', 'jpeg']:
+            #everything looks good, save file
+            file.save(os.path.join(app.config['UPLOADED_PATH'], filename))
+            return jsonify({'location' : filename})
+
+    # fail, image did not upload
+    output = make_response(404)
+    output.headers['Error'] = 'Filename needs to be JPG, JPEG, GIF or PNG'
+    return output
+
+'''
 # Code from flask-ckeditor documentation
 @app.route('/files/<filename>')
 def uploaded_files(filename):
@@ -323,6 +354,7 @@ def upload():
     f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
     url = url_for('uploaded_files', filename=f.filename)
     return upload_success(url=url)  # return upload_success call
+'''
 
 ##############################################################################
 # Forgot password routes

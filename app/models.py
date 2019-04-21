@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     lastname = db.Column(db.String(50), nullable=False)
     password_hash = db.Column(db.String(100), nullable=False)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='commenter', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     last_seen = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
     create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
@@ -59,7 +60,7 @@ class User(db.Model, UserMixin):
         return User.query.get(id)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}>'.format(self.email)
 
 # This allows application to freely call these methods even if you're not logged in
 class AnonymousUser(AnonymousUserMixin):
@@ -105,6 +106,7 @@ class Post(db.Model):
                                     backref=db.backref('posts',lazy='joined'),
                                     lazy='dynamic',
                                     cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
     def getPost(id):
         return Post.query.filter(Post.id==id).first()

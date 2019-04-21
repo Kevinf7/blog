@@ -7,9 +7,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from flask_moment import Moment
-from flask_ckeditor import CKEditor
-from flask_wtf.csrf import CSRFProtect
 from flask_mail import Mail
+#from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,9 +19,8 @@ login.login_view = 'login'
 
 migrate = Migrate(app,db)
 moment = Moment(app)
-ckeditor = CKEditor(app)
-csrf = CSRFProtect(app) #enable CSRF protect upload for ckeditor
 mail = Mail(app)
+#toolbar = DebugToolbarExtension(app)
 
 #setup log files
 if not app.debug:

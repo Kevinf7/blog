@@ -17,14 +17,16 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-lg-6">
+            <div class="form-group col-lg-8">
                 {{ form.firstname.label }}
                 {% for error in form.firstname.errors %}
                     <span style="color: red;">[ {{ error }} ]</span><br/>
                 {% endfor %}
                 {{ form.firstname(class="form-control") }}
             </div>
-            <div class="form-group col-lg-6">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-8">
                 {{ form.lastname.label }}<br/>
                 {% for error in form.lastname.errors %}
                     <span style="color: red;">[ {{ error }} ]</span><br/>
@@ -40,6 +42,8 @@
                 {% endfor %}
                 {{ form.password(class="form-control") }}
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-lg-6">
                 {{ form.password2.label }}<br/>
                 {% for error in form.password2.errors %}
@@ -47,7 +51,9 @@
                 {% endfor %}
                 {{ form.password2(class="form-control") }}
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-6">
                 {{ form.submit(class="btn btn-md btn-primary") }}
             </div>
         </div>

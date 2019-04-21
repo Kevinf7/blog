@@ -29,7 +29,8 @@ class RegistrationForm(FlaskForm):
 
 class PostForm(FlaskForm):
     heading = StringField('Title', validators=[InputRequired(), Length(max=100)])
-    post = CKEditorField('Write something', validators=[InputRequired(), Length(max=2000)])
+    #post = CKEditorField('Write something', validators=[InputRequired(), Length(max=2000)])
+    post = TextAreaField('Write something')
     tags = StringField('Tags')
     submit = SubmitField('Submit')
 

@@ -11,7 +11,7 @@
 <div class="col-md-10">
     {% for post in posts.items %}
 
-        <h4><a href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h4>
+        <h2><a href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
         <p><small>{{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}

@@ -9,18 +9,32 @@
 
 {% block app_content %}
 <div class="col-md-12">
-    <h4>{{ post.heading }}</h4>
+    <h2>{{ post.heading }}</h2>
     <p><small>By {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
     <p>{{ post.post|safe }}</p>
     {% if post.getTagNames() %}
         <p>
-        {% for tag_name in post.getTagNames() %}
-            <span class="btn btn-info btn-sm">{{ tag_name }}</span>
-        {% endfor %}
+            {% for tag_name in post.getTagNames() %}
+                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-info btn-sm" role="button">{{ tag_name }}</a>
+            {% endfor %}
         </p>
     {% endif %}
     <hr/>
     <h5>Comments</h5>
+
+    {% for comment in comments %}
+        {% if comment.name is not none %}
+            <p><small>{{ comment.name }} on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
+        {% else %}
+            {% if comment.commenter is not none %}
+                <p><small>{{ comment.commenter.firstname }} {{ comment.commenter.lastname }}
+                     on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
+            {% endif %}
+        {% endif %}
+        <p>{{ comment.comment }}</p>
+        <hr/>
+    {% endfor %}
+
     <form action="{{ url_for('post_detail',id=post.id) }}" method="post">
         {{ form.csrf_token }}
         {% if current_user.is_anonymous %}
