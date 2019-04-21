@@ -32,9 +32,13 @@ class PostForm(FlaskForm):
     tags = StringField('Tags')
     submit = SubmitField('Submit')
 
-class CommentForm(FlaskForm):
-    name = StringField('Name', validators=[Length(max=20)])
+class CommentFormAnon(FlaskForm):
+    name = StringField('Name', validators=[InputRequired(), Length(max=20)])
     email = StringField('Email', validators=[Length(max=50)])
+    comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
+    submit = SubmitField('Submit')
+
+class CommentFormReg(FlaskForm):
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')
 

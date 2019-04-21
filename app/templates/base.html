@@ -20,7 +20,7 @@
     <body>
         <div id="jumbo" class="jumbotron jumbotron-fluid">
             <div class="container">
-                <p class="display-3">Kevin's Blog</p>
+                <p class="display-4">Kevin's Blog</p>
                 {% if current_user.is_authenticated %}
                     <span class="h5">Hi {{ current_user.firstname }}! Welcome to my blog</span>
                 {% else %}
@@ -32,7 +32,7 @@
         {% block navbar %}
             <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('index') }}">KF7.com</a>
+                    <a class="navbar-brand" href="{{ url_for('index') }}">kevin7.net</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -83,7 +83,7 @@
         <div class="container-fluid bg-light">
             <div class="row">
                 <div class="col-12 p-5">
-                    <div class="d-flex justify-content-center"><small>&#169; 2019 KF7.com</small></div>
+                    <div class="d-flex justify-content-center"><small>&#169; 2019 kevin7.net</small></div>
                 </div>
             </div>
         </div>

@@ -255,19 +255,24 @@ def del_post(id):
 @app.route('/post_detail/<id>', methods=['GET','POST'])
 def post_detail(id):
     post = Post.query.filter_by(id=id).first()
-    form = CommentForm()
+    comments = post.comments.all()
+    if current_user.is_authenticated:
+        form = CommentFormReg()
+    else:
+        form = CommentFormAnon()
     if form.validate_on_submit():
-        # maybe also need to double check if user logged in...............
-        if form.name.data == '':
-            comment = Comment(comment=form.comment.data,commenter=current_user,\
-                                post=post)
+        if current_user.is_authenticated:
+            comment = Comment(comment=form.comment.data,commenter=current_user,post=post)
         else:
-            comment = Comment(comment=form.comment.data,name=form.name.data,\
+            if form.email.data == '':
+                comment = Comment(comment=form.comment.data,name=form.name.data,post=post)
+            else:
+                comment = Comment(comment=form.comment.data,name=form.name.data,\
                                 email=form.email.data,post=post)
         db.session.add(comment)
         db.session.commit()
         flash('Your comments have been posted')
-    comments = post.comments.all()
+        return redirect(url_for('post_detail',id=id))
     return render_template('post_det.html',post=post, form=form, comments=comments)
 
 
