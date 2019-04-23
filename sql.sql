@@ -1,7 +1,7 @@
 #The below 2 values are mandatory
-INSERT INTO Role (name)
+INSERT INTO role (name)
 VALUES ('admin'),('user');
 
-UPDATE Role
+UPDATE role
 SET `default` = 1
-WHERE name = 'user'
+WHERE name = 'user';

@@ -27,15 +27,20 @@
             <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-secondary btn-sm" role="button"/>delete</a>
             </p>
         {% endif %}
-        <hr/>
+        {% if not loop.last %}
+            <hr/>
+        {% endif %}
     {% endfor %}
 
     {% if posts.pages > 1 %}
-        <nav aria-label="...">
-          <ul class="pagination">
+        <nav aria-label="posts navigation">
+          <ul class="pagination pagination-sm justify-content-left  pt-5">
             {% if posts.has_prev %}
             <li class="page-item">
-                <span class="page-link"><a href="{{ url_for('index', page=posts.prev_num) }}">Previous</a></span>
+                <a class="page-link" href="{{ url_for('index', page=posts.prev_num) }}">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
             </li>
             {% endif %}
 
@@ -43,7 +48,7 @@
                 {% if page_num %}
                     {% if page_num != posts.page %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+                            <span class="page-link"><a href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a></span>
                         </li>
                     {% else %}
                         <li class="page-item active" aria-current="page">
@@ -59,7 +64,10 @@
 
             {% if posts.has_next %}
             <li class="page-item">
-                <span class="page-link"><a href="{{ url_for('index',page=posts.next_num) }}">Next</a></span>
+                <a class="page-link" href="{{ url_for('index',page=posts.next_num) }}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
             </li>
             {% endif %}
           </ul>
@@ -69,18 +77,20 @@
 
 <div class="col-md-2">
     <div class="row">
-        <div class="col-12 m-2 p-2 bg-light border rounded">
+        <div class="col-12 m-2 p-2 bg-light border">
             <h5>Tags</h5>
             {% for tag_tup in tag_list %}
                 <a href="{{ url_for('index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> ({{ tag_tup[1] }})<br/>
             {% endfor %}
         </div>
     </div>
+    <!--
     <div class="row">
-        <div class="col-12 m-2 p-2 bg-light border rounded">
+        <div class="col-12 m-2 p-2 bg-light border">
             <h5>Test</h5>
             <p>abc</p>
         </div>
     </div>
+    -->
 </div>
 {% endblock %}

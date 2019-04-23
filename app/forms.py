@@ -32,12 +32,14 @@ class PostForm(FlaskForm):
     tags = StringField('Tags')
     submit = SubmitField('Submit')
 
+# Two forms for commeting, one if user is not logged in
 class CommentFormAnon(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=20)])
     email = StringField('Email', validators=[Length(max=50)])
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')
 
+# Another form if user is logged in
 class CommentFormReg(FlaskForm):
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')

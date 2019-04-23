@@ -1,0 +1,10 @@
+You have received a message submitted from the contact form on kevin7.net
+
+From: {{ contact.name }}
+
+Email: {{ contact.email }}
+
+Date: {{ contact.create_date }}
+
+Message:
+{{ contact.message }}

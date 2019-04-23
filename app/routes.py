@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import *
 from datetime import datetime
 import os
-from app.email import send_password_reset_email
+from app.email import send_password_reset_email, send_contact_email
 from werkzeug.urls import url_parse
 
 ##############################################################################
@@ -69,6 +69,7 @@ def contact():
                         message=form.message.data)
         db.session.add(contact)
         db.session.commit()
+        send_contact_email(contact)
         flash('Message has been sent!')
         return redirect(url_for('index'))
     return render_template('contact.html',form=form)
@@ -275,9 +276,21 @@ def post_detail(id):
         return redirect(url_for('post_detail',id=id))
     return render_template('post_det.html',post=post, form=form, comments=comments)
 
+##############################################################################
+# Admin routes - Messages
+##############################################################################
+
+@app.route('/manage_messages',methods=['GET','POST'])
+@login_required
+def manage_messages():
+    page = request.args.get('page',1,type=int)
+    contacts = Contact.query.order_by(Contact.create_date.desc()) \
+    .paginate(page,app.config['MESSAGES_PER_PAGE'],False)
+
+    return render_template('manage_message.html',contacts=contacts)
 
 ##############################################################################
-# Tags admin routes
+# Admin routes - Tags
 ##############################################################################
 
 @app.route('/manage_tags',methods=['GET'])
@@ -324,10 +337,10 @@ def del_tag(id):
 # tinyMCE file upload routes
 ##############################################################################
 
+# Handles javascript image uploads from tinyMCE
 @app.route('/imageuploader', methods=['POST'])
 @login_required
 def imageuploader():
-    # Handles javascript image uploads from tinyMCE on the help pages.
     file = request.files.get('file')
     if file:
         filename = file.filename
@@ -341,25 +354,6 @@ def imageuploader():
     output = make_response(404)
     output.headers['Error'] = 'Filename needs to be JPG, JPEG, GIF or PNG'
     return output
-
-'''
-# Code from flask-ckeditor documentation
-@app.route('/files/<filename>')
-def uploaded_files(filename):
-    path = app.config['UPLOADED_PATH']
-    return send_from_directory(path, filename)
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    f = request.files.get('upload')
-    # Add more validations here
-    extension = f.filename.split('.')[1].lower()
-    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
-        return upload_fail(message='Image only!')
-    f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-    url = url_for('uploaded_files', filename=f.filename)
-    return upload_success(url=url)  # return upload_success call
-'''
 
 ##############################################################################
 # Forgot password routes

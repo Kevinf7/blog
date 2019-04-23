@@ -10,8 +10,11 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_POOL_RECYCLE = 299
     SQLALCHEMY_TRACK_MODIFICATIONS=False
+    # number of messages (via contact form) to show per page for admin
+    MESSAGES_PER_PAGE = 10
+    # number of blog posts to show per page
     POSTS_PER_PAGE = 5
-    #auto reload template without needing to restart Flask
+    # auto reload template without needing to restart Flask
     TEMPLATES_AUTO_RELOAD = True
 
     # tinyMCE settings
@@ -24,5 +27,7 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    #list of admin email address that will recieve emails
-    ADMINS = ['kevin_foong@yahoo.com']
+    # email to use for sender
+    MAIL_SENDER = 'kfoong7@gmail.com'
+    # list of admin email address that will recieve emails
+    MAIL_ADMINS = ['kevin_foong@yahoo.com']
