@@ -8,6 +8,7 @@
         <!-- Bootstrap CSS -->
         {% block scripts %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" type="text/css">
             <style>
             #jumbo {
@@ -84,7 +85,7 @@
         <div class="container-fluid bg-dark">
             <div class="row">
                 <div class="col-12 p-5">
-                    <div class="d-flex justify-content-center text-light"><small>&#169; 2019 kevin7.net</small></div>
+                    <div class="d-flex justify-content-center text-white"><small>&#169; 2019 kevin7.net</small></div>
                 </div>
             </div>
         </div>

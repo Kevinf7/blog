@@ -23,8 +23,8 @@
         {% endif %}
         {% if current_user.is_authenticated and current_user == post.author %}
             <p>
-            <a href="{{ url_for('edit_post',id=post.id) }}" class="btn btn-secondary btn-sm" role="button"/>edit</a>
-            <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-secondary btn-sm" role="button"/>delete</a>
+            <a href="{{ url_for('edit_post',id=post.id) }}" class="btn btn-info2 btn-sm" role="button"/>edit</a>
+            <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-info2 btn-sm" role="button"/>delete</a>
             </p>
         {% endif %}
         {% if not loop.last %}
