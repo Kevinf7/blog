@@ -15,7 +15,7 @@
         <p><small>{{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}
-            <p>
+            <p><small class="text-muted">Tags:</small>
             {% for tag_name in post.getTagNames() %}
                 <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-info btn-sm" role="button">{{ tag_name }}</a>
             {% endfor %}
