@@ -15,7 +15,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bootstrap CSS -->
         {% block scripts %}
             <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" type="text/css">
@@ -61,7 +60,7 @@
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <a class="dropdown-item" href="{{ url_for('add_post') }}">Add Post</a>
-                                            <a class="dropdown-item" href="{{ url_for('manage_messages') }}">View Messages</a>
+                                            <a class="dropdown-item" href="{{ url_for('manage_messages') }}">Manage Messages</a>
                                             <a class="dropdown-item" href="{{ url_for('manage_tags') }}">Manage Tags</a>
                                             <a class="dropdown-item" href="#">Manage Page Banner</a>
                                         </div>

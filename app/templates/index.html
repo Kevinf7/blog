@@ -17,14 +17,14 @@
         {% if post.getTagNames() %}
             <p><small class="text-muted">Tags:</small>
             {% for tag_name in post.getTagNames() %}
-                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-info btn-sm" role="button">{{ tag_name }}</a>
+                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-tags btn-sm" role="button">{{ tag_name }}</a>
             {% endfor %}
             </p>
         {% endif %}
         {% if current_user.is_authenticated and current_user == post.author %}
             <p>
-            <a href="{{ url_for('edit_post',id=post.id) }}" class="btn btn-info2 btn-sm" role="button"/>edit</a>
-            <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-info2 btn-sm" role="button"/>delete</a>
+            <a href="{{ url_for('edit_post',id=post.id) }}" class="btn btn-admin btn-sm" role="button"/>edit</a>
+            <a href="{{ url_for('del_post',id=post.id) }}" class="btn btn-admin btn-sm" role="button"/>delete</a>
             </p>
         {% endif %}
         {% if not loop.last %}
@@ -77,7 +77,7 @@
 
 <div class="col-md-2">
     <div class="row">
-        <div class="col-12 m-2 p-2 bg-light border">
+        <div class="col-12 m-2 p-2 bg-side_panel border">
             <h5>Tags</h5>
             {% for tag_tup in tag_list %}
                 <a href="{{ url_for('index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> ({{ tag_tup[1] }})<br/>

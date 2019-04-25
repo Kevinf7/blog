@@ -1,20 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Manage Tags{% endblock %}
 
+
+
 {% block app_content %}
 <div class="col-12">
     <h1>Manage Tags</h1>
     <h5>Tags being used</h5>
     <p>To delete these tags, first remove them from all blog postings</p>
-    {% for tu in tag_used %}
-        <span>{{ tu.name }}</span> (<a href="{{ url_for('edit_tag',id=tu.id) }}">Edit</a>)<br/>
-    {% endfor %}
-    <br/>
+    <table class="table table-sm table-striped">
+        <tbody>
+            {% for tu in tag_used %}
+                <tr class="d-flex">
+                    <th scope="row" class="col-4">{{ tu.name }}</th>
+                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tu.id) }}" class="btn btn-admin btn-md" role="button">Edit</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <h5>Tags not being used</h5>
-    {% for tnu in tag_notused %}
-        <span class="text-muted">{{ tnu.name }}</span> (<a href="{{ url_for('edit_tag',id=tnu.id) }}">Edit</a>
-        | <a href="{{ url_for('del_tag',id=tnu.id) }}">Delete</a>)<br/>
-    {% endfor %}
-    <br/>
+    <table class="table table-sm table-striped">
+        <tbody>
+            {% for tnu in tag_notused %}
+                <tr class="d-flex">
+                    <th scope="row" class="col-4">{{ tnu.name }}</th>
+                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tnu.id) }}" class="btn btn-admin btn-md" role="button">Edit</a>
+                    <a href="{{ url_for('del_tag',id=tnu.id) }}" class="btn btn-admin btn-md" role="button">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
