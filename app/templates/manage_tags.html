@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Manage Tags{% endblock %}
 
-
-
 {% block app_content %}
 <div class="col-12">
     <h1>Manage Tags</h1>
@@ -13,7 +11,7 @@
             {% for tu in tag_used %}
                 <tr class="d-flex">
                     <th scope="row" class="col-4">{{ tu.name }}</th>
-                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tu.id) }}" class="btn btn-admin btn-md" role="button">Edit</a></td>
+                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tu.id) }}" class="btn btn-admin btn-sm" role="button">Edit</a></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -24,8 +22,8 @@
             {% for tnu in tag_notused %}
                 <tr class="d-flex">
                     <th scope="row" class="col-4">{{ tnu.name }}</th>
-                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tnu.id) }}" class="btn btn-admin btn-md" role="button">Edit</a>
-                    <a href="{{ url_for('del_tag',id=tnu.id) }}" class="btn btn-admin btn-md" role="button">Delete</a></td>
+                    <td class="col-8"><a href="{{ url_for('edit_tag',id=tnu.id) }}" class="btn btn-admin btn-sm" role="button">Edit</a>
+                    <a href="{{ url_for('del_tag',id=tnu.id) }}" class="btn btn-admin btn-sm" role="button">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>
