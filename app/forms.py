@@ -35,7 +35,7 @@ class PostForm(FlaskForm):
 # Two forms for commeting, one if user is not logged in
 class CommentFormAnon(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=20)])
-    email = StringField('Email', validators=[Length(max=50)])
+    email = StringField('Email', validators=[Length(max=50), Email()])
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')
 
@@ -49,7 +49,7 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email(), Length(max=50)])
     message = TextAreaField('Leave a message', validators=[InputRequired(), Length(max=400)])
     submit = SubmitField('Submit')
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
 
 class DeletePostForm(FlaskForm):
     submit = SubmitField('Submit')
