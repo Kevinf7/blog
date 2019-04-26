@@ -67,6 +67,14 @@
                 {{ form.comment(class="form-control", rows='4') }}
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-lg-6">
+                {{ form.recaptcha }}
+                {% for error in form.recaptcha.errors %}
+                    <span style="color: red;">[ {{ error }} ]</span><br/>
+                {% endfor %}
+            </div>
+        </div>
         <div class="form-group">
             {{ form.submit(class="btn btn-md btn-primary") }}
         </div>

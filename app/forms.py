@@ -18,6 +18,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
     password2 = PasswordField('Repeat Password', validators=[InputRequired(), EqualTo('password')])
     submit = SubmitField('Register')
+    recaptcha = RecaptchaField()
 
     # wtforms takes validate_<field_name> as custom validators
     # so the below validator gets invoked on username
@@ -38,6 +39,7 @@ class CommentFormAnon(FlaskForm):
     email = StringField('Email', validators=[Length(max=50), Email()])
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')
+    recaptcha = RecaptchaField()
 
 # Another form if user is logged in
 class CommentFormReg(FlaskForm):
