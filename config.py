@@ -28,7 +28,7 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     # email to use for sender
-    MAIL_SENDER = 'kfoong7@gmail.com'
+    MAIL_SENDER = 'kwebdev7@gmail.com'
     # list of admin email address that will recieve emails
     MAIL_ADMINS = ['kevin_foong@yahoo.com']
 

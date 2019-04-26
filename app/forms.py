@@ -49,7 +49,7 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email(), Length(max=50)])
     message = TextAreaField('Leave a message', validators=[InputRequired(), Length(max=400)])
     submit = SubmitField('Submit')
-    #recaptcha = RecaptchaField()
+    recaptcha = RecaptchaField()
 
 class DeletePostForm(FlaskForm):
     submit = SubmitField('Submit')
