@@ -15,14 +15,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {% block scripts %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" type="text/css">
-            <style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" type="text/css">
+        <style>
             #jumbo {
                 background-image: url("{{ url_for('static',filename='images/wm.jpg') }}")
             }
-            </style>
+        </style>
+        {% block scripts %}
         {% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>

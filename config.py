@@ -31,3 +31,9 @@ class Config(object):
     MAIL_SENDER = 'kfoong7@gmail.com'
     # list of admin email address that will recieve emails
     MAIL_ADMINS = ['kevin_foong@yahoo.com']
+
+    # Google recaptcha
+    RECAPTCHA_USE_SSL= False
+    RECAPTCHA_PUBLIC_KEY=os.environ.get('RECAPTCHA_PUBLIC_KEY')
+    RECAPTCHA_PRIVATE_KEY=os.environ.get('RECAPTCHA_PRIVATE_KEY')
+    RECAPTCHA_OPTIONS= {'theme':'black'}

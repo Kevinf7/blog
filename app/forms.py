@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, Email, EqualTo, ValidationError, Length
 from flask_login import UserMixin
@@ -49,6 +49,7 @@ class ContactForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email(), Length(max=50)])
     message = TextAreaField('Leave a message', validators=[InputRequired(), Length(max=400)])
     submit = SubmitField('Submit')
+    recaptcha = RecaptchaField()
 
 class DeletePostForm(FlaskForm):
     submit = SubmitField('Submit')
