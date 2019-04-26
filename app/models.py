@@ -42,9 +42,8 @@ class User(db.Model, UserMixin):
         return self.role.name == 'admin'
 
     # creates token of user object
-    # token will expire in 600 seconds (10 minutes)
     # decode('utf-8') converts token to string
-    def get_reset_password_token(self, expires_in=600):
+    def get_reset_password_token(self, expires_in=app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return jwt.encode(
             {'reset_password': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expires_in)},
             app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
@@ -72,7 +71,7 @@ class AnonymousUser(AnonymousUserMixin):
         return False
     def is_admin(self):
         return False
-    def get_reset_password_token(self, expires_in=600):
+    def get_reset_password_token(self, expires_in=app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return False
 # This tells flask login which class to use if user is not logged in
 login.anonymous_user = AnonymousUser
