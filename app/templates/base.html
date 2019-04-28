@@ -70,9 +70,12 @@
                             {% endif %}
                         </ul>
 
-                        <form action="{{ url_for('search') }}"  method="post">
-                            <input id="search_txt" name="search_txt" >
-                            <input class="btn btn-md btn-primary" type="submit" value="Search">
+
+                        <form class="form-inline" action="{{ url_for('search') }}" method="post">
+                            <div class="form-group">
+                                <input class="form-control" id="search_txt" name="search_txt" >
+                                <input class="btn btn-md btn-primary" type="submit" value="Search">
+                            </div>
                         </form>
                     </div>
                 </div>

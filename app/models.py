@@ -126,17 +126,25 @@ class Post(db.Model):
     # helper function for search
     def is_txtinHTML(self, str_compare):
         soup = BeautifulSoup(self.post).get_text()
-        if soup.count(str_compare) > 0:
+        if soup.lower().count(str_compare.lower()) > 0:
             return True
         else:
             return False
 
+    # return summary of post for search, text only 100 characters
+    def getTextSummary(self):
+        soup = BeautifulSoup(self.post).get_text()
+        return soup[0:100]
+
     # used for search to return the number of occurrences of string
-    @hybrid_method
+    # case is ignored
+    # occurs anywhere in the text
+    # compares both body of post and heading
     def occurrences(self, str_compare):
         # use beautifulsoup to only count text not html
-        soup = BeautifulSoup(self.post).get_text()
-        return (soup.count(str_compare))
+        soup_post = BeautifulSoup(self.post).get_text()
+        soup_head = BeautifulSoup(self.heading).get_text()
+        return soup_post.lower().count(str_compare.lower()) + soup_head.lower().count(str_compare.lower())
 
     def __repr__(self):
         return '<Post {}>'.format(self.heading)

@@ -39,4 +39,5 @@ class Config(object):
     RECAPTCHA_OPTIONS= {'theme':'black'}
 
     # custom app settings
-    FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 #in seconds, 3600 = 1 hour
+    FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 # in seconds, 3600 = 1 hour
+    SEARCH_RESULTS_RETURN = 12 # number of search results to return for each search

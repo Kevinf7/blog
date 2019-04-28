@@ -45,6 +45,7 @@ class CommentFormAnon(FlaskForm):
 class CommentFormReg(FlaskForm):
     comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
     submit = SubmitField('Submit')
+    recaptcha = RecaptchaField()
 
 class ContactForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=20)])

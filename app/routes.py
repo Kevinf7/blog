@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 from app.email import send_password_reset_email, send_contact_email
 from werkzeug.urls import url_parse
+from operator import itemgetter
 
 ##############################################################################
 # Main pages
@@ -341,15 +342,19 @@ def del_tag(id):
 def search():
     if request.method == 'POST':
         search_str = request.form['search_txt']
-        posts = Post.query.filter(Post.current==True).filter(Post.post.like('%'+search_str+'%')).all()
+        posts = Post.query.filter(Post.current==True). \
+                            filter(Post.post.like('%'+search_str+'%') | \
+                            Post.heading.like('%'+search_str+'%')).all()
         results = []
-        # create a tuple of lists posts and number of occurrence of search string
+        # create a list of dictionaries of posts and number of occurrence of search string
         for p in posts:
             # only keep if search text is in content not tags
-            if p.is_txtinHTML(search_str):
+            if p.is_txtinHTML(search_str) or search_str.lower() in p.heading.lower():
                 # add to results
-                results.append((p,) + (p.occurrences(search_str),))
-        results = sorted(results, key=lambda tup: tup[1], reverse=True)
+                d = {"post":p,"count":p.occurrences(search_str)}
+                results.append(d)
+        # now sort the results and only keep the first n elements
+        results = sorted(results, key=itemgetter('count'), reverse=True)[:app.config['SEARCH_RESULTS_RETURN']]
 
     return render_template('search.html',results=results)
 

@@ -14,8 +14,9 @@
         <p>No results returned</p>
     {% else %}
         {% for r in results %}
-            <p><a href="{{ url_for('post_detail',id=r[0].id) }}">{{ r[0].heading }}</a></p>
-            <p>Number of occurrences: {{ r[1] }}
+            <div class="pb-1"><a href="{{ url_for('post_detail',id=r['post'].id) }}">{{ r['post'].heading }}</a></div>
+            <div class="pb-1">{{ r['post'].getTextSummary() }}</div>
+            <div class="pb-4"><small class="text-muted">Number of matches: {{ r['count'] }}</small></div>
         {% endfor %}
     {% endif %}
 </div>
