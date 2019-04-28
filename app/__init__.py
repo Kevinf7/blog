@@ -20,6 +20,7 @@ login.login_view = 'login'
 migrate = Migrate(app,db)
 moment = Moment(app)
 mail = Mail(app)
+
 #toolbar = DebugToolbarExtension(app)
 
 #setup log files

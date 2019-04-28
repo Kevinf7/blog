@@ -39,4 +39,4 @@ class Config(object):
     RECAPTCHA_OPTIONS= {'theme':'black'}
 
     # custom app settings
-    FORGOT_PASSWORD_TOKEN_EXPIRE = 1800 #in seconds, 1800 = 30 mins
+    FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 #in seconds, 3600 = 1 hour

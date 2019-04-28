@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
+{% endblock %}
+
+{% block app_content %}
+<div class="col-md-12">
+    <h1>Search Results</h1>
+    {% if not results %}
+        <p>No results returned</p>
+    {% else %}
+        {% for r in results %}
+            <p><a href="{{ url_for('post_detail',id=r[0].id) }}">{{ r[0].heading }}</a></p>
+            <p>Number of occurrences: {{ r[1] }}
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

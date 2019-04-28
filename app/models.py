@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
 from hashlib import md5
+from sqlalchemy.ext.hybrid import hybrid_method
+from bs4 import BeautifulSoup
 
 import jwt
 
@@ -91,6 +93,7 @@ class Tagged(db.Model):
 
 class Post(db.Model):
     __tablename__='post'
+
     id = db.Column(db.Integer, primary_key=True)
     heading = db.Column(db.String(100), nullable=False)
     post = db.Column(db.String(2000), nullable=False)
@@ -119,8 +122,25 @@ class Post(db.Model):
     def getTagNamesStr(self):
         return ','.join(self.getTagNames())
 
+
+    # helper function for search
+    def is_txtinHTML(self, str_compare):
+        soup = BeautifulSoup(self.post).get_text()
+        if soup.count(str_compare) > 0:
+            return True
+        else:
+            return False
+
+    # used for search to return the number of occurrences of string
+    @hybrid_method
+    def occurrences(self, str_compare):
+        # use beautifulsoup to only count text not html
+        soup = BeautifulSoup(self.post).get_text()
+        return (soup.count(str_compare))
+
     def __repr__(self):
         return '<Post {}>'.format(self.heading)
+
 
 class Tag(db.Model):
     __tablename__ = 'tag'

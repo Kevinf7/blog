@@ -334,6 +334,26 @@ def del_tag(id):
     return render_template('del_tag.html',form=form,tag=tag)
 
 ##############################################################################
+# search routes
+##############################################################################
+
+@app.route('/search', methods=['POST'])
+def search():
+    if request.method == 'POST':
+        search_str = request.form['search_txt']
+        posts = Post.query.filter(Post.current==True).filter(Post.post.like('%'+search_str+'%')).all()
+        results = []
+        # create a tuple of lists posts and number of occurrence of search string
+        for p in posts:
+            # only keep if search text is in content not tags
+            if p.is_txtinHTML(search_str):
+                # add to results
+                results.append((p,) + (p.occurrences(search_str),))
+        results = sorted(results, key=lambda tup: tup[1], reverse=True)
+
+    return render_template('search.html',results=results)
+
+##############################################################################
 # tinyMCE file upload routes
 ##############################################################################
 
