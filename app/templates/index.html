@@ -10,8 +10,7 @@
 {% block app_content %}
 <div class="col-md-10">
     {% for post in posts.items %}
-
-        <h2><a href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
+        <h2 class="text-buttons"><a class="text-buttons" href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
         <p><small>{{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}

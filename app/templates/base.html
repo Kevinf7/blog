@@ -15,6 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}" type="text/css" >
         <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" type="text/css">
         <style>
@@ -22,6 +23,7 @@
                 background-image: url("{{ url_for('static',filename='images/wm.jpg') }}")
             }
         </style>
+
         {% block scripts %}
         {% endblock %}
         <title>{% block title %}{% endblock %}</title>
@@ -70,16 +72,22 @@
                             {% endif %}
                         </ul>
 
-
                         <form class="form-inline" action="{{ url_for('search') }}" method="post">
                             <div class="form-group">
                                 <input class="form-control" id="search_txt" name="search_txt" >
-                                <input class="btn btn-md btn-primary" type="submit" value="Search">
+                                <input class="btn btn-md btn-buttons" type="submit" value="Search">
+                                <a href="#" class="far fa-question-circle fa-sm pl-2 text-light"
+                                style="text-decoration:none" data-toggle="popover" data-placement="top"
+                                title="Search help"
+                                data-trigger="focus"
+                                data-content="Enter some text to search blog post content. Do not use spaces nor wildcards.">
+                                </a>
                             </div>
                         </form>
                     </div>
                 </div>
             </nav>
+
         {% endblock %}
 
         {% block content %}
@@ -110,5 +118,11 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!--For tooltip-->
+        <script>
+            $(function () {
+              $('[data-toggle="popover"]').popover()
+            })
+        </script>
     </body>
 </html>
