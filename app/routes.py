@@ -22,7 +22,7 @@ def getSummaryPosts(posts):
         p = post.post.split('<p>br<a id="br"></a></p>',1)[0]
         # add a more... to the end of the post
         if p != post.post:
-            p += '<i>more...</i>'
+            p += '<p>...</p>'
         posts.items[index].post = p
     return posts
 
@@ -257,6 +257,7 @@ def del_post(id):
 @app.route('/post_detail/<id>', methods=['GET','POST'])
 def post_detail(id):
     post = Post.query.filter_by(id=id).first()
+    post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     comments = post.comments.all()
     if current_user.is_authenticated:
         form = CommentFormReg()
