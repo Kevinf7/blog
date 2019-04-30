@@ -11,7 +11,7 @@
 <div class="col-md-10">
     {% for post in posts.items %}
         <h2 class="text-buttons"><a class="text-buttons" href="{{ url_for('post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
-        <p><small>{{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
+        <p><small>Written by {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}
             <p><small class="text-muted">Tags:</small>

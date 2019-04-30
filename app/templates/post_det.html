@@ -10,12 +10,12 @@
 {% block app_content %}
 <div class="col-md-12">
     <h2>{{ post.heading }}</h2>
-    <p><small>By {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
+    <p><small>Written by {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
     <p>{{ post.post|safe }}</p>
     {% if post.getTagNames() %}
         <p>
             {% for tag_name in post.getTagNames() %}
-                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-info btn-sm" role="button">{{ tag_name }}</a>
+                <a href="{{ url_for('index',tag=tag_name) }}" class="btn btn-tags btn-xs" role="button">{{ tag_name }}</a>
             {% endfor %}
         </p>
     {% endif %}

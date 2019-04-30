@@ -14,12 +14,12 @@ from operator import itemgetter
 ##############################################################################
 
 # check for new page anchor so only summary is shown
-# new page anchor must be an anchor entered in a paragraph <p><a id="new_page" name="new_page"></a></p>
+# new page anchor must be an anchor entered in a paragraph <p>br<a id="br"></a></p>
 # expects a SQLalchemy pagination object
 def getSummaryPosts(posts):
     for index, post in enumerate(posts.items):
         # split first occcurence of below string and keep everything on the left
-        p = post.post.split('<p><a id="new_page" name="new_page"></a></p>',1)[0]
+        p = post.post.split('<p>br<a id="br"></a></p>',1)[0]
         # add a more... to the end of the post
         if p != post.post:
             p += '<i>more...</i>'
