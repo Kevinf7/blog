@@ -20,6 +20,7 @@
         </div>
         <div class="form-group">
             {{ form.post.label }}
+            <small class="text-muted">(Add a summary break by adding <code>&lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;</code>)</small>
             {% for error in form.post.errors %}
                 <span style="color:red">[ {{ error }} ]</span><br/>
             {% endfor %}

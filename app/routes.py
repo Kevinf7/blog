@@ -1,6 +1,5 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash, request, send_from_directory, \
-                    jsonify, make_response
+from flask import render_template, redirect, url_for, flash, request, send_from_directory, jsonify
 from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import *
@@ -408,12 +407,12 @@ def imageuploader():
         fn = fn[:30]
         filename = fn + '.' + ext
         if ext in ['jpg', 'gif', 'png', 'jpeg']:
-            # everything looks good, save file
-            img_fullpath = os.path.join(app.config['UPLOADED_PATH'], filename)
-            file.save(img_fullpath)
-            # get the file size to save to db
-            file_size = os.stat(img_fullpath).st_size
             try:
+                # everything looks good, save file
+                img_fullpath = os.path.join(app.config['UPLOADED_PATH'], filename)
+                file.save(img_fullpath)
+                # get the file size to save to db
+                file_size = os.stat(img_fullpath).st_size
                 size = 160, 160
                 # read image into pillow
                 im = Image.open(img_fullpath)
@@ -423,6 +422,8 @@ def imageuploader():
                 im.thumbnail(size)
                 thumbnail = fn + '-thumb.jpg'
                 tmb_fullpath = os.path.join(app.config['UPLOADED_PATH_THUMB'], thumbnail)
+                # not sure, converts PNG to JPG otherwise will error when saving as jpg
+                im = im.convert('RGB')
                 # save thumbnail
                 im.save(tmb_fullpath, "JPEG")
 
