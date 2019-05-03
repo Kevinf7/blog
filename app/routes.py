@@ -422,8 +422,9 @@ def imageuploader():
                 im.thumbnail(size)
                 thumbnail = fn + '-thumb.jpg'
                 tmb_fullpath = os.path.join(app.config['UPLOADED_PATH_THUMB'], thumbnail)
-                # not sure, converts PNG to JPG otherwise will error when saving as jpg
-                im = im.convert('RGB')
+                # PNG is index while JPG needs RGB
+                if not im.mode == 'RGB':
+                    im = im.convert('RGB')
                 # save thumbnail
                 im.save(tmb_fullpath, "JPEG")
 
