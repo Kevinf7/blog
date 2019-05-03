@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Manage Images{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_jquery() }}
+    {{ moment.include_moment() }}
+
+    <!--
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function() {
+            copyToClipboard(document.getElementById("copyTarget"));
+        });
+
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+    </script>
+    -->
+{% endblock %}
+
+{% block app_content %}
+<h1>Manage Images</h1>
+
+<div class="col-12 pt-4">
+    <div class="table-responsive">
+    <table class="table"><tbody>
+        {% for img in images %}
+            {% if loop.index0 is divisibleby 4 or loop.index0==0 %}
+            <tr>
+            {% endif %}
+                <td>
+                    <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}"><br/>
+                    <small class="text-muted" id="file_path">../static/uploads/{{ img.filename }}</small>
+                    <a href="{{ url_for('del_image',id=img.id) }}" class="far fa-clipboard fa-sm text-admin"></a><br/>
+                    <small class="text-muted">{{ img.file_width }}x{{ img.file_height }}</small><br/>
+                    <small class="text-muted">{{ img.file_size }} bytes</small><br/>
+                    <small class="text-muted">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</small>
+                    <a href="{{ url_for('del_image',id=img.id) }}" class="fas fa-trash-alt fa-sm text-admin" style="text-decoration:none"></a>
+                </td>
+            {% if loop.last %}
+                {% for r in range(0,(4-(loop.index%4)|int)) %}
+                    <td></td>
+                {% endfor %}
+            {% endif %}
+            {% if loop.index is divisibleby 4 %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody></table>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash, request, send_from_directory, jsonify
+from flask import render_template, redirect, url_for, flash, request, send_from_directory, \
+                    jsonify, make_response
 from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import *
@@ -8,6 +9,7 @@ import os
 from app.email import send_password_reset_email, send_contact_email
 from werkzeug.urls import url_parse
 from operator import itemgetter
+from PIL import Image
 
 ##############################################################################
 # Main pages
@@ -125,13 +127,6 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route('/user/<username>')
-@login_required
-def user(username):
-    # returns a user if not it returns 404 to browser
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user)
-
 ##############################################################################
 # Post routes
 ##############################################################################
@@ -228,7 +223,6 @@ def edit_post(id):
 @login_required
 def del_post(id):
     post = Post.getPost(id)
-
     # id is wrong
     if post is None:
         flash('No such post exists.')
@@ -277,6 +271,42 @@ def post_detail(id):
         flash('Your comments have been posted')
         return redirect(url_for('post_detail',id=id))
     return render_template('post_det.html',post=post, form=form, comments=comments)
+
+##############################################################################
+# Admin routes - Images
+##############################################################################
+
+@app.route('/manage_images',methods=['GET'])
+@login_required
+def manage_images():
+    images = Images.query.all()
+    return render_template('manage_images.html',images=images)
+
+@app.route('/del_image/<id>',methods=['GET','POST'])
+@login_required
+def del_image(id):
+    form = DeleteImageForm()
+    image = Images.getImage(id)
+    # id is wrong
+    if image is None:
+        flash('No such image.')
+        return redirect(url_for('index'))
+    if form.validate_on_submit():
+        img_fullpath = os.path.join(app.config['UPLOADED_PATH'], image.filename)
+        tmb_fullpath = os.path.join(app.config['UPLOADED_PATH_THUMB'], image.thumbnail)
+        try:
+            # delete image and thumbnail from file system
+            os.remove(img_fullpath)
+            os.remove(tmb_fullpath)
+            # delete from db
+            db.session.delete(image)
+            db.session.commit()
+            flash('The image has been successfully deleted')
+            return redirect(url_for('manage_images'))
+        except OSError:
+            flash('System error deleting image.')
+            return redirect(url_for('manage_images'))
+    return render_template('del_image.html',form=form,img=image)
 
 ##############################################################################
 # Admin routes - Messages
@@ -328,6 +358,9 @@ def edit_tag(id):
 def del_tag(id):
     form = DeleteTagForm()
     tag = Tag.getTag(id)
+    if tag is None:
+        flash('No such tag.')
+        return redirect(url_for('index'))
     if form.validate_on_submit():
         db.session.delete(tag)
         db.session.commit()
@@ -369,11 +402,39 @@ def search():
 def imageuploader():
     file = request.files.get('file')
     if file:
-        filename = file.filename
-        extension = filename.split('.')[1].lower()
-        if extension in ['jpg', 'gif', 'png', 'jpeg']:
-            #everything looks good, save file
-            file.save(os.path.join(app.config['UPLOADED_PATH'], filename))
+        filename = file.filename.lower()
+        fn, ext = filename.split('.')
+        # truncate filename (excluding extension) to 30 characters
+        fn = fn[:30]
+        filename = fn + '.' + ext
+        if ext in ['jpg', 'gif', 'png', 'jpeg']:
+            # everything looks good, save file
+            img_fullpath = os.path.join(app.config['UPLOADED_PATH'], filename)
+            file.save(img_fullpath)
+            # get the file size to save to db
+            file_size = os.stat(img_fullpath).st_size
+            try:
+                size = 160, 160
+                # read image into pillow
+                im = Image.open(img_fullpath)
+                # get image dimension to save to db
+                file_width, file_height = im.size
+                # convert to thumbnail
+                im.thumbnail(size)
+                thumbnail = fn + '-thumb.jpg'
+                tmb_fullpath = os.path.join(app.config['UPLOADED_PATH_THUMB'], thumbnail)
+                # save thumbnail
+                im.save(tmb_fullpath, "JPEG")
+
+                # save to db
+                img = Images(filename=filename, thumbnail=thumbnail, file_size=file_size, \
+                            file_width=file_width, file_height=file_height)
+                db.session.add(img)
+                db.session.commit()
+            except IOError:
+                output = make_response(404)
+                output.headers['Error'] = 'Cannot create thumbnail for ' + filename
+                return output
             return jsonify({'location' : filename})
 
     # fail, image did not upload

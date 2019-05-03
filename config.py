@@ -20,6 +20,7 @@ class Config(object):
     # tinyMCE settings
     basedir = os.path.abspath(os.path.dirname(__file__))
     UPLOADED_PATH=os.path.join(basedir, 'app', 'static', 'uploads')
+    UPLOADED_PATH_THUMB=os.path.join(basedir, 'app', 'static', 'uploads', 'thumbnails')
 
     # flask-mail settings
     MAIL_SERVER = os.environ.get('MAIL_SERVER')

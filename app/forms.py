@@ -54,8 +54,11 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Submit')
     recaptcha = RecaptchaField()
 
+class DeleteImageForm(FlaskForm):
+    submit = SubmitField('Delete')
+
 class DeletePostForm(FlaskForm):
-    submit = SubmitField('Submit')
+    submit = SubmitField('Delete')
 
 class EditTagForm(FlaskForm):
     tag_name = StringField('Tag Name', validators=[InputRequired(), Length(max=20)])

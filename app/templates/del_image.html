@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Delete Image{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>Delete Image</h1>
+
+    <form action="{{ url_for('del_image',id=img.id) }}"  method="post">
+        {{ form.csrf_token }}
+        <p>Are you sure you want to delete the image? Note that this image may currently be used in one of your post.</p>
+        <p>
+            <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}"><br/>
+            <small class="text-muted">../static/uploads/{{ img.filename }}</small><br/>
+            <small class="text-muted">{{ img.file_width }}x{{ img.file_height }}</small><br/>
+            <small class="text-muted">{{ img.file_size }} bytes</small><br/>
+            <small class="text-muted">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</small>
+        </p>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-buttons") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
