@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Manage Message{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_jquery() }}
-    {{ moment.include_moment() }}
-{% endblock %}
-
 {% block app_content %}
 <div class="col-12">
     <h1>Manage Messages</h1>
@@ -66,4 +60,9 @@
         </nav>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}

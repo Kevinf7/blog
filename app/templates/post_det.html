@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Post Detail{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_jquery() }}
-    {{ moment.include_moment() }}
-{% endblock %}
-
 {% block app_content %}
 <div class="col-md-12">
     <h2>{{ post.heading }}</h2>
@@ -86,4 +80,9 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}

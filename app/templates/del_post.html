@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Delete Post{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_jquery() }}
-    {{ moment.include_moment() }}
-{% endblock %}
-
 {% block app_content %}
 <div class="col-12">
     <h1>Delete Post</h1>
@@ -43,4 +37,9 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}

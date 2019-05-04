@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_jquery() }}
-    {{ moment.include_moment() }}
-{% endblock %}
-
 {% block app_content %}
 <div class="col-md-12">
     <h1>Search Results</h1>
@@ -20,4 +14,9 @@
         {% endfor %}
     {% endif %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}
