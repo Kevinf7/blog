@@ -481,6 +481,10 @@ def reset_password(token):
         return redirect(url_for('index'))
     return render_template('reset_password.html', form=form)
 
+##############################################################################
+# Miscellaneous
+##############################################################################
+
 # checks this before any function, updates last seen with current time
 @app.before_request
 def before_request():

@@ -134,7 +134,10 @@ class Post(db.Model):
     # return summary of post for search, text only 100 characters
     def getTextSummary(self):
         soup = BeautifulSoup(self.post).get_text()
-        return soup[0:100]
+        if len(soup) > 100:
+            return soup[0:100] + '...'
+        else:
+            return soup
 
     # used for search to return the number of occurrences of string
     # case is ignored
