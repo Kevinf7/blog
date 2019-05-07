@@ -4,7 +4,6 @@ class Config(object):
     # Flask settings
     #SECRET_KEY = os.urandom(24)
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'random string'
-    DEBUG=True
 
     # Flask-SQLAlchemy settings
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')

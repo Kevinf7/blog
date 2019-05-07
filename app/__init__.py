@@ -29,7 +29,7 @@ if not app.debug:
         os.mkdir('logs')
     #Log size rotates at 100KB so file size doesn't grow too big
     #Keeps the last 5 log files as backup
-    file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=102400, backupCount=5)
+    file_handler = RotatingFileHandler('logs/blog.log', maxBytes=102400, backupCount=5)
     #Provide custom formatting for log messages
     file_handler.setFormatter(logging.Formatter( \
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]' \
@@ -39,6 +39,6 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     #set logging level to INFO in application logger
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Microblog startup')
+    app.logger.info('Blog startup')
 
 from app import models, routes, errors
