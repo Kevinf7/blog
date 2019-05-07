@@ -133,7 +133,7 @@ class Post(db.Model):
 
     # return summary of post for search, text only 100 characters
     def getTextSummary(self):
-        soup = BeautifulSoup(self.post).get_text()
+        soup = BeautifulSoup(self.post,'html.parser').get_text()
         if len(soup) > 100:
             return soup[0:100] + '...'
         else:

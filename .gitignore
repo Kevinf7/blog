@@ -10,3 +10,4 @@ runenv.bat
 uploads
 test.py
 **/static/uploads
+**/logs
