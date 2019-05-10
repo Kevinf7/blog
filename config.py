@@ -9,8 +9,6 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_POOL_RECYCLE = 299
     SQLALCHEMY_TRACK_MODIFICATIONS=False
-    # number of messages (via contact form) to show per page for admin
-    MESSAGES_PER_PAGE = 10
     # number of blog posts to show per page
     POSTS_PER_PAGE = 5
     # auto reload template without needing to restart Flask
@@ -41,3 +39,7 @@ class Config(object):
     # custom app settings
     FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 # in seconds, 3600 = 1 hour
     SEARCH_RESULTS_RETURN = 12 # number of search results to return for each search
+    # number of messages (via contact form) to show per page for admin
+    MESSAGES_PER_PAGE = 10
+    # number of images (on manage images page) to show per page for admin
+    IMAGES_PER_PAGE = 12

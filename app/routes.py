@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, redirect, url_for, flash, request, send_from_directory, jsonify
+from flask import render_template, redirect, url_for, flash, request, send_from_directory, jsonify, session
 from app.forms import *
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import *
@@ -108,6 +108,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    session.pop('edit_post',None)
     logout_user()
     return redirect(url_for('index'))
 
@@ -187,6 +188,9 @@ def add_post():
 @app.route('/edit_post/<id>',methods=['GET','POST'])
 @login_required
 def edit_post(id):
+    # keeps track of whether user came from home page or detail page
+    if request.method == 'GET':
+        session['edit_post'] = request.referrer
     post = Post.getPost(id)
     # id is wrong
     if post is None:
@@ -212,7 +216,10 @@ def edit_post(id):
         processTags(tag_list,post)
 
         flash('Your post has been updated!')
-        return redirect(url_for('index'))
+        if session['edit_post'] is not None:
+            return redirect(session['edit_post'])
+        else:
+            return redirect(url_for('index'))
 
     tags = post.getTagNamesStr()
     return render_template('edit_post.html',form=form,post=post,tags=tags)
@@ -278,7 +285,11 @@ def post_detail(id):
 @app.route('/manage_images',methods=['GET'])
 @login_required
 def manage_images():
-    images = Images.query.all()
+    # get page number from url. If no page number use page 1
+    page = request.args.get('page',1,type=int)
+    # True means 404 error is returned if page is out of range. False means an empty list is returned
+    images = Images.query.order_by(Images.create_date.desc()) \
+                        .paginate(page,app.config['IMAGES_PER_PAGE'],False)
     return render_template('manage_images.html',images=images)
 
 @app.route('/del_image/<id>',methods=['GET','POST'])
