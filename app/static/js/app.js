@@ -15,8 +15,7 @@ $(".clipboard").click(function() {
 })
 
 //so it doesnt jump to the top when you click the clipboard
-$('a.cliplink').click(function(e)
-{
+$('a.cliplink').click(function(e) {
     // Cancel the default action
     e.preventDefault();
 });

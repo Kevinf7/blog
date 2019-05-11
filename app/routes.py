@@ -61,10 +61,12 @@ def index():
 
 @app.route('/about', methods=['GET'])
 def about():
-    return render_template('about.html')
+    about_html = db.session.query(Content).join(Page).filter(Page.name=='about',Content.name=='content1').first()
+    return render_template('about.html',about_html=about_html)
 
 @app.route('/contact', methods=['GET','POST'])
 def contact():
+    contact_html = db.session.query(Content).join(Page).filter(Page.name=='contact',Content.name=='content1').first()
     form = ContactForm()
     if form.validate_on_submit():
         contact = Contact(name=form.name.data, email=form.email.data, \
@@ -74,7 +76,7 @@ def contact():
         send_contact_email(contact)
         flash('Message has been sent!')
         return redirect(url_for('index'))
-    return render_template('contact.html',form=form)
+    return render_template('contact.html',form=form, contact_html=contact_html)
 
 ##############################################################################
 # User routes
@@ -196,14 +198,13 @@ def edit_post(id):
     if post is None:
         flash('No such post exists.')
         return redirect(url_for('index'))
-    # users's cannot edit other user's post
+    # users's cannot edit other user's post, not needed in this blog but there anyways
     if post.author.id != current_user.id:
         flash("You are not authorised to edit someone else's post")
         return redirect(url_for('index'))
 
     form = PostForm()
     if form.validate_on_submit():
-
         post.heading = form.heading.data
         post.post = form.post.data
         post.update_date = datetime.utcnow()
@@ -277,6 +278,34 @@ def post_detail(id):
         flash('Your comments have been posted')
         return redirect(url_for('post_detail',id=id))
     return render_template('post_det.html',post=post, form=form, comments=comments)
+
+##############################################################################
+# Admin routes - Content Management
+##############################################################################
+
+@app.route('/manage_content',methods=['GET'])
+@login_required
+def manage_content():
+    contents = Content.query.all()
+    return render_template('manage_content.html',contents=contents)
+
+@app.route('/edit_content/<id>',methods=['GET','POST'])
+@login_required
+def edit_content(id):
+    content = Content.query.filter_by(id=id).first()
+    if content is None:
+        flash('No such content exists.')
+        return redirect(url_for('index'))
+    form=ContentManageForm()
+    if form.validate_on_submit():
+        # update db
+        content.content = form.post.data
+        content.update_date = datetime.utcnow()
+        db.session.add(content)
+        db.session.commit()
+        flash('The content has been updated!')
+        return redirect(url_for('manage_content'))
+    return render_template('edit_content.html',form=form,content=content)
 
 ##############################################################################
 # Admin routes - Images

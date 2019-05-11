@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block nav_admin %}active{% endblock %}
+{% block title %}Edit Content{% endblock %}
+
+{% block app_content %}
+<div class="col-12">
+    <h1>Edit Content</h1>
+    <p>You are editing the <i>{{ content.name }}</i> area on the {{ content.page.name|capitalize }} page.
+    <form action="{{ url_for('edit_content',id=content.id) }}"  method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.post.label }}
+            {% for error in form.post.errors %}
+                <span style="color:red">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {% set p = form.post.process_data(content.content) %}
+            {{ form.post(class="form-control",rows=16) }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-buttons") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {% include '_tinymce.html' %}
+{% endblock %}

@@ -5,7 +5,7 @@
 {% block app_content %}
 <div class="col-12">
     <h1>Contact</h1>
-    <p>Drop me a line! I will get back to you shortly.</p>
+    {{ contact_html.content|safe }}
     <form action="{{ url_for('contact') }}"  method="post">
         {{ form.csrf_token }}
         <div class="form-row">

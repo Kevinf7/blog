@@ -54,6 +54,11 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Submit')
     recaptcha = RecaptchaField()
 
+class ContentManageForm(FlaskForm):
+    #post is actually content, just call it post because tinymce uses post id selector
+    post = TextAreaField('Write something')
+    submit = SubmitField('Submit')
+
 class DeleteImageForm(FlaskForm):
     submit = SubmitField('Delete')
 

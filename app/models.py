@@ -97,7 +97,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     heading = db.Column(db.String(100), nullable=False)
     post = db.Column(db.String(12000), nullable=False)
-    current = db.Column(db.Boolean, default=True, index=True, nullable=False)
+    current = db.Column(db.Boolean, default=True, nullable=False)
     update_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -209,6 +209,22 @@ class Images(db.Model):
 
     def getImage(image_id):
         return Images.query.filter_by(id=image_id).first()
+
+# Content Management
+class Content(db.Model):
+    __tablename__ = 'content'
+    id = db.Column(db.Integer, primary_key=True)
+    # naming convention used by template to identify, not user changeable - "content1", "content2" etc
+    name = db.Column(db.String(20), nullable=False)
+    content = db.Column(db.String(4000), nullable=False)
+    page_id = db.Column(db.Integer, db.ForeignKey('page.id'), nullable=False)
+    update_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+
+class Page(db.Model):
+    __tablename__ = 'page'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    content = db.relationship('Content',backref='page',lazy='dynamic')
 
 # Used by flask-login
 # This callback is used to reload the user object from the user ID stored in the session
