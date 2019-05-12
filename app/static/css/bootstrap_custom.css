@@ -1647,7 +1647,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: #fff;
   background-color: rgba(40, 167, 69, 0.9); }
@@ -1736,7 +1736,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: #fff;
   background-color: rgba(220, 53, 69, 0.9); }
@@ -4354,7 +4354,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   word-wrap: break-word;
   opacity: 0; }
   .tooltip.show {

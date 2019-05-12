@@ -17,7 +17,10 @@
         </div>
         <div class="form-group">
             {{ form.post.label }}
-            <small class="text-muted">(Add a summary break by adding <code>&lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;</code>)</small>
+            <i class="far fa-question-circle fa-sm pl-2 text-dark"
+            style="text-decoration:none" data-toggle="tooltip" data-placement="top"
+            title='Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;'>
+            </i>
             {% for error in form.post.errors %}
                 <span style="color:red">[ {{ error }} ]</span><br/>
             {% endfor %}
