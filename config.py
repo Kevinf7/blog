@@ -19,16 +19,10 @@ class Config(object):
     UPLOADED_PATH=os.path.join(basedir, 'app', 'static', 'uploads')
     UPLOADED_PATH_THUMB=os.path.join(basedir, 'app', 'static', 'uploads', 'thumbnails')
 
-    # flask-mail settings
-    MAIL_SERVER = os.environ.get('MAIL_SERVER')
-    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    # email to use for sender
-    MAIL_SENDER = os.environ.get('MAIL_USERNAME')
-    # list of admin email address that will recieve emails
-    MAIL_ADMINS = ['kevin_foong@yahoo.com']
+    # Sendgrid settings
+    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+    MAIL_FROM = os.environ.get('MAIL_FROM')
+    MAIL_ADMINS = os.environ.get('MAIL_ADMINS').split(' ')
 
     # Google recaptcha
     RECAPTCHA_USE_SSL= False

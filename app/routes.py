@@ -73,8 +73,10 @@ def contact():
                         message=form.message.data)
         db.session.add(contact)
         db.session.commit()
-        send_contact_email(contact)
-        flash('Message has been sent!')
+        if send_contact_email(contact):
+            flash('Message has been sent!')
+        else:
+            flash('Sorry system error')
         return redirect(url_for('index'))
     return render_template('contact.html',form=form, contact_html=contact_html)
 
@@ -497,8 +499,10 @@ def forgot_password():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            send_password_reset_email(user)
-            flash('Check your email for instructions to reset your password')
+            if send_password_reset_email(user):
+                flash('Check your email for instructions to reset your password')
+            else:
+                flask('Sorry system error')
         else:
             flash('Email does not exist in our database')
             return redirect(url_for('forgot_password'))
@@ -524,6 +528,10 @@ def reset_password(token):
 ##############################################################################
 # Miscellaneous
 ##############################################################################
+
+@app.route('/test', methods=['GET'])
+def test():
+    return render_template('test.html')
 
 # checks this before any function, updates last seen with current time
 @app.before_request

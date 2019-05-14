@@ -7,7 +7,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from flask_moment import Moment
-from flask_mail import Mail
 #from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -19,7 +18,6 @@ login.login_view = 'login'
 
 migrate = Migrate(app,db)
 moment = Moment(app)
-mail = Mail(app)
 
 #toolbar = DebugToolbarExtension(app)
 
