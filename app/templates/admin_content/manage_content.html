@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block nav_admin %}active{% endblock %}
+{% block title %}Manage Content{% endblock %}
+
+{% block app_content %}
+<h1>Manage Content</h1>
+
+<div class="col-12 pt-4">
+    <p>There are {{ contents|length }} content areas that are editable:</p>
+    <ul>
+    {% for content in contents %}
+        <li>On {{ content.page.name|capitalize }} page, <a href="{{ url_for('admin_content.edit_content',id=content.id) }}"><i>{{ content.name }}</i></a></li>
+    {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}

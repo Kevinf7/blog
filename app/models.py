@@ -1,12 +1,11 @@
-from app import app, db, login
-from datetime import datetime, timedelta
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import current_app
 from flask_login import UserMixin, AnonymousUserMixin
+from datetime import datetime, timedelta
 from hashlib import md5
-from sqlalchemy.ext.hybrid import hybrid_method
 from bs4 import BeautifulSoup
-
+from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from app import db, login
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -45,16 +44,16 @@ class User(db.Model, UserMixin):
 
     # creates token of user object
     # decode('utf-8') converts token to string
-    def get_reset_password_token(self, expires_in=app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
+    def get_reset_password_token(self, expires_in=current_app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return jwt.encode(
             {'reset_password': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expires_in)},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     # decodes token and returns user object
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, app.config['SECRET_KEY'],
+            id = jwt.decode(token, current_app.config['SECRET_KEY'],
                             algorithms=['HS256'])['reset_password']
         except:
             return
@@ -73,7 +72,7 @@ class AnonymousUser(AnonymousUserMixin):
         return False
     def is_admin(self):
         return False
-    def get_reset_password_token(self, expires_in=app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
+    def get_reset_password_token(self, expires_in=current_app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return False
 # This tells flask login which class to use if user is not logged in
 login.anonymous_user = AnonymousUser

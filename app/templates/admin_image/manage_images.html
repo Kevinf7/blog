@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block nav_admin %}active{% endblock %}
+{% block title %}Manage Images{% endblock %}
+
+{% block app_content %}
+<h1>Manage Images</h1>
+
+<div class="col-12 pt-4">
+    <div class="table-responsive">
+    <table class="table"><tbody>
+        {% for img in images.items %}
+            {% if loop.index0 is divisibleby 4 or loop.index0==0 %}
+            <tr>
+            {% endif %}
+                <td>
+                    <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}"><br/>
+                    <small class="text-muted" id="filepath-{{ loop.index }}">../static/uploads/{{ img.filename }}</small>
+                    <span class="clipboard" id="{{ loop.index }}">
+                        <a href="#" class="far fa-clipboard fa-sm text-admin cliplink"></a>
+                    </span><br/>
+                    <small class="text-muted">{{ img.file_width }}x{{ img.file_height }}</small><br/>
+                    <small class="text-muted">{{ img.file_size }} bytes</small><br/>
+                    <small class="text-muted">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</small>
+                    <a href="{{ url_for('admin_image.del_image',id=img.id) }}" class="fas fa-trash-alt fa-sm text-admin" style="text-decoration:none"></a>
+                </td>
+            {% if loop.last %}
+                {% for r in range(0,(4-(loop.index%4)|int)) %}
+                    <td></td>
+                {% endfor %}
+            {% endif %}
+            {% if loop.index is divisibleby 4 %}
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody></table>
+    </div>
+
+    {% if images.pages > 1 %}
+        <nav aria-label="posts navigation">
+          <ul class="pagination pagination-sm justify-content-left  pt-5">
+            {% if images.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin_image.manage_images', page=images.prev_num) }}">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for page_num in images.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
+                {% if page_num %}
+                    {% if page_num != images.page %}
+                        <li class="page-item">
+                            <span class="page-link"><a href="{{ url_for('admin_image.manage_images', page=page_num) }}">{{ page_num }}</a></span>
+                        </li>
+                    {% else %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="page-item">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if images.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('admin_image.manage_images',page=images.next_num) }}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}

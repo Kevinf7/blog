@@ -12,3 +12,4 @@ test.py
 test.html
 static/uploads/
 logs/
+.env

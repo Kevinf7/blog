@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block nav_home %}active{% endblock %}
+{% block title %}Post Detail{% endblock %}
+
+{% block app_content %}
+<div class="col-md-12">
+    <h2>{{ post.heading }}</h2>
+    <p><small>Written by {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
+    <p>{{ post.post|safe }}</p>
+    {% if post.getTagNames() %}
+        <p><small class="text-muted">Tags:</small>
+            {% for tag_name in post.getTagNames() %}
+                <a href="{{ url_for('main.index',tag=tag_name) }}" class="btn btn-tags btn-xs" role="button">{{ tag_name }}</a>
+            {% endfor %}
+        </p>
+    {% endif %}
+    {% if current_user.is_authenticated and current_user == post.author %}
+        <p>
+        <a href="{{ url_for('post.edit_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>edit</a>
+        <a href="{{ url_for('post.del_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>delete</a>
+        </p>
+    {% endif %}
+    <hr/>
+    <h5>Comments</h5>
+
+    {% for comment in comments %}
+        {% if comment.name is not none %}
+            <p><small>{{ comment.name }} on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
+        {% else %}
+            {% if comment.commenter is not none %}
+                <p><small>{{ comment.commenter.firstname }} {{ comment.commenter.lastname }}
+                     on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
+            {% endif %}
+        {% endif %}
+        <p>{{ comment.comment }}</p>
+        <hr/>
+    {% endfor %}
+
+    <form action="{{ url_for('post.post_detail',id=post.id) }}" method="post">
+        {{ form.csrf_token }}
+        {% if current_user.is_anonymous %}
+            <div class="form-row">
+                <div class="form-group col-lg-6">
+                    {{ form.name.label }}
+                    {% for error in form.name.errors %}
+                        <span style="color: red;">[ {{ error }} ]</span><br/>
+                    {% endfor %}
+                    {{ form.name(class="form-control") }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-lg-6">
+                    {{ form.email.label }}
+                    {% for error in form.email.errors %}
+                        <span style="color: red;">[ {{ error }} ]</span><br/>
+                    {% endfor %}
+                    {{ form.email(class="form-control") }}
+                    <small class="text-muted">Email is optional</small>
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-row">
+            <div class="form-group col-lg-6">
+                {{ form.comment.label }}<br/>
+                {% for error in form.comment.errors %}
+                    <span style="color: red;">[ {{ error }} ]</span><br/>
+                {% endfor %}
+                {{ form.comment(class="form-control", rows='4') }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-6">
+                {{ form.recaptcha }}
+                {% for error in form.recaptcha.errors %}
+                    <span style="color: red;">[ {{ error }} ]</span><br/>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-md btn-buttons") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}

@@ -1,8 +1,11 @@
 import os
+from dotenv import load_dotenv
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 class Config(object):
     # Flask settings
-    #SECRET_KEY = os.urandom(24)
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'random string'
 
     # Flask-SQLAlchemy settings
@@ -32,8 +35,8 @@ class Config(object):
 
     # custom app settings
     FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 # in seconds, 3600 = 1 hour
-    SEARCH_RESULTS_RETURN = 12 # number of search results to return for each search
-    # number of messages (via contact form) to show per page for admin
+    SEARCH_RESULTS_RETURN = 12
+    # admin number of messages
     MESSAGES_PER_PAGE = 10
-    # number of images (on manage images page) to show per page for admin
+    # admin number of images
     IMAGES_PER_PAGE = 12

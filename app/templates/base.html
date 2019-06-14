@@ -39,37 +39,37 @@
         {% block navbar %}
             <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('index') }}">kevin7.net</a>
+                    <a class="navbar-brand" href="{{ url_for('main.index') }}">kevin7.net</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="mainNav">
                         <ul class="navbar-nav">
-                            <li class="nav-item {% block nav_home %}{% endblock %}"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
-                            <li class="nav-item {% block nav_about %}{% endblock %}"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
-                            <li class="nav-item {% block nav_contact %}{% endblock %}"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                            <li class="nav-item {% block nav_home %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                            <li class="nav-item {% block nav_about %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.about') }}">About</a></li>
+                            <li class="nav-item {% block nav_contact %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a></li>
                             {% if current_user.is_anonymous %}
-                                <li class="nav-item {% block nav_login %}{% endblock %}"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                                <li class="nav-item {% block nav_login %}{% endblock %}"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
                             {% else %}
-                                <li class="nav-item {% block nav_logout %}{% endblock %}"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                                <li class="nav-item {% block nav_logout %}{% endblock %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
                                 {% if current_user.is_admin() %}
                                     <li class="nav-item dropdown {% block nav_admin %}{% endblock %}">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           <i class="fas fa-wrench"></i>Admin
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{ url_for('add_post') }}">Add Post</a>
-                                            <a class="dropdown-item" href="{{ url_for('manage_content') }}">Manage Content</a>
-                                            <a class="dropdown-item" href="{{ url_for('manage_messages') }}">Manage Messages</a>
-                                            <a class="dropdown-item" href="{{ url_for('manage_tags') }}">Manage Tags</a>
-                                            <a class="dropdown-item" href="{{ url_for('manage_images') }}">Manage Uploaded Images</a>
+                                            <a class="dropdown-item" href="{{ url_for('post.add_post') }}">Add Post</a>
+                                            <a class="dropdown-item" href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
+                                            <a class="dropdown-item" href="{{ url_for('admin_message.manage_messages') }}">Manage Messages</a>
+                                            <a class="dropdown-item" href="{{ url_for('admin_tag.manage_tags') }}">Manage Tags</a>
+                                            <a class="dropdown-item" href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
                                         </div>
                                     </li>
                                 {% endif %}
                             {% endif %}
                         </ul>
 
-                        <form class="form-inline" action="{{ url_for('search') }}" method="post">
+                        <form class="form-inline" action="{{ url_for('search.search') }}" method="post">
                             <div class="form-group">
                                 <input class="form-control" id="search_txt" name="search_txt" >
                                 <input class="btn btn-md btn-buttons" type="submit" value="Search">

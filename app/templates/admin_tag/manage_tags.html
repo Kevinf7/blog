@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block nav_admin %}active{% endblock %}
+{% block title %}Manage Tags{% endblock %}
+
+{% block app_content %}
+<h1>Manage Tags</h1>
+
+<div class="col-12 pt-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#tag_used">Tags used</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tag_not_used">Tags not used</a>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-4">
+        <div id="tag_used" class="tab-pane fade show active">
+            <p>To delete these tags, first remove them from all blog postings</p>
+            <table class="table table-sm table-striped">
+                <tbody>
+                    {% for tu in tag_used %}
+                        <tr class="d-flex">
+                            <td scope="row" class="col-4">{{ tu.name }}</td>
+                            <td class="col-8"><a href="{{ url_for('admin_tag.edit_tag',id=tu.id) }}" class="btn btn-admin btn-sm" role="button">Edit</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="tag_not_used" class="tab-pane fade">
+            <table class="table table-sm table-striped">
+                <tbody>
+                    {% for tnu in tag_notused %}
+                        <tr class="d-flex">
+                            <td scope="row" class="col-4">{{ tnu.name }}</td>
+                            <td class="col-8"><a href="{{ url_for('admin_tag.edit_tag',id=tnu.id) }}" class="btn btn-admin btn-sm" role="button">Edit</a>
+                            <a href="{{ url_for('admin_tag.del_tag',id=tnu.id) }}" class="btn btn-admin btn-sm" role="button">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
