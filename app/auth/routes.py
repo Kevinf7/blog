@@ -73,7 +73,7 @@ def forgot_password():
             if send_password_reset_email(user):
                 flash('Check your email for instructions to reset your password')
             else:
-                flask('Sorry system error')
+                flash('Sorry system error')
         else:
             flash('Email does not exist in our database')
             return redirect(url_for('auth.forgot_password'))

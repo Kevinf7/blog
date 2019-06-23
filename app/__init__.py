@@ -23,7 +23,6 @@ def create_app(config_class=Config):
     with app.app_context():
         db.init_app(app)
         login.init_app(app)
-        #Which page to redirect to page if user is not logged in
         migrate.init_app(app,db)
         moment.init_app(app)
 

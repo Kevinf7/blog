@@ -4,7 +4,7 @@ app = create_app()
 
 #when you run flask shell the model objects will be instantiated for you
 with app.app_context():
-    #it seems you need to wrap it inside with app.app_context
+    #it seems you need to wrap it inside with app.app_context otherwise current_app is null?
     from app.models import User, Role, Tagged, Post, Tag, Comment, Contact, Images, Content, Page
     @app.shell_context_processor
     def make_shell_context():

@@ -29,5 +29,5 @@ def send_email(subject, sender, recipients, text_body, html_body):
         print(response.headers)
         return True
     except Exception as e:
-        print(e.message)
+        print(e)
         return False
