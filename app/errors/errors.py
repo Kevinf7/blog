@@ -1,18 +1,10 @@
 from flask import render_template
-from app import db
-from app.errors import bp
+from . import bp
 
-##############################################################################
-# Error handlers
-##############################################################################
-
-#register the error handlers using blueprints decorator
 @bp.app_errorhandler(404)
-def not_found_error(error):
+def page_not_found(e):
     return render_template('errors/404.html'), 404
 
 @bp.app_errorhandler(500)
-def internal_error(error):
-    #reset db session to a clean state
-    db.session.rollback()
+def internal_server_error(e):
     return render_template('errors/500.html'), 500
