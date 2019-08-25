@@ -3,37 +3,23 @@
 {% block title %}Manage Images{% endblock %}
 
 {% block app_content %}
-<h1>Manage Images</h1>
+<h2>Manage Images</h2>
 
-<div class="col-12 pt-4">
-    <div class="table-responsive">
-    <table class="table"><tbody>
-        {% for img in images.items %}
-            {% if loop.index0 is divisibleby 4 or loop.index0==0 %}
-            <tr>
-            {% endif %}
-                <td>
-                    <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}"><br/>
-                    <small class="text-muted" id="filepath-{{ loop.index }}">../static/uploads/{{ img.filename }}</small>
-                    <span class="clipboard" id="{{ loop.index }}">
-                        <a href="#" class="far fa-clipboard fa-sm text-admin cliplink"></a>
-                    </span><br/>
-                    <small class="text-muted">{{ img.file_width }}x{{ img.file_height }}</small><br/>
-                    <small class="text-muted">{{ img.file_size }} bytes</small><br/>
-                    <small class="text-muted">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</small>
-                    <a href="{{ url_for('admin_image.del_image',id=img.id) }}" class="fas fa-trash-alt fa-sm text-admin" style="text-decoration:none"></a>
-                </td>
-            {% if loop.last %}
-                {% for r in range(0,(4-(loop.index%4)|int)) %}
-                    <td></td>
-                {% endfor %}
-            {% endif %}
-            {% if loop.index is divisibleby 4 %}
-            </tr>
-            {% endif %}
-        {% endfor %}
-    </tbody></table>
+<div class="image-gallery">
+    {% for img in images.items %}
+    <div class="image-container">
+        <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}">
+        <div class="minor-text word-wrap">
+            <span id="filepath-{{ loop.index }}">../static/uploads/{{ img.filename }}</span>
+            <a href="#" class="far fa-clipboard" id="{{ loop.index }}" onClick="copyText(this.id);"></a>
+        </div>
+        <div class="minor-text">{{ img.file_width }}x{{ img.file_height }}</div>
+        <div class="minor-text">{{ img.file_size }} bytes</div>
+        <div class="minor-text">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</div>
+        <div><a href="{{ url_for('admin_image.del_image',id=img.id) }}" class="fas fa-trash-alt fa-sm"></a></div>
     </div>
+    {% endfor %}
+</div>
 
     {% if images.pages > 1 %}
         <nav aria-label="posts navigation">
@@ -77,9 +63,4 @@
         </nav>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
 {% endblock %}

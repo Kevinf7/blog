@@ -3,67 +3,56 @@
 {% block title %}Manage Message{% endblock %}
 
 {% block app_content %}
-<div class="col-12">
-    <h1>Manage Messages</h1>
+
+    <h2>Manage Messages</h2>
     <p>Here are all the messages you have received via the contact form.</p>
+    <table>
     {% for msg in contacts.items %}
-        <p>
-        Date: {{ moment(msg.create_date).format('DD/MM/YY LT') }}<br/>
-        From: {{ msg.name }}<br/>
-        Email: {{ msg.email }}<br/>
-        Message:<br/>
-        {{ msg.message }}
+        <tr>
+            <td>Date:</td>
+            <td>{{ moment(msg.create_date).format('DD/MM/YY LT') }}</td>
+        </tr><tr>
+            <td>From:</td>
+            <td>{{ msg.name }}</td>
+        </tr><tr>
+            <td>Email:</td>
+            <td>{{ msg.email }}</td>
+        </tr><tr>
+            <td>Message:</td>
+            <td>{{ msg.message }}</td>
+        </tr>
         {% if not loop.last %}
-            <hr/>
+            <tr><td colspan="2"><hr/></td></tr>
         {% endif %}
-        </p>
     {% endfor %}
+    </table>
 
     {% if contacts.pages > 1 %}
-        <nav aria-label="contacts messages navigation">
-          <ul class="pagination pagination-sm justify-content-left  pt-5">
+        <nav class="paging">
+          <ul>
             {% if contacts.has_prev %}
-            <li class="page-item">
-                <a class="page-link" href="{{ url_for('admin_message.manage_messages', page=contacts.prev_num) }}">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
+                <li><a href="{{ url_for('admin_message.manage_messages', page=contacts.prev_num) }}">Previous</a></li>
             {% endif %}
-
             {% for page_num in contacts.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
                 {% if page_num %}
                     {% if page_num != contacts.page %}
-                        <li class="page-item">
-                            <span class="page-link"><a href="{{ url_for('admin_message.manage_messages', page=page_num) }}">{{ page_num }}</a></span>
+                        <li>
+                            <a href="{{ url_for('admin_message.manage_messages', page=page_num) }}">{{ page_num }}</a>
                         </li>
                     {% else %}
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">{{ page_num }}</span>
-                        </li>
+                        <li class="active">{{ page_num }}</li>
                     {% endif %}
                 {% else %}
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
+                    <li>...</li>
                 {% endif %}
             {% endfor %}
-
             {% if contacts.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="{{ url_for('admin_message.manage_messages',page=contacts.next_num) }}">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
+            <li>
+                <a href="{{ url_for('admin_message.manage_messages',page=contacts.next_num) }}">Next</a>
             </li>
             {% endif %}
           </ul>
         </nav>
     {% endif %}
-</div>
-{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
 {% endblock %}

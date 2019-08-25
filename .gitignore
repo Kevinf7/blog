@@ -1,7 +1,6 @@
 *.pyc
 *.db
 env
-secret.bat
 secret.txt
 .zip
 .sql
@@ -10,6 +9,8 @@ runenv.bat
 uploads
 test.py
 test.html
-static/uploads/
-logs/
+static/uploads
+logs
 .env
+migrations
+__pycache__

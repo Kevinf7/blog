@@ -3,87 +3,71 @@
 {% block title %}Post Detail{% endblock %}
 
 {% block app_content %}
-<div class="col-md-12">
-    <h2>{{ post.heading }}</h2>
-    <p><small>Written by {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
-    <p>{{ post.post|safe }}</p>
-    {% if post.getTagNames() %}
-        <p><small class="text-muted">Tags:</small>
-            {% for tag_name in post.getTagNames() %}
-                <a href="{{ url_for('main.index',tag=tag_name) }}" class="btn btn-tags btn-xs" role="button">{{ tag_name }}</a>
-            {% endfor %}
-        </p>
+<h2>{{ post.heading }}</h2>
+<div class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</div>
+<p>{{ post.post|safe }}</p>
+{% if post.getTagNames() %}
+    <p><span class="minor-text">
+        <span>Tags:</span>
+        {% for tag_name in post.getTagNames() %}
+            <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>
+        {% endfor %}
+    </span></p>
+{% endif %}
+{% if current_user.is_authenticated and current_user == post.author %}
+    <div class="post-btn">
+        <a href="{{ url_for('post.edit_post',id=post.id) }}">edit</a>
+        <a href="{{ url_for('post.del_post',id=post.id) }}">delete</a>
+    </div>
+{% endif %}
+
+<hr/>
+<h3>Comments</h3>
+{% for comment in comments %}
+    {% if comment.name is not none %}
+        <p><span class="minor-text">{{ comment.name }} on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</span></p>
+    {% else %}
+        {% if comment.commenter is not none %}
+            <p><span class="minor-text">{{ comment.commenter.firstname }} {{ comment.commenter.lastname }}
+                 on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</span></p>
+        {% endif %}
     {% endif %}
-    {% if current_user.is_authenticated and current_user == post.author %}
-        <p>
-        <a href="{{ url_for('post.edit_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>edit</a>
-        <a href="{{ url_for('post.del_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>delete</a>
-        </p>
-    {% endif %}
+    <p>{{ comment.comment }}</p>
     <hr/>
-    <h5>Comments</h5>
+{% endfor %}
 
-    {% for comment in comments %}
-        {% if comment.name is not none %}
-            <p><small>{{ comment.name }} on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
-        {% else %}
-            {% if comment.commenter is not none %}
-                <p><small>{{ comment.commenter.firstname }} {{ comment.commenter.lastname }}
-                     on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</small></p>
-            {% endif %}
-        {% endif %}
-        <p>{{ comment.comment }}</p>
-        <hr/>
-    {% endfor %}
-
-    <form action="{{ url_for('post.post_detail',id=post.id) }}" method="post">
-        {{ form.csrf_token }}
+<form action="{{ url_for('post.post_detail',id=post.id) }}" method="post">
+    {{ form.csrf_token }}
+    <div class="formgrid">
         {% if current_user.is_anonymous %}
-            <div class="form-row">
-                <div class="form-group col-lg-6">
-                    {{ form.name.label }}
-                    {% for error in form.name.errors %}
-                        <span style="color: red;">[ {{ error }} ]</span><br/>
-                    {% endfor %}
-                    {{ form.name(class="form-control") }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-lg-6">
-                    {{ form.email.label }}
-                    {% for error in form.email.errors %}
-                        <span style="color: red;">[ {{ error }} ]</span><br/>
-                    {% endfor %}
-                    {{ form.email(class="form-control") }}
-                    <small class="text-muted">Email is optional</small>
-                </div>
+            {{ form.name.label }}
+            {% for error in form.name.errors %}
+                <span style="color: red;">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            {{ form.name }}
+
+            {{ form.email.label }}
+            {% for error in form.email.errors %}
+                <span style="color: red;">[ {{ error }} ]</span><br/>
+            {% endfor %}
+            <div class="form-group">
+                {{ form.email }}
+                <div class="minor-text">Email is optional</div>
             </div>
         {% endif %}
-        <div class="form-row">
-            <div class="form-group col-lg-6">
-                {{ form.comment.label }}<br/>
-                {% for error in form.comment.errors %}
-                    <span style="color: red;">[ {{ error }} ]</span><br/>
-                {% endfor %}
-                {{ form.comment(class="form-control", rows='4') }}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-lg-6">
-                {{ form.recaptcha }}
-                {% for error in form.recaptcha.errors %}
-                    <span style="color: red;">[ {{ error }} ]</span><br/>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-md btn-buttons") }}
-        </div>
-    </form>
-</div>
-{% endblock %}
+        
+        {{ form.comment.label }}
+        {% for error in form.comment.errors %}
+            <span style="color: red;">[ {{ error }} ]</span><br/>
+        {% endfor %}
+        {{ form.comment(rows='4') }}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+        {{ form.recaptcha }}
+        {% for error in form.recaptcha.errors %}
+            <span style="color: red;">[ {{ error }} ]</span><br/>
+        {% endfor %}
+
+        {{ form.submit(class="submit-btn") }}
+    </div>
+</form>
 {% endblock %}

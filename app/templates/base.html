@@ -1,130 +1,91 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
         <!-- favicons -->
         <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='/apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
         <link rel="manifest" href="{{ url_for('static', filename='/site.webmanifest') }}">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/985ea8c115.js"></script>
+        <!-- Google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Anton|Roboto+Slab:300,400,700&display=swap" rel="stylesheet">
         <!-- CSS -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap_custom.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/prism.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}" type="text/css">
+        <!--prism is for displaying code from the blog-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/prism.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/app.css') }}" type="text/css">
         <!-- Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139072308-1"></script>
         <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'UA-139072308-1');
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-139072308-1');
         </script>
+        <!-- Flask moment -->
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
     </head>
     <body>
-        <div id="jumbo" class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <p class="display-4">Kevin's Blog</p>
-                {% if current_user.is_authenticated %}
-                    <span class="h5">Hi {{ current_user.firstname }}! Welcome to my blog</span>
-                {% else %}
-                    <span class="h5">Welcome to my blog!</span>
-                {% endif %}
-            </div>
-        </div>
+        <div class="page-container">
 
-        {% block navbar %}
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url_for('main.index') }}">kevin7.net</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="mainNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item {% block nav_home %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-                            <li class="nav-item {% block nav_about %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.about') }}">About</a></li>
-                            <li class="nav-item {% block nav_contact %}{% endblock %}"><a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a></li>
-                            {% if current_user.is_anonymous %}
-                                <li class="nav-item {% block nav_login %}{% endblock %}"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
-                            {% else %}
-                                <li class="nav-item {% block nav_logout %}{% endblock %}"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
-                                {% if current_user.is_admin() %}
-                                    <li class="nav-item dropdown {% block nav_admin %}{% endblock %}">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          <i class="fas fa-wrench"></i>Admin
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{ url_for('post.add_post') }}">Add Post</a>
-                                            <a class="dropdown-item" href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
-                                            <a class="dropdown-item" href="{{ url_for('admin_message.manage_messages') }}">Manage Messages</a>
-                                            <a class="dropdown-item" href="{{ url_for('admin_tag.manage_tags') }}">Manage Tags</a>
-                                            <a class="dropdown-item" href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                            {% endif %}
-                        </ul>
-
-                        <form class="form-inline" action="{{ url_for('search.search') }}" method="post">
-                            <div class="form-group">
-                                <input class="form-control" id="search_txt" name="search_txt" >
-                                <input class="btn btn-md btn-buttons" type="submit" value="Search">
-                                <i class="far fa-question-circle fa-sm pl-2 text-light"
-                                style="text-decoration:none" data-toggle="tooltip" data-placement="top"
-                                title="Hint: Search for blog posts. Do not use spaces or wildcards">
-                                </i>
+            <header class="head-section">
+                <h1 class="head-title"><a href="{{ url_for('main.index') }}">kevin7.net</a></h1>
+                <nav class="nav-section">
+                    <a href="{{ url_for('main.index') }}">Home</a>
+                    <a href="{{ url_for('main.about') }}">About</a>
+                    <a href="{{ url_for('main.contact') }}">Contact</a>
+                    {% if current_user.is_anonymous %}
+                    <a href="{{ url_for('auth.login') }}">Login</a>
+                    {% else %}
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                        {% if current_user.is_admin() %}
+                        <div class="nav-dropdown">
+                            <a href="#"><i class="fas fa-wrench"></i>Admin</a>
+                            <div class="nav-dropdown-content">
+                                <a href="{{ url_for('post.add_post') }}">Add Post</a>
+                                <a href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
+                                <a href="{{ url_for('admin_message.manage_messages') }}">Manage Messages</a>
+                                <a href="{{ url_for('admin_tag.manage_tags') }}">Manage Tags</a>
+                                <a href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </nav>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </nav>
+                <form class="head-search" action="{{ url_for('search.search') }}" method="post">
+                    <input type="text" name="search_txt" >
+                    <input type="submit" value="Search">
+                </form>
+            </header>
 
-        {% endblock %}
-
-        {% block content %}
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-info" role="alert">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="container">
-                <div class="row pt-4 pb-5">
+            <main class="main-section">
+                {% block content %}
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-info" role="alert">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     {% block app_content %}{% endblock %}
-                </div>
-            </div>
-        {% endblock %}
+                {% endblock %}
+            </main>
 
-        <div class="container-fluid bg-dark">
-            <div class="row">
-                <div class="col-12 pt-5">
-                    <div class="d-flex justify-content-center text-white">
-                        <a href="https://github.com/Kevinf7" style="text-decoration:none" target="_blank">
-                        <i class="fab fa-github fa-2x text-light"></i>
-                        </a>
-                    </div>
+            <footer class="footer-section">
+                <div class="footer-icons">
+                    <a href="https://github.com/Kevinf7" style="text-decoration:none" target="_blank">
+                    <i class="fab fa-github"></i></a>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12 pt-1 pb-5">
-                    <div class="d-flex justify-content-center text-white">
-                        <small>&#169; 2019 kevin7.net</small>
-                    </div>
-                </div>
-            </div>
+                <small>&#169; 2019 kevin7.net</small>
+            </footer>
         </div>
 
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="{{ url_for('static',filename='js/prism.js') }}"></script>
-        <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+        <script src="{{ url_for('static',filename='scripts/prism.js') }}"></script>
+        <script src="{{ url_for('static',filename='scripts/app.js') }}"></script>
         <!-- Custom Javascript -->
         {% block scripts %}
         {% endblock %}

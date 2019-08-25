@@ -2,18 +2,16 @@
 {% block title %}Home{% endblock %}
 
 {% block app_content %}
-<div class="col-md-12">
-    <h1>Search Results</h1>
-    {% if not results %}
-        <p>No results returned</p>
-    {% else %}
-        {% for r in results %}
-            <div class="pb-1"><a href="{{ url_for('post.post_detail',id=r['post'].id) }}">{{ r['post'].heading }}</a></div>
-            <div class="pb-1">{{ r['post'].getTextSummary() }}</div>
-            <div class="pb-4"><small class="text-muted">Number of matches: {{ r['count'] }}</small></div>
-        {% endfor %}
-    {% endif %}
-</div>
+<h2>Search Results</h2>
+{% if not results %}
+    <p>No results returned</p>
+{% else %}
+    {% for r in results %}
+        <h3><a href="{{ url_for('post.post_detail',id=r['post'].id) }}">{{ r['post'].heading }}</a></h3>
+        <p>{{ r['post'].getTextSummary() }}</p>
+        <div class="minor-text">Number of matches: {{ r['count'] }}</div>
+    {% endfor %}
+{% endif %}
 {% endblock %}
 
 {% block scripts %}

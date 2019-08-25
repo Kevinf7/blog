@@ -3,44 +3,31 @@
 {% block title %}Login{% endblock %}
 
 {% block app_content %}
-<div class="col-12">
-    <h1>Login</h1>
-    <form action="{{ url_for('auth.login') }}" method="post">
-        {{ form.csrf_token }}
-        <div class="form-row">
-            <div class="form-group col-lg-8">
-                {{ form.email.label }}
-                {% for error in form.email.errors %}
-                    <span style="color: red;">[ {{ error }} ]</span><br/>
-                {% endfor %}
-                {{ form.email(class="form-control") }}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-lg-8">
-                {{ form.password.label }}
-                {% for error in form.password.errors %}
-                    <span style="color: red;">[ {{ error }} ]</span><br/>
-                {% endfor %}
-                {{ form.password(class="form-control") }}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-lg-8">
-                <div class="form-check custom-control custom-checkbox">
-                    {{ form.remember_me(class="custom-control-input") }}
-                    {{ form.remember_me.label(class="custom-control-label") }}
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-lg-8">
-                {{ form.submit(class="btn btn-md btn-buttons") }}
-            </div>
-        </div>
-    </form>
-    <hr/>
-    <p><small><a href="{{ url_for('auth.forgot_password') }}">Forgot Password</a> |
-    <a href="{{ url_for('auth.register') }}">Register</a></small></p>
+<h2>Login</h2>
+<form action="{{ url_for('auth.login') }}" method="post">
+    {{ form.csrf_token }}
+    <div class="formgrid">
+        {{ form.email.label }}
+        {% for error in form.email.errors %}
+            <span style="color: red;">[ {{ error }} ]</span><br/>
+        {% endfor %}
+        {{ form.email }}
+
+        {{ form.password.label }}
+        {% for error in form.password.errors %}
+            <span style="color: red;">[ {{ error }} ]</span><br/>
+        {% endfor %}
+        {{ form.password }}
+
+        {{ form.remember_me }}
+        {{ form.remember_me.label }}
+
+        {{ form.submit(class_="submit-btn") }}
+    </div>
+</form>
+<div class="login-footer">
+    <small><a href="{{ url_for('auth.forgot_password') }}">Forgot Password</a> |
+    <a href="{{ url_for('auth.register') }}">Register</a></small>
 </div>
+
 {% endblock %}

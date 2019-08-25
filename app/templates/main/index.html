@@ -3,23 +3,24 @@
 {% block title %}Home{% endblock %}
 
 {% block app_content %}
-<div class="col-md-10">
+<div class="content-wrapper">
+    <div class="content-main">
     {% for post in posts.items %}
-        <h2 class="text-buttons"><a class="text-buttons" href="{{ url_for('post.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
-        <p><small>Written by {{ post.author.firstname }} {{ post.author.lastname }} on {{ moment(post.create_date).format('DD/MM/YYYY') }}</small></p>
+        <h2 class="post-title"><a href="{{ url_for('post.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
+        <p><span class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</span></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}
-            <p><small class="text-muted">Tags:</small>
-            {% for tag_name in post.getTagNames() %}
-                <a href="{{ url_for('main.index',tag=tag_name) }}" class="btn btn-tags btn-xs" role="button">{{ tag_name }}</a>
-            {% endfor %}
-            </p>
+            <p><span class="minor-text">Tags:
+                {% for tag_name in post.getTagNames() %}
+                    <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>
+                {% endfor %}
+            </span></p>
         {% endif %}
         {% if current_user.is_authenticated and current_user == post.author %}
-            <p>
-            <a href="{{ url_for('post.edit_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>edit</a>
-            <a href="{{ url_for('post.del_post',id=post.id) }}" class="btn btn-admin btn-xs" role="button"/>delete</a>
-            </p>
+            <div class="post-btn">
+                <a href="{{ url_for('post.edit_post',id=post.id) }}">edit</a>
+                <a href="{{ url_for('post.del_post',id=post.id) }}">delete</a>
+            </div>
         {% endif %}
         {% if not loop.last %}
             <hr/>
@@ -27,69 +28,43 @@
     {% endfor %}
 
     {% if posts.pages > 1 %}
-        <nav aria-label="posts navigation">
-          <ul class="pagination pagination-sm justify-content-left  pt-5">
+        <nav class="paging">
+          <ul>
             {% if posts.has_prev %}
-            <li class="page-item">
-                <a class="page-link" href="{{ url_for('main.index', page=posts.prev_num) }}">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
+                <li><a href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a></li>
             {% endif %}
-
             {% for page_num in posts.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
                 {% if page_num %}
                     {% if page_num != posts.page %}
-                        <li class="page-item">
-                            <span class="page-link"><a href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a></span>
+                        <li>
+                            <a href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
                         </li>
                     {% else %}
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">{{ page_num }}</span>
-                        </li>
+                        <li class="active">{{ page_num }}</li>
                     {% endif %}
                 {% else %}
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
+                    <li>...</li>
                 {% endif %}
             {% endfor %}
-
             {% if posts.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="{{ url_for('main.index',page=posts.next_num) }}">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
+            <li>
+                <a href="{{ url_for('main.index',page=posts.next_num) }}">Next</a>
             </li>
             {% endif %}
           </ul>
         </nav>
     {% endif %}
-</div>
-
-<div class="col-md-2">
-    <div class="row">
-        <div class="col-12 p-2 bg-side_panel">
-            <h5>Tags</h5>
-            {% for tag_tup in tag_list %}
-                <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> ({{ tag_tup[1] }})<br/>
-            {% endfor %}
-        </div>
     </div>
-    <!--
-    <div class="row">
-        <div class="col-12 m-2 p-2 bg-light border">
-            <h5>Test</h5>
-            <p>abc</p>
-        </div>
-    </div>
-    -->
-</div>
-{% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+    <aside class="content-sidebar">
+        <h3>Tags</h3>
+        <ul>
+        {% for tag_tup in tag_list %}
+            <li>
+                <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> <span class="tag_num">({{ tag_tup[1] }})</span>
+            </li>
+        {% endfor %}
+        </ul>
+    </aside>
+</div>
 {% endblock %}

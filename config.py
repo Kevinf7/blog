@@ -40,3 +40,6 @@ class Config(object):
     MESSAGES_PER_PAGE = 10
     # admin number of images
     IMAGES_PER_PAGE = 12
+
+    # Dev only so browser doesnt cache for CSS
+    SEND_FILE_MAX_AGE_DEFAULT = 0
