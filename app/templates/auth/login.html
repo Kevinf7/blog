@@ -8,16 +8,20 @@
     {{ form.csrf_token }}
     <div class="formgrid">
         {{ form.email.label }}
+        <div class="form-group">
         {% for error in form.email.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.email }}
+        </div>
 
         {{ form.password.label }}
+        <div class="form-group">
         {% for error in form.password.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.password }}
+        </div>
 
         {{ form.remember_me }}
         {{ form.remember_me.label }}

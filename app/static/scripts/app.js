@@ -22,7 +22,7 @@ function openTab(evt, tabName) {
 
 // Function to copy image gallery link to clipboard
 function copyText(id) {
-    var txtid = "filepath-" + id;
+    var txtid = "copyclip-" + id;
     var copyText = document.getElementById(txtid);
 
     // Create dummy textare

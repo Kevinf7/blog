@@ -8,22 +8,29 @@
 <form action="{{ url_for('post.add_post') }}"  method="post">
     {{ form.csrf_token }}
     <div class="formstacked">
+
         {{ form.heading.label }}
         {% for error in form.heading.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.heading }}
 
         {{ form.post.label }}
-        <div class="minor-text">Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;'></div>
+        <div class="minor-text">
+            Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;
+            <span class="minor-text" id="copyclip-1" style="display:none;"><p>br<a id="br"></a></p></span>
+            <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
+        </div>
+
         {% for error in form.post.errors %}
-            <span style="color:red">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.post(rows=12) }}
 
         {{ form.tags.label }}
+        <div class="minor-text">Hint: Separate tags by , (comma)</div>
         {% for error in form.tags.errors %}
-            <span style="color:red">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.tags }}
 

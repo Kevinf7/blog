@@ -10,7 +10,7 @@
     <div class="image-container">
         <img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}">
         <div class="minor-text word-wrap">
-            <span id="filepath-{{ loop.index }}">../static/uploads/{{ img.filename }}</span>
+            <span id="copyclip-{{ loop.index }}">../static/uploads/{{ img.filename }}</span>
             <a href="#" class="far fa-clipboard" id="{{ loop.index }}" onClick="copyText(this.id);"></a>
         </div>
         <div class="minor-text">{{ img.file_width }}x{{ img.file_height }}</div>

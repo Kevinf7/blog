@@ -3,24 +3,21 @@
 {% block title %}Edit Content{% endblock %}
 
 {% block app_content %}
-<div class="col-12">
-    <h1>Edit Content</h1>
-    <p>You are editing the <i>{{ content.name }}</i> area on the {{ content.page.name|capitalize }} page.
-    <form action="{{ url_for('admin_content.edit_content',id=content.id) }}"  method="post">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.post.label }}
-            {% for error in form.post.errors %}
-                <span style="color:red">[ {{ error }} ]</span><br/>
-            {% endfor %}
-            {% set p = form.post.process_data(content.content) %}
-            {{ form.post(class="form-control",rows=16) }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-md btn-buttons") }}
-        </div>
-    </form>
-</div>
+<h2>Edit Content</h2>
+<p>You are editing the <i>{{ content.name }}</i> area on the {{ content.page.name|capitalize }} page.
+<form action="{{ url_for('admin_content.edit_content',id=content.id) }}"  method="post">
+    {{ form.csrf_token }}
+    <div class="formstacked">
+        {{ form.post.label }}
+        {% for error in form.post.errors %}
+            <span class="error-msg">[ {{ error }} ]</span>
+        {% endfor %}
+        {% set p = form.post.process_data(content.content) %}
+        {{ form.post(rows=16) }}
+
+        {{ form.submit(class="submit-btn") }}
+    </div>
+</form>
 {% endblock %}
 
 {% block scripts %}

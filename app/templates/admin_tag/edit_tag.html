@@ -9,11 +9,13 @@
     {{ form.csrf_token }}
     <div class="formgrid">
         {{ form.tag_name.label }}
+        <div class="form-group">
         {% for error in form.tag_name.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {% set t = form.tag_name.process_data(tag.name) %}
         {{ form.tag_name }}
+        </div>
 
         {{ form.submit(class="submit-btn") }}
     </div>

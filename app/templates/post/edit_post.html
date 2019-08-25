@@ -9,22 +9,23 @@
     <div class="formstacked">
         {{ form.heading.label }}
         {% for error in form.heading.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {% set h = form.heading.process_data(post.heading) %}
         {{ form.heading }}
 
         {{ form.post.label }}
-        <div class="minor-text">Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;'></div>
+        <div class="minor-text">Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;</div>
         {% for error in form.post.errors %}
-            <span style="color:red">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {% set p = form.post.process_data(post.post) %}
         {{ form.post(rows=16) }}
 
         {{ form.tags.label }}
+        <div class="minor-text">Hint: Separate tags by , (comma)</div>
         {% for error in form.tags.errors %}
-            <span style="color:red">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {% set t = form.tags.process_data(tags) %}
         {{ form.tags }}

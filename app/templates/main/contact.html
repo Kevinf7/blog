@@ -9,27 +9,35 @@
     {{ form.csrf_token }}
     <div class="formgrid">
         {{ form.name.label }}
+        <div class="form-group">
         {% for error in form.name.errors %}
-            <span style="color: red;">[ {{ error }} ]</span>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.name }}
+        </div>
 
         {{ form.email.label }}
+        <div class="form-group">
         {% for error in form.email.errors %}
-            <span style="color: red;">[ {{ error }} ]</span>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.email }}
+        </div>
 
         {{ form.message.label }}
+        <div class="form-group">
         {% for error in form.message.errors %}
-            <span style="color: red;">[ {{ error }} ]</span>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.message(rows=6) }}
+        </div>
 
-        {{ form.recaptcha }}
+        <div class="form-group">
         {% for error in form.recaptcha.errors %}
-            <span style="color: red;">[ {{ error }} ]</span>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
+        {{ form.recaptcha }}
+        </div>
 
         {{ form.submit(class_="submit-btn") }}
     </div>

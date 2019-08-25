@@ -198,7 +198,7 @@ input:-webkit-autofill:active  {
     align-items: start;
     justify-items: start;
     grid-template-columns: auto;
-    width: 90vw;
+    width: 94vw;
 }
 .formgrid label, .formstacked label {
     grid-column: 1 / 2;
@@ -230,6 +230,11 @@ input:-webkit-autofill:active  {
     font-family: inherit;
     font-size: 100%;
     width: 7rem;
+}
+.error-msg {
+    display: block;
+    color: red;
+    font-size: 0.8rem;
 }
 
 
