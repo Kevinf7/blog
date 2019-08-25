@@ -193,6 +193,7 @@ input:-webkit-autofill:active  {
 }
 .footer-icons > a {
     color: #EFEFEF;
+    padding-right: 10px;
 }
 .footer-icons > a:hover {
     color: #EFEFEF80;
