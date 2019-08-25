@@ -4,7 +4,7 @@
 
 {% block app_content %}
 <h2>{{ post.heading }}</h2>
-<div class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</div>
+<p><span class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</span></p>
 <p>{{ post.post|safe }}</p>
 {% if post.getTagNames() %}
     <p><span class="minor-text">
