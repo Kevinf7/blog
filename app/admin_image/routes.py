@@ -27,7 +27,7 @@ def del_image(id):
     image = Images.getImage(id)
     # id is wrong
     if image is None:
-        flash('No such image.')
+        flash('No such image.','error')
         return redirect(url_for('main.index'))
     if form.validate_on_submit():
         img_fullpath = os.path.join(current_app.config['UPLOADED_PATH'], image.filename)
@@ -39,9 +39,9 @@ def del_image(id):
             # delete from db
             db.session.delete(image)
             db.session.commit()
-            flash('The image has been successfully deleted')
+            flash('The image has been successfully deleted','success')
             return redirect(url_for('admin_image.manage_images'))
         except OSError:
-            flash('System error deleting image.')
+            flash('System error deleting image.','error')
             return redirect(url_for('admin_image.manage_images'))
     return render_template('admin_image/del_image.html',form=form,img=image)

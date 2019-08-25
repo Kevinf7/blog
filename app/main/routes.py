@@ -69,8 +69,8 @@ def contact():
         db.session.add(contact)
         db.session.commit()
         if send_contact_email(contact):
-            flash('Message has been sent!')
+            flash('Message has been sent!', 'success')
         else:
-            flash('Sorry system error')
+            flash('Sorry system error', 'error')
         return redirect(url_for('main.index'))
     return render_template('main/contact.html',form=form, contact_html=contact_html)

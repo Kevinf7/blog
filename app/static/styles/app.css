@@ -34,7 +34,7 @@ ul ul li {margin-bottom: 0.4rem; margin-left: 4.0rem;}
 a {color:#0B6198; text-decoration: none;}
 a:hover {color:#C85A13;}
 hr {border-top: 1px solid #CCCCCC; margin-top: 0.4rem; margin-bottom: 0.8rem;}
-img {max-width: 100% !important; height: auto !important;}
+img {max-width: 88vw !important; height: auto !important;}
 .minor-text {font-size: 0.8rem; color: #666666;}
 
 
@@ -198,7 +198,7 @@ input:-webkit-autofill:active  {
     align-items: start;
     justify-items: start;
     grid-template-columns: auto;
-    width: 94vw;
+    width: 100%;
 }
 .formgrid label, .formstacked label {
     grid-column: 1 / 2;
@@ -333,6 +333,19 @@ th, td {
 }
 .word-wrap {
     overflow-wrap: break-word;
+}
+
+
+/*** Alerts ***/
+.alert-msg {
+    display: block;
+    margin-bottom: 10px;
+}
+.msg-success {
+    color: green;
+}
+.msg-error {
+    color: red;
 }
 
 

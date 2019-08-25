@@ -41,31 +41,37 @@
     <div class="formgrid">
         {% if current_user.is_anonymous %}
             {{ form.name.label }}
+            <div class="form-group">
             {% for error in form.name.errors %}
-                <span style="color: red;">[ {{ error }} ]</span><br/>
+                <span class="error-msg">[ {{ error }} ]</span>
             {% endfor %}
             {{ form.name }}
+            </div>
 
             {{ form.email.label }}
-            {% for error in form.email.errors %}
-                <span style="color: red;">[ {{ error }} ]</span><br/>
-            {% endfor %}
             <div class="form-group">
-                {{ form.email }}
-                <div class="minor-text">Email is optional</div>
+            {% for error in form.email.errors %}
+                <span class="error-msg">[ {{ error }} ]</span>
+            {% endfor %}
+            {{ form.email }}
+            <div class="minor-text">Email is optional</div>
             </div>
         {% endif %}
-        
+
         {{ form.comment.label }}
+        <div class="form-group">
         {% for error in form.comment.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
         {{ form.comment(rows='4') }}
+        </div>
 
+        <div class="form-group">
         {{ form.recaptcha }}
         {% for error in form.recaptcha.errors %}
-            <span style="color: red;">[ {{ error }} ]</span><br/>
+            <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
+        </div>
 
         {{ form.submit(class="submit-btn") }}
     </div>

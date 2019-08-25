@@ -19,7 +19,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Invalid username or password','error')
             return redirect(url_for('auth.login'))
 
         # username/password is valid. sets current_user to the user
@@ -56,7 +56,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Registration successful!')
+        flash('Registration successful!','success')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
@@ -71,11 +71,11 @@ def forgot_password():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             if send_password_reset_email(user):
-                flash('Check your email for instructions to reset your password')
+                flash('Check your email for instructions to reset your password','success')
             else:
-                flash('Sorry system error')
+                flash('Sorry system error','error')
         else:
-            flash('Email does not exist in our database')
+            flash('Email does not exist in our database','error')
             return redirect(url_for('auth.forgot_password'))
     return render_template('auth/forgot_password.html',form=form)
 
@@ -87,12 +87,12 @@ def reset_password(token):
         return redirect(url_for('main.index'))
     user = User.verify_reset_password_token(token)
     if not user:
-        flash('Token has expired or is no longer valid')
+        flash('Token has expired or is no longer valid','error')
         return redirect(url_for('main.index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password has been reset.')
+        flash('Your password has been reset','success')
         return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)

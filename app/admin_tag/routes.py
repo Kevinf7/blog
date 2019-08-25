@@ -34,7 +34,7 @@ def edit_tag(id):
         tag.update_date = datetime.utcnow()
         db.session.add(tag)
         db.session.commit()
-        flash('The tag has been successfully updated')
+        flash('The tag has been successfully updated','success')
         return redirect(url_for('admin_tag.manage_tags'))
     return render_template('admin_tag/edit_tag.html',form=form,tag=tag)
 
@@ -44,11 +44,11 @@ def del_tag(id):
     form = DeleteTagForm()
     tag = Tag.getTag(id)
     if tag is None:
-        flash('No such tag.')
+        flash('No such tag.','error')
         return redirect(url_for('main.index'))
     if form.validate_on_submit():
         db.session.delete(tag)
         db.session.commit()
-        flash('The tag has been successfully deleted')
+        flash('The tag has been successfully deleted','success')
         return redirect(url_for('admin_tag.manage_tags'))
     return render_template('admin_tag/del_tag.html',form=form,tag=tag)

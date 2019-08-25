@@ -62,7 +62,7 @@ def add_post():
         tag_list = [t.strip() for t in tags.split(',')]
         processTags(tag_list,post)
 
-        flash('Your post has been published!')
+        flash('Your post has been published!','success')
         return redirect(url_for('main.index'))
     return render_template('post/add_post.html',form=form)
 
@@ -76,11 +76,11 @@ def edit_post(id):
     post = Post.getPost(id)
     # id is wrong
     if post is None:
-        flash('No such post exists.')
+        flash('No such post exists.','error')
         return redirect(url_for('index'))
     # users's cannot edit other user's post, not needed in this blog but there anyways
     if post.author.id != current_user.id:
-        flash("You are not authorised to edit someone else's post")
+        flash("You are not authorised to edit someone else's post",'error')
         return redirect(url_for('main.index'))
 
     form = PostForm()
@@ -96,7 +96,7 @@ def edit_post(id):
         tag_list = [t.strip() for t in tags.split(',')]
         processTags(tag_list,post)
 
-        flash('Your post has been updated!')
+        flash('Your post has been updated!','success')
         if session['edit_post'] is not None:
             return redirect(session['edit_post'])
         else:
@@ -112,11 +112,11 @@ def del_post(id):
     post = Post.getPost(id)
     # id is wrong
     if post is None:
-        flash('No such post exists.')
+        flash('No such post exists.','error')
         return redirect(url_for('index'))
     # only admin can delete post
     if not current_user.is_admin():
-        flash("You do not have permission to perform this function")
+        flash('You do not have permission to perform this function','error')
         return redirect(url_for('main.index'))
 
     # user confirms he wants to delete
@@ -129,7 +129,7 @@ def del_post(id):
         for t in tagged:
             db.session.delete(t)
         db.session.commit()
-        flash('The post has been deleted')
+        flash('The post has been deleted','error')
         return redirect(url_for('main.index'))
     form = DeletePostForm()
     tags = post.getTagNamesStr()
@@ -155,7 +155,7 @@ def post_detail(id):
                                 email=form.email.data,post=post)
         db.session.add(comment)
         db.session.commit()
-        flash('Your comments have been posted')
+        flash('Your comments have been posted','success')
         return redirect(url_for('post.post_detail',id=id))
     return render_template('post/post_det.html',post=post, form=form, comments=comments)
 

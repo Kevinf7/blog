@@ -21,7 +21,7 @@ def manage_content():
 def edit_content(id):
     content = Content.query.filter_by(id=id).first()
     if content is None:
-        flash('No such content exists.')
+        flash('No such content exists.','error')
         return redirect(url_for('main.index'))
     form=ContentManageForm()
     if form.validate_on_submit():
@@ -30,6 +30,6 @@ def edit_content(id):
         content.update_date = datetime.utcnow()
         db.session.add(content)
         db.session.commit()
-        flash('The content has been updated!')
+        flash('The content has been updated!','success')
         return redirect(url_for('admin_content.manage_content'))
     return render_template('admin_content/edit_content.html',form=form,content=content)
