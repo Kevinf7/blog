@@ -29,12 +29,13 @@ h3 {font-size: 22px;}
 h1, h2, h3, h4, h5 {color: #333333;}
 h2, h3, h4, h5 {margin-bottom: 1.0rem;}
 p, table, ul li:last-of-type {margin-bottom: 0.8rem;}
-ul li {margin-bottom: 0.4rem; margin-left: 2.0rem;}
-ul ul li {margin-bottom: 0.4rem; margin-left: 4.0rem;}
+ul > li, ol > li {margin-bottom: 0.4rem; margin-left: 2.0rem;}
+ul > ul > li, ol > ol > li, ul > ol > li, ol > ul > li {margin-bottom: 0.4rem; margin-left: 4.0rem;}
 a {color:#0B6198; text-decoration: none;}
 a:hover {color:#C85A13;}
 hr {border-top: 1px solid #CCCCCC; margin-top: 0.4rem; margin-bottom: 0.8rem;}
 img {max-width: 100% !important; height: auto !important;}
+.img-rounded {border-radius: 20%;}
 .minor-text {font-size: 0.8rem; color: #666666;}
 
 
@@ -104,7 +105,8 @@ input:-webkit-autofill:active  {
     font-size: 0.92rem;
 }
 .nav-section a:hover {
-    color: #EFEFEF80;
+    /*same as #EFEFEF80 more browsers understand rgba*/
+    color: rgba(238,238,238,0.5);
 }
 .nav-dropdown {
     display: inline;
@@ -182,7 +184,7 @@ input:-webkit-autofill:active  {
 
 /*** Footer section ***/
 .footer-section {
-    padding: 80px 0 80px 0;
+    padding: 40px 0 40px 0;
     background-color: #0B6198;
     color: #EFEFEF;
     text-align: center;
@@ -196,7 +198,7 @@ input:-webkit-autofill:active  {
     padding-right: 10px;
 }
 .footer-icons > a:hover {
-    color: #EFEFEF80;
+    color: rgba(238,238,238,0.5);
 }
 
 
@@ -212,6 +214,15 @@ input:-webkit-autofill:active  {
 }
 .formgrid label, .formstacked label {
     grid-column: 1 / 2;
+}
+input, textarea, select {
+    outline: none;
+    border: 1px solid #cccccc;
+    padding: 2px;
+
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+    outline: solid #C85A1350;
 }
 .formgrid input, .formgrid textarea, .formgrid select, .formgrid button,
 .formstacked input, .formstacked textarea, .formstacked select, .formstacked button,

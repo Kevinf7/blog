@@ -15,7 +15,12 @@
         {{ form.heading }}
 
         {{ form.post.label }}
-        <div class="minor-text">Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;</div>
+        <div class="minor-text">
+            Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;
+            <span class="minor-text" id="copyclip-1" style="display:none;"><p>br<a id="br"></a></p></span>
+            <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
+        </div>
+        
         {% for error in form.post.errors %}
             <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
