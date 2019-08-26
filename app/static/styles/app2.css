@@ -9,7 +9,8 @@ Tag number  #0B619880;
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 html, body {
@@ -51,26 +52,55 @@ input:-webkit-autofill:active  {
 /*** Page wrapper ***/
 .page-container {
     min-height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
 }
 
 /*** Header section ***/
 .head-section {
     padding: 10px 30px 10px 30px;
+    display: -ms-grid;
     display: grid;
     justify-items: start;
     grid-gap: 2%;
-    align-items: baseline;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
     background-color: #0B6198;
     margin-bottom: 1.4rem;
-    flex-shrink: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
+    -ms-grid-rows: auto 2% auto 2% auto;
     grid-template-rows: auto auto auto;
 }
+.head-section > *:nth-child(1) {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+.head-section > *:nth-child(2) {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+}
+.head-section > *:nth-child(3) {
+    -ms-grid-row: 5;
+    -ms-grid-column: 1;
+}
 .head-title {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1/2;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
     grid-row: 1/2;
 }
 .head-title a {
@@ -79,7 +109,11 @@ input:-webkit-autofill:active  {
     text-decoration: none;
 }
 .head-search {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1/2;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
     grid-row: 2/3;
 }
 .head-search > input {
@@ -94,7 +128,11 @@ input:-webkit-autofill:active  {
 }
 .nav-section {
     font-size: 16px;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1/2;
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
     grid-row: 3/4;
 }
 .nav-section a {
@@ -132,21 +170,39 @@ input:-webkit-autofill:active  {
 /*** Main Section ***/
 .main-section {
     padding: 10px 30px 10px 30px;
-    flex-grow: 1;
-    align-self: flex-start;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
     padding-bottom: 4rem;
     width: 100%;
 }
 
 /*** Content Section main page ***/
 .content-wrapper {
+    display: -ms-grid;
     display: grid;
     grid-gap: 2%;
+    -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
+    -ms-grid-rows: auto 2% auto;
     grid-template-rows: auto auto;
 }
+.content-wrapper > *:nth-child(1) {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+}
+.content-wrapper > *:nth-child(2) {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+}
 .content-main {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1/2;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
     grid-row: 1/2;
     min-width: 100%;
     max-width: 100%;
@@ -164,7 +220,11 @@ input:-webkit-autofill:active  {
 }
 .content-sidebar {
     padding-right: 20px;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1/2;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
     grid-row: 2/3;
 }
 .content-sidebar > ul {
@@ -188,7 +248,8 @@ input:-webkit-autofill:active  {
     background-color: #0B6198;
     color: #EFEFEF;
     text-align: center;
-    flex-shrink: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
 }
 .footer-icons {
     font-size: 2rem;
@@ -204,18 +265,24 @@ input:-webkit-autofill:active  {
 
 /*** Forms ***/
 .formgrid, .formstacked {
+    display: -ms-grid;
     display: grid;
     grid-gap: 0.5em 2.0em;
     grid-auto-flow: dense;
-    align-items: start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: start;
     justify-items: start;
+    -ms-grid-columns: auto;
     grid-template-columns: auto;
     width: 100%;
 }
 .formgrid label, .formstacked label {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1 / 2;
 }
-input[type=text], input[type=password], textarea, select {
+input, textarea, select {
     outline: none;
     border: 1px solid #cccccc;
     padding: 2px;
@@ -227,6 +294,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .formgrid input, .formgrid textarea, .formgrid select, .formgrid button,
 .formstacked input, .formstacked textarea, .formstacked select, .formstacked button,
 .g-recaptcha, .form-group {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
     grid-column: 1 / 2;
     font-family: inherit;
     font-size: 100%;
@@ -240,7 +309,9 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .formgrid > input[type=checkbox] {
     height: 0.9rem;
     width: 0.9rem;
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
 }
 .login-footer {
     border-top: 1px solid #CCCCCC;
@@ -317,9 +388,14 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     border-right: 1px solid #AAAAAA;
 }
 .tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  -webkit-animation: fadeEffect 1s;
+          animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 /* Go from zero to full opacity */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 @keyframes fadeEffect {
   from {opacity: 0;}
   to {opacity: 1;}
@@ -340,10 +416,18 @@ th, td {
 
 /*** Image Gallery ***/
 .image-gallery {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
 }
 
 .image-container {
@@ -374,38 +458,84 @@ th, td {
 @media only screen and (min-width: 768px) {
     .head-section {
         /* middle section expand out */
+        -ms-grid-columns: auto 2% 1fr 2% auto;
         grid-template-columns: auto 1fr auto;
+        -ms-grid-rows: auto;
         grid-template-rows: auto;
     }
+    .head-section > *:nth-child(1) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+    }
+    .head-section > *:nth-child(2) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 3;
+    }
+    .head-section > *:nth-child(3) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 5;
+    }
     .head-search {
+        -ms-grid-column: 3;
+        -ms-grid-column-span: 1;
         grid-column: 3/4;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
         grid-row: 1/2;
     }
     .nav-section {
+        -ms-grid-column: 2;
+        -ms-grid-column-span: 1;
         grid-column: 2/3;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
         grid-row: 1/2;
-        justify-self: end;
+        -ms-grid-column-align: end;
+            justify-self: end;
     }
     .content-wrapper {
+        -ms-grid-columns: 1fr 2% auto;
         grid-template-columns: 1fr auto;
+        -ms-grid-rows: auto;
         grid-template-rows: auto;
     }
+    .content-wrapper > *:nth-child(1) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
+    }
+    .content-wrapper > *:nth-child(2) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 3;
+    }
     .content-main {
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 1;
         grid-column: 1/2;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
         grid-row: 1/2;
     }
     .content-sidebar {
+        -ms-grid-column: 2;
+        -ms-grid-column-span: 1;
         grid-column: 2/3;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
         grid-row: 1/2;
     }
     .formgrid {
+        -ms-grid-columns: auto 2.0em 1fr;
         grid-template-columns: auto 1fr;
     }
     .formgrid label {
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 1;
         grid-column: 1/2;
     }
     .formgrid input, .formgrid textarea, .formgrid select, .formgrid button,
     .g-recaptcha, .form-group {
+        -ms-grid-column: 2;
+        -ms-grid-column-span: 1;
         grid-column: 2/3;
         max-width: 700px;
     }
