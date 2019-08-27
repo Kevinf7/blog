@@ -84,13 +84,15 @@ input:-webkit-autofill:active  {
 }
 .site-search > input {
     font-family: inherit;
-    font-size: 100%;
+    font-size: 90%;
 }
 .site-search > input[type=text] {
-    width: 130px;
+    width: 110px;
 }
 .site-search > input[type=submit] {
-    width: 70px;
+    width: auto;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 .site-nav {
     font-size: 16px;
