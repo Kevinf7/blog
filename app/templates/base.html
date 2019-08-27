@@ -34,8 +34,8 @@
         <div class="page-container">
 
             <header class="head-section">
-                <h1 class="head-title"><a href="{{ url_for('main.index') }}">kevin7.net</a></h1>
-                <nav class="nav-section">
+                <h1 class="site-title"><a href="{{ url_for('main.index') }}">kevin7.net</a></h1>
+                <nav class="site-nav">
                     <a href="{{ url_for('main.index') }}">Home</a>
                     <a href="{{ url_for('main.about') }}">About</a>
                     <a href="{{ url_for('main.contact') }}">Contact</a>
@@ -57,7 +57,7 @@
                         {% endif %}
                     {% endif %}
                 </nav>
-                <form class="head-search" action="{{ url_for('search.search') }}" method="post">
+                <form class="site-search" action="{{ url_for('search.search') }}" method="post">
                     <input type="text" name="search_txt" >
                     <input type="submit" value="Search">
                 </form>
