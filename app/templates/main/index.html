@@ -65,6 +65,18 @@
             </li>
         {% endfor %}
         </ul>
+        <h3>I'm bored</h3>
+        <p><small>Try these interactive sketches I made. Click ... move your mouse ...</small></p>
+        <table>
+            <tr>
+                <td><a href="{{ url_for('static', filename='processing/garden.html') }}"><img src="{{ url_for('static', filename='images/garden_small.PNG') }}"></a></td>
+                <td><a href="{{ url_for('static', filename='processing/stars.html') }}"><img src="{{ url_for('static', filename='images/stars_small.PNG') }}"></a></td>
+            </tr>
+            <tr>
+                <td><a href="{{ url_for('static', filename='processing/snake_game.html') }}"><img src="{{ url_for('static', filename='images/snakegame_small.PNG') }}"></a></td>
+                <td><a href="{{ url_for('static', filename='processing/sun_moon.html') }}"><img src="{{ url_for('static', filename='images/sunmoon_small.PNG') }}"></a></td>
+            </tr>
+        </table>
     </aside>
 </div>
 {% endblock %}

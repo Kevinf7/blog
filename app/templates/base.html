@@ -6,10 +6,10 @@
         <meta name="description" content="Personal website of Kevin Foong - Website & Mobile App Developer, based in Sydney, Australia">
         <title>{% block title %}{% endblock %}</title>
         <!-- favicons -->
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='/apple-touch-icon.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-        <link rel="manifest" href="{{ url_for('static', filename='/site.webmanifest') }}">
+        <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
         <!-- Font Awesome -->
         <script src="https://kit.fontawesome.com/985ea8c115.js"></script>
         <!-- Google fonts -->
@@ -29,6 +29,10 @@
         <!-- Flask moment -->
         {{ moment.include_jquery() }}
         {{ moment.include_moment() }}
+
+        <!-- Custom Javascript -->
+        {% block scripts %}
+        {% endblock %}
     </head>
     <body>
         <div class="page-container">
@@ -89,8 +93,5 @@
 
         <script src="{{ url_for('static',filename='scripts/prism.js') }}"></script>
         <script src="{{ url_for('static',filename='scripts/app.js') }}"></script>
-        <!-- Custom Javascript -->
-        {% block scripts %}
-        {% endblock %}
     </body>
 </html>
