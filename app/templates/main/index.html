@@ -6,7 +6,7 @@
 <div class="content-wrapper">
     <div class="content-main">
     {% for post in posts.items %}
-        <h2 class="post-title"><a href="{{ url_for('post.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
+        <h2 class="post-title"><a href="{{ url_for('main.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
         <p><span class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</span></p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}

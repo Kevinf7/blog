@@ -36,22 +36,25 @@ def create_app(config_class=Config):
         app.register_blueprint(main_bp)
 
         from app.post import bp as post_bp
-        app.register_blueprint(post_bp)
+        app.register_blueprint(post_bp, url_prefix='/admin')
 
         from app.search import bp as search_bp
         app.register_blueprint(search_bp)
 
+        from app.sitemap import bp as sitemap_bp
+        app.register_blueprint(sitemap_bp)
+
         from app.admin_content import bp as admin_content_bp
-        app.register_blueprint(admin_content_bp)
+        app.register_blueprint(admin_content_bp, url_prefix='/admin')
 
         from app.admin_image import bp as admin_image_bp
-        app.register_blueprint(admin_image_bp)
+        app.register_blueprint(admin_image_bp, url_prefix='/admin')
 
         from app.admin_tag import bp as admin_tag_bp
-        app.register_blueprint(admin_tag_bp)
+        app.register_blueprint(admin_tag_bp, url_prefix='/admin')
 
         from app.admin_message import bp as admin_message_bp
-        app.register_blueprint(admin_message_bp)
+        app.register_blueprint(admin_message_bp, url_prefix='/admin')
 
         #setup log files
         if not app.debug:

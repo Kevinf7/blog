@@ -1,9 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request, current_app
+from flask_login import current_user
 from app import db
 from app.main import bp
 from app.main.forms import ContactForm
 from app.models import Tag, Tagged, Post, Content, Page, Contact
 from app.main.email import send_contact_email
+from app.post.forms import CommentFormAnon, CommentFormReg
 
 ##############################################################################
 # Main blueprint
@@ -21,6 +23,7 @@ def getSummaryPosts(posts):
             p += '<p>...</p>'
         posts.items[index].post = p
     return posts
+
 
 @bp.route('/')
 @bp.route('/index')
@@ -54,10 +57,12 @@ def index():
 
     return render_template('main/index.html',posts=posts,tag_list=tag_list)
 
+
 @bp.route('/about', methods=['GET'])
 def about():
     about_html = db.session.query(Content).join(Page).filter(Page.name=='about',Content.name=='content1').first()
     return render_template('main/about.html',about_html=about_html)
+
 
 @bp.route('/contact', methods=['GET','POST'])
 def contact():
@@ -74,3 +79,28 @@ def contact():
             flash('Sorry system error', 'error')
         return redirect(url_for('main.index'))
     return render_template('main/contact.html',form=form, contact_html=contact_html)
+
+
+@bp.route('/post_detail/<id>', methods=['GET','POST'])
+def post_detail(id):
+    post = Post.query.filter_by(id=id).first()
+    post.post = post.post.replace('<p>br<a id="br"></a></p>','')
+    comments = post.comments.all()
+    if current_user.is_authenticated:
+        form = CommentFormReg()
+    else:
+        form = CommentFormAnon()
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            comment = Comment(comment=form.comment.data,commenter=current_user,post=post)
+        else:
+            if form.email.data == '':
+                comment = Comment(comment=form.comment.data,name=form.name.data,post=post)
+            else:
+                comment = Comment(comment=form.comment.data,name=form.name.data,\
+                                email=form.email.data,post=post)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comments have been posted','success')
+        return redirect(url_for('post.post_detail',id=id))
+    return render_template('post/post_det.html',post=post, form=form, comments=comments)

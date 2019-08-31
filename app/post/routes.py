@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, session, m
 from flask_login import current_user, login_required
 from app import db
 from app.post import bp
-from app.post.forms import PostForm, CommentFormAnon, CommentFormReg, DeletePostForm
+from app.post.forms import PostForm, DeletePostForm
 from app.models import Post, Tag, Tagged, Images, Comment
 from werkzeug.urls import url_parse
 import os
@@ -135,29 +135,6 @@ def del_post(id):
     tags = post.getTagNamesStr()
     return render_template('post/del_post.html',form=form,post=post,tags=tags)
 
-@bp.route('/post_detail/<id>', methods=['GET','POST'])
-def post_detail(id):
-    post = Post.query.filter_by(id=id).first()
-    post.post = post.post.replace('<p>br<a id="br"></a></p>','')
-    comments = post.comments.all()
-    if current_user.is_authenticated:
-        form = CommentFormReg()
-    else:
-        form = CommentFormAnon()
-    if form.validate_on_submit():
-        if current_user.is_authenticated:
-            comment = Comment(comment=form.comment.data,commenter=current_user,post=post)
-        else:
-            if form.email.data == '':
-                comment = Comment(comment=form.comment.data,name=form.name.data,post=post)
-            else:
-                comment = Comment(comment=form.comment.data,name=form.name.data,\
-                                email=form.email.data,post=post)
-        db.session.add(comment)
-        db.session.commit()
-        flash('Your comments have been posted','success')
-        return redirect(url_for('post.post_detail',id=id))
-    return render_template('post/post_det.html',post=post, form=form, comments=comments)
 
 ##############################################################################
 # tinyMCE file uploader

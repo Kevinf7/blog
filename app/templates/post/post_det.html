@@ -36,7 +36,7 @@
     <hr/>
 {% endfor %}
 
-<form action="{{ url_for('post.post_detail',id=post.id) }}" method="post">
+<form action="{{ url_for('main.post_detail',id=post.id) }}" method="post">
     {{ form.csrf_token }}
     <div class="formgrid">
         {% if current_user.is_anonymous %}
