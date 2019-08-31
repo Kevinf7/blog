@@ -9,7 +9,7 @@
     {{ form.csrf_token }}
     <p>Are you sure you want to delete the image? Note that this image may currently be used in one of your post.</p>
     <p><img src="{{ url_for('static',filename='uploads/thumbnails/' ~ img.thumbnail) }}">
-        <div class="minor-text">../static/uploads/{{ img.filename }}</div>
+        <div class="minor-text">../../static/uploads/{{ img.filename }}</div>
         <div class="minor-text">{{ img.file_width }}x{{ img.file_height }}</div>
         <div class="minor-text">{{ img.file_size }} bytes</div>
         <div class="minor-text">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</div>

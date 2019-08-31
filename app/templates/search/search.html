@@ -7,7 +7,7 @@
     <p>No results returned</p>
 {% else %}
     {% for r in results %}
-        <h3><a href="{{ url_for('post.post_detail',id=r['post'].id) }}">{{ r['post'].heading }}</a></h3>
+        <h3><a href="{{ url_for('main.post_detail',id=r['post'].id) }}">{{ r['post'].heading }}</a></h3>
         <p>{{ r['post'].getTextSummary() }}</p>
         <div class="minor-text">Number of matches: {{ r['count'] }}</div>
     {% endfor %}
