@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from app import db
 from app.post import bp
 from app.post.forms import PostForm, DeletePostForm
-from app.models import Post, Tag, Tagged, Images, Comment
+from app.models import Post, Tag, Tagged, Images
 from werkzeug.urls import url_parse
 import os
 from PIL import Image

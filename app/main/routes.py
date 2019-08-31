@@ -3,7 +3,7 @@ from flask_login import current_user
 from app import db
 from app.main import bp
 from app.main.forms import ContactForm
-from app.models import Tag, Tagged, Post, Content, Page, Contact
+from app.models import Tag, Tagged, Post, Content, Page, Contact, Comment
 from app.main.email import send_contact_email
 from app.post.forms import CommentFormAnon, CommentFormReg
 
@@ -85,7 +85,7 @@ def contact():
 def post_detail(id):
     post = Post.query.filter_by(id=id).first()
     post.post = post.post.replace('<p>br<a id="br"></a></p>','')
-    comments = post.comments.all()
+    comments = post.comments.order_by(Comment.create_date.desc()).all()
     if current_user.is_authenticated:
         form = CommentFormReg()
     else:
@@ -102,5 +102,5 @@ def post_detail(id):
         db.session.add(comment)
         db.session.commit()
         flash('Your comments have been posted','success')
-        return redirect(url_for('post.post_detail',id=id))
-    return render_template('post/post_det.html',post=post, form=form, comments=comments)
+        return redirect(url_for('main.post_detail',id=id))
+    return render_template('main/post_det.html',post=post, form=form, comments=comments)
