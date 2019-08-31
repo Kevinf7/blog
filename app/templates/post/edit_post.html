@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% block nav_admin %}active{% endblock %}
-{% block title %}Edit Post{% endblock %}
+{% block title %}Admin | Edit Post{% endblock %}
 
 {% block app_content %}
 <h2>Edit Post</h2>
@@ -20,7 +19,7 @@
             <span class="minor-text" id="copyclip-1" style="display:none;"><p>br<a id="br"></a></p></span>
             <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
         </div>
-        
+
         {% for error in form.post.errors %}
             <span class="error-msg">[ {{ error }} ]</span>
         {% endfor %}
