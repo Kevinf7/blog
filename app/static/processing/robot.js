@@ -1,14 +1,18 @@
 var rbod = [];
 var rhead = [];
 var rarms = [];
+var numrobots_x;
+var numrobots_y;
 
 function setup() {
   createCanvas(windowWidth,windowHeight);
   
+  numrobots_x = int(width/80);
+  numrobots_y = int(height/80);
   counter=0;
-  for(let i=0;i<12;i++) {
-    for(let j=0;j<6;j++) {
-      rbod[counter] = new robotBody((i*width/12)+66, (j*height/6)+random(-10,10), 40, 10, round(6+random(-4,4)));
+  for(let i=0;i<numrobots_x;i++) {
+    for(let j=0;j<numrobots_y;j++) {
+      rbod[counter] = new robotBody((i*width/numrobots_x)+30, (j*height/numrobots_y)+random(-10,10), 40, 10, round(6+random(-4,4)));
       rhead[counter] = new robotHead(rbod[counter]);
       rarms[counter] = new robotArms(rbod[counter]);
       counter++;
@@ -19,8 +23,8 @@ function setup() {
 function draw() {
   background(255);
   counter=0;
-  for(i=0;i<12;i++) {
-    for(let j=0;j<6;j++) {
+  for(i=0;i<numrobots_x;i++) {
+    for(let j=0;j<numrobots_y;j++) {
       rbod[counter].display();
       rhead[counter].display();
       rarms[counter].display();
@@ -31,9 +35,9 @@ function draw() {
 
 function mouseClicked() {
    counter=0;
-   for(let i=0;i<12;i++) {
-    for(let j=0;j<6;j++) {
-      rbod[counter] = new robotBody((i*width/12)+66, (j*height/6)+random(-10,10), 40, 10, round(6+random(-4,4)));
+   for(let i=0;i<numrobots_x;i++) {
+    for(let j=0;j<numrobots_y;j++) {
+      rbod[counter] = new robotBody((i*width/numrobots_x)+30, (j*height/numrobots_y)+random(-10,10), 40, 10, round(6+random(-4,4)));
       rhead[counter] = new robotHead(rbod[counter]);
       rarms[counter] = new robotArms(rbod[counter]);
       counter++;
