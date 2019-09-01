@@ -2,10 +2,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kevin Foong - Website & Mobile App Developer, based in Sydney, Australia">
+  <title>{{ script_name }}</title>
 
   <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
-  <script language="javascript" type="text/javascript" src="sun_moon.js"></script>
+  <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='processing/' + script_name) }}"></script>
   <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
 
   <!-- This line removes any default padding and style.

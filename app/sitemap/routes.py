@@ -26,6 +26,13 @@ def sitemap():
         last_updated = post.update_date.strftime('%Y-%m-%d')
         pages.append([url, last_updated])
 
+    # get custom routes this is a one off so ok to hardcode
+    pages.append(['https://www.kevin7.net/processing/garden', last_updated])
+    pages.append(['https://www.kevin7.net/processing/robots', last_updated])
+    pages.append(['https://www.kevin7.net/processing/snake_game', last_updated])
+    pages.append(['https://www.kevin7.net/processing/sun_moon', last_updated])
+    pages.append(['https://www.kevin7.net/processing/stars', last_updated])
+
     sitemap_template = render_template('sitemap/sitemap_template.xml', pages=pages)
     response = make_response(sitemap_template)
     response.headers['Content-Type'] = 'application/xml'

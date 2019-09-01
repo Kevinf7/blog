@@ -104,3 +104,10 @@ def post_detail(id):
         flash('Your comments have been posted','success')
         return redirect(url_for('main.post_detail',id=id))
     return render_template('main/post_det.html',post=post, form=form, comments=comments)
+
+
+# Simple route to display p5.js sketches
+@bp.route('/processing/<name>', methods=['GET'])
+def processing(name):
+    script_name = name + '.js'
+    return render_template('main/processing.html', script_name=script_name)
