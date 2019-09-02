@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, '.env'))
+basedir = Path(__file__).parent
+load_dotenv(basedir / '.env')
 
 class Config(object):
     # Flask settings
@@ -18,9 +19,8 @@ class Config(object):
     TEMPLATES_AUTO_RELOAD = True
 
     # tinyMCE settings
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    UPLOADED_PATH=os.path.join(basedir, 'app', 'static', 'uploads')
-    UPLOADED_PATH_THUMB=os.path.join(basedir, 'app', 'static', 'uploads', 'thumbnails')
+    UPLOADED_PATH = basedir / 'app/static/uploads'
+    UPLOADED_PATH_THUMB = basedir / 'app/static/uploads/thumbnails'
 
     # Sendgrid settings
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
@@ -32,6 +32,9 @@ class Config(object):
     RECAPTCHA_PUBLIC_KEY=os.environ.get('RECAPTCHA_PUBLIC_KEY')
     RECAPTCHA_PRIVATE_KEY=os.environ.get('RECAPTCHA_PRIVATE_KEY')
     RECAPTCHA_OPTIONS= {'theme':'black'}
+
+    # Processing folder
+    PROCESSING_FOLDER = basedir / 'app/static/processing'
 
     # custom app settings
     FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 # in seconds, 3600 = 1 hour

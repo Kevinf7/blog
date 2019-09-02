@@ -2,6 +2,7 @@ from flask import render_template, current_app, make_response, url_for
 from app.sitemap import bp
 from datetime import datetime, timedelta
 from app.models import Post
+from os import listdir
 
 
 @bp.route('/sitemap.xml', methods=['GET'])
@@ -26,12 +27,10 @@ def sitemap():
         last_updated = post.update_date.strftime('%Y-%m-%d')
         pages.append([url, last_updated])
 
-    # get custom routes this is a one off so ok to hardcode
-    pages.append(['https://www.kevin7.net/processing/garden', last_updated])
-    pages.append(['https://www.kevin7.net/processing/robots', last_updated])
-    pages.append(['https://www.kevin7.net/processing/snake_game', last_updated])
-    pages.append(['https://www.kevin7.net/processing/sun_moon', last_updated])
-    pages.append(['https://www.kevin7.net/processing/stars', last_updated])
+    # get Processing files
+    files = [f[:-3] for f in listdir(current_app.config['PROCESSING_FOLDER'])]
+    for f in files:
+        pages.append(['https://www.kevin7.net/processing/' + f, last_updated])
 
     sitemap_template = render_template('sitemap/sitemap_template.xml', pages=pages)
     response = make_response(sitemap_template)
