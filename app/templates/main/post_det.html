@@ -9,7 +9,11 @@
     <p><span class="minor-text">
         <span>Tags:</span>
         {% for tag_name in post.getTagNames() %}
+            {% if not loop.last %}
+            <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>,
+            {% else %}
             <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>
+            {% endif %}
         {% endfor %}
     </span></p>
 {% endif %}
