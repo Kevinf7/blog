@@ -56,6 +56,9 @@ def create_app(config_class=Config):
         from app.admin_message import bp as admin_message_bp
         app.register_blueprint(admin_message_bp, url_prefix='/admin')
 
+        from app.test import bp as test_bp
+        app.register_blueprint(test_bp, url_prefix='/test')
+
         #setup log files
         if not app.debug:
             if not os.path.exists('logs'):

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Testing only - payment{% endblock %}
+
+{% block scripts %}
+<script src="https://js.braintreegateway.com/web/dropin/1.20.0/js/dropin.min.js"></script>
+{% endblock %}
+
+{% block app_content %}
+<h2>Braintree payment testing</h2>
+<h4>Drop in UI</h4>
+<p>Make a test payment with Braintree using PayPal or a card</p>
+
+
+<form id="payment-form" method="post" action="{{ url_for('test.create_checkout') }}">
+    <div class="formgrid">
+        <label for="amount">Amount</label>
+        <div class="form-group">
+            <input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="10">
+        </div>
+
+        <div class="bt-drop-in-wrapper">
+          <div id="bt-dropin"></div>
+        </div>
+
+        <input type="hidden" id="nonce" name="payment_method_nonce" />
+        <button class="submit-btn" type="submit">Submit</button>
+    </div>
+</form>
+
+
+
+
+<script>
+  var form = document.querySelector('#payment-form');
+  var client_token = '{{ client_token }}';
+  braintree.dropin.create({
+    authorization: client_token,
+    container: '#bt-dropin',
+    paypal: {
+      flow: 'vault'
+    }
+  }, function (createErr, instance) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      instance.requestPaymentMethod(function (err, payload) {
+        if (err) {
+          console.log('Error', err);
+          return;
+        }
+        // Add the nonce to the form and submit
+        document.querySelector('#nonce').value = payload.nonce;
+        form.submit();
+      });
+    });
+  });
+</script>
+
+
+{% endblock %}

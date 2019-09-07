@@ -17,7 +17,8 @@ def sitemap():
         # omit auth and admin routes and if route has parameters. Only include if route has GET method
         if 'GET' in rule.methods and len(rule.arguments) == 0 \
                 and not rule.rule.startswith('/admin') \
-                and not rule.rule.startswith('/auth'):
+                and not rule.rule.startswith('/auth') \
+                and not rule.rule.startswith('/test'):
             pages.append(['https://www.kevin7.net' + rule.rule, lastmod])
 
     # get dynamic routes
