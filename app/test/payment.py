@@ -1,7 +1,9 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, jsonify, session
 from app.test import bp
 import braintree
 from app.test.gateway import generate_client_token, transact, find_transaction
+from flask_login import login_required
+import time
 
 
 # Card number: 4111 1111 1111 1111
@@ -20,18 +22,22 @@ TRANSACTION_SUCCESS_STATUSES = [
     braintree.Transaction.Status.SubmittedForSettlement
 ]
 
-@bp.route('/braintree', methods=['GET'])
+
+@bp.route('/shop', methods=['GET'])
+@login_required
 def braintree():
-    return redirect(url_for('test.new_checkout'))
+    return render_template('test/shop.html')
 
 
 @bp.route('/checkouts/new', methods=['GET'])
+@login_required
 def new_checkout():
     client_token = generate_client_token()
     return render_template('test/new_checkout.html',client_token=client_token)
 
 
 @bp.route('/checkouts/<transaction_id>', methods=['GET'])
+@login_required
 def show_checkout(transaction_id):
     transaction = find_transaction(transaction_id)
     result = {}
@@ -51,6 +57,7 @@ def show_checkout(transaction_id):
 
 
 @bp.route('/checkouts', methods=['POST'])
+@login_required
 def create_checkout():
     result = transact({
         'amount': request.form['amount'],
@@ -66,3 +73,25 @@ def create_checkout():
         for x in result.errors.deep_errors:
             flash('Error: %s: %s' % (x.code, x.message))
         return redirect(url_for('test.new_checkout'))
+
+
+@bp.route('/add_to_cart', methods=['POST'])
+@login_required
+def add_to_cart():
+    # time.sleep(1)
+    if 'cart' not in session:
+        session['cart'] = []
+    item = {
+        'id' : request.form['id'],
+        'amount' : request.form['amount']
+    }
+    session['cart'].append(item)
+    session.modified = True
+    return jsonify({'count': len(session['cart'])})
+
+
+@bp.route('/clear_cart', methods=['GET'])
+@login_required
+def clear_cart():
+    session.pop('cart', None)
+    return ('', 204)

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Testing only - payment{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static',filename='scripts/jquery-3.4.1.min.js') }}"></script>
+<script>
+    function add_to_cart(id, sourceElem, destElem) {
+        $(destElem).html('<img src="{{ url_for('static', filename='images/bt/loading.gif') }}">');
+        $.post("{{ url_for('test.add_to_cart') }}", {
+            id: id,
+            amount: $(sourceElem).text()
+        }).done(function(response) {
+            $(destElem).text(response['count']);
+        }).fail(function() {
+            $(destElem).html('');
+            console.log('Error has occurred');
+        });
+    }
+</script>
+{% endblock %}
+
+{% block app_content %}
+<h2>Catalog</h2>
+
+<p>
+    <img class="cart" src="{{ url_for('static', filename='images/bt/shopping-cart-solid.svg') }}" width="20">
+    <span id="cart-count"></span>
+</p>
+
+<table>
+    <tr>
+        <td><img src="/static/images/bt/flower.jpg" alt="" width="120"></td>
+        <td><img src="/static/images/bt/cat.jpg" alt="" width="120"></td>
+        <td><img src="/static/images/bt/ball.jpg" alt="" width="120"></td>
+    </tr>
+    <tr>
+        <td><span id="price-1">$12.99</span></td>
+        <td><span id="price-2">$24.00</span></td>
+        <td><span id="price-3">$19.15</span></td>
+    </tr>
+    <tr>
+        <td>
+            <a href="javascript:add_to_cart(
+            '0','#price-1','#cart-count'
+            );">Add to cart</a>
+        </td>
+        <td>
+            <a href="javascript:add_to_cart(
+            '1','#price-2','#cart-count'
+            );">Add to cart</a>
+        </td>
+        <td>
+            <a href="javascript:add_to_cart(
+            '2','#price-3','#cart-count'
+            );">Add to cart</a>
+        </td>
+    </tr>
+</table>
+
+<a href="{{ url_for('test.new_checkout') }}">Checkout</a>
+<br/>
+<a href="{{ url_for('test.clear_cart') }}">Clear cart</a>
+
+
+{% endblock %}

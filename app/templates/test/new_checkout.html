@@ -7,9 +7,11 @@
 
 {% block app_content %}
 <h2>Braintree payment testing</h2>
+
 <h4>Drop in UI</h4>
 <p>Make a test payment with Braintree using PayPal or a card</p>
 
+<p><img class="cart" src="{{ url_for('static', filename='images/bt/shopping-cart-solid.svg') }}" width="20"></p>
 
 <form id="payment-form" method="post" action="{{ url_for('test.create_checkout') }}">
     <div class="formgrid">
