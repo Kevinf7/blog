@@ -5,7 +5,7 @@ from hashlib import md5
 from bs4 import BeautifulSoup
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
-from app import db, login
+from app import db, login_manager
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -75,7 +75,7 @@ class AnonymousUser(AnonymousUserMixin):
     def get_reset_password_token(self, expires_in=current_app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return False
 # This tells flask login which class to use if user is not logged in
-login.anonymous_user = AnonymousUser
+login_manager.anonymous_user = AnonymousUser
 
 class Role(db.Model):
     __tablename__='role'
@@ -227,6 +227,6 @@ class Page(db.Model):
 
 # Used by flask-login
 # This callback is used to reload the user object from the user ID stored in the session
-@login.user_loader
+@login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

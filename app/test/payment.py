@@ -25,11 +25,11 @@ TRANSACTION_SUCCESS_STATUSES = [
 
 @bp.route('/shop', methods=['GET'])
 @login_required
-def braintree():
+def shop():
     return render_template('test/shop.html')
 
 
-@bp.route('/checkouts/new', methods=['GET'])
+@bp.route('/checkout/new', methods=['GET'])
 @login_required
 def new_checkout():
     client_token = generate_client_token()
@@ -56,7 +56,7 @@ def show_checkout(transaction_id):
     return render_template('test/show_checkout.html', transaction=transaction, result=result)
 
 
-@bp.route('/checkouts', methods=['POST'])
+@bp.route('/checkout', methods=['POST'])
 @login_required
 def create_checkout():
     result = transact({
@@ -75,19 +75,38 @@ def create_checkout():
         return redirect(url_for('test.new_checkout'))
 
 
-@bp.route('/add_to_cart', methods=['POST'])
+@bp.route('/add_cart', methods=['POST'])
 @login_required
-def add_to_cart():
+def add_cart():
     # time.sleep(1)
     if 'cart' not in session:
         session['cart'] = []
     item = {
         'id' : request.form['id'],
-        'amount' : request.form['amount']
+        'qty' : request.form['qty'],
+        'price' : request.form['price']
     }
     session['cart'].append(item)
     session.modified = True
+    print(session['cart'])
     return jsonify({'count': len(session['cart'])})
+
+
+@bp.route('/remove_cart/<id>', methods=['GET'])
+@login_required
+def remove_cart(id):
+    # id in url is index of the session variable cart
+    del session['cart'][int(id)]
+    session.modified=True
+    return redirect(url_for('test.cart'))
+
+
+@bp.route('/cart', methods=['GET'])
+@login_required
+def cart():
+    if 'cart' not in session:
+        session['cart'] = []
+    return render_template('test/cart.html',cart=session['cart'])
 
 
 @bp.route('/clear_cart', methods=['GET'])

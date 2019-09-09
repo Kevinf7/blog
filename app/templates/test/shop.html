@@ -4,11 +4,12 @@
 {% block scripts %}
 <script src="{{ url_for('static',filename='scripts/jquery-3.4.1.min.js') }}"></script>
 <script>
-    function add_to_cart(id, sourceElem, destElem) {
+    function add_cart(id, priceElem, qtyElem, destElem) {
         $(destElem).html('<img src="{{ url_for('static', filename='images/bt/loading.gif') }}">');
-        $.post("{{ url_for('test.add_to_cart') }}", {
+        $.post("{{ url_for('test.add_cart') }}", {
             id: id,
-            amount: $(sourceElem).text()
+            price: $(priceElem).text(),
+            qty : $(qtyElem).val()
         }).done(function(response) {
             $(destElem).text(response['count']);
         }).fail(function() {
@@ -39,25 +40,30 @@
         <td><span id="price-3">$19.15</span></td>
     </tr>
     <tr>
+        <td>Qty: <input type="text" id="qty-1"></td>
+        <td>Qty: <input type="text" id="qty-2"></td>
+        <td>Qty: <input type="text" id="qty-3"></td>
+    </tr>
+    <tr>
         <td>
-            <a href="javascript:add_to_cart(
-            '0','#price-1','#cart-count'
+            <a href="javascript:add_cart(
+            '0','#price-1','#qty-1','#cart-count'
             );">Add to cart</a>
         </td>
         <td>
-            <a href="javascript:add_to_cart(
-            '1','#price-2','#cart-count'
+            <a href="javascript:add_cart(
+            '1','#price-2','#qty-2','#cart-count'
             );">Add to cart</a>
         </td>
         <td>
-            <a href="javascript:add_to_cart(
-            '2','#price-3','#cart-count'
+            <a href="javascript:add_cart(
+            '2','#price-3','#qty-3','#cart-count'
             );">Add to cart</a>
         </td>
     </tr>
 </table>
 
-<a href="{{ url_for('test.new_checkout') }}">Checkout</a>
+<a href="{{ url_for('test.cart') }}">View cart</a>
 <br/>
 <a href="{{ url_for('test.clear_cart') }}">Clear cart</a>
 

@@ -3,7 +3,7 @@
 
 {% block app_content %}
 <h2>Login</h2>
-<form action="{{ url_for('auth.login') }}" method="post">
+<form action="" method="post">
     {{ form.csrf_token }}
     <div class="formgrid">
         {{ form.email.label }}

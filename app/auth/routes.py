@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, session
 from flask_login import current_user, login_user, logout_user, login_required
-from app import db
+from app import db, login_manager
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ResetPasswordForm, ForgotPasswordForm
 from app.auth.email import send_password_reset_email
@@ -25,15 +25,12 @@ def login():
         # username/password is valid. sets current_user to the user
         login_user(user, remember=form.remember_me.data)
 
-        # Parameter is added by flask-login.
-        # It tells you where user was trying to go to.
         next_page = request.args.get('next')
-
         # in case url is absolute we will ignore, we only want a relative url
         # netloc returns the www.website.com part
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.index')
-        return redirect(next_page)
+        if not next_page:
+            return redirect(url_for('main.index'))
+        return redirect(url_for(next_page))
     return render_template('auth/login.html',form=form)
 
 
@@ -96,3 +93,10 @@ def reset_password(token):
         flash('Your password has been reset','success')
         return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
+
+
+# handler when you are trying to access a page but you are not logged in
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('You must be logged in to view that page.','error')
+    return redirect(url_for('auth.login',next=request.endpoint))
