@@ -4,12 +4,11 @@
 {% block scripts %}
 <script src="{{ url_for('static',filename='scripts/jquery-3.4.1.min.js') }}"></script>
 <script>
-    function add_cart(id, priceElem, qtyElem, destElem) {
+    function add_cart(id, priceElem, destElem) {
         $(destElem).html('<img src="{{ url_for('static', filename='images/bt/loading.gif') }}">');
         $.post("{{ url_for('test.add_cart') }}", {
             id: id,
-            price: $(priceElem).text(),
-            qty : $(qtyElem).val()
+            price: $(priceElem).text()
         }).done(function(response) {
             $(destElem).text(response['count']);
         }).fail(function() {
@@ -28,44 +27,16 @@
     <span id="cart-count"></span>
 </p>
 
-<table>
-    <tr>
-        <td><img src="/static/images/bt/flower.jpg" alt="" width="120"></td>
-        <td><img src="/static/images/bt/cat.jpg" alt="" width="120"></td>
-        <td><img src="/static/images/bt/ball.jpg" alt="" width="120"></td>
-    </tr>
-    <tr>
-        <td><span id="price-1">$12.99</span></td>
-        <td><span id="price-2">$24.00</span></td>
-        <td><span id="price-3">$19.15</span></td>
-    </tr>
-    <tr>
-        <td>Qty: <input type="text" id="qty-1"></td>
-        <td>Qty: <input type="text" id="qty-2"></td>
-        <td>Qty: <input type="text" id="qty-3"></td>
-    </tr>
-    <tr>
-        <td>
-            <a href="javascript:add_cart(
-            '0','#price-1','#qty-1','#cart-count'
-            );">Add to cart</a>
-        </td>
-        <td>
-            <a href="javascript:add_cart(
-            '1','#price-2','#qty-2','#cart-count'
-            );">Add to cart</a>
-        </td>
-        <td>
-            <a href="javascript:add_cart(
-            '2','#price-3','#qty-3','#cart-count'
-            );">Add to cart</a>
-        </td>
-    </tr>
-</table>
+{% for d in data %}
+    <img src="/static/images/bt/{{ d['image'] }}" alt="" width="120"><br>
+    <span id="price-{{loop.index0}}">${{ d['price'] }}</span><br>
+    <a href="javascript:add_cart(
+    '{{loop.index0}}','#price-{{loop.index0}}','#cart-count'
+    );">Add to cart</a><br><br>
+{% endfor %}
 
 <a href="{{ url_for('test.cart') }}">View cart</a>
 <br/>
 <a href="{{ url_for('test.clear_cart') }}">Clear cart</a>
-
 
 {% endblock %}

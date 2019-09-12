@@ -1,41 +1,22 @@
 {% extends "base.html" %}
 {% block title %}Testing only - payment{% endblock %}
 
-
 {% block app_content %}
-<h2>Catalog</h2>
+<h2>Cart</h2>
 
-<p>
-    <img class="cart" src="{{ url_for('static', filename='images/bt/shopping-cart-solid.svg') }}" width="20">
-    <span id="cart-count"></span>
-</p>
-
-{% for c in cart %}
-    {% if c['id'] == '0' %}
-        <img src="/static/images/bt/flower.jpg" alt="" width="120"><br/>
-        <span id="price-1">$12.99</span><br/>
-        Qty: <input type="text" id="qty-1"><br/>
-        <a href="{{ url_for('test.remove_cart', id=loop.index0) }}">Remove</a><br/><br/>
-    {% endif %}
-
-    {% if c['id'] == '1' %}
-        <img src="/static/images/bt/cat.jpg" alt="" width="120"><br/>
-        <span id="price-2">$24.00</span><br/>
-        Qty: <input type="text" id="qty-2"><br/>
-        <a href="{{ url_for('test.remove_cart', id=loop.index0) }}">Remove</a><br/><br/>
-    {% endif %}
-
-    {% if c['id'] == '2' %}
-        <img src="/static/images/bt/ball.jpg" alt="" width="120"><br/>
-        <span id="price-3">$19.15</span><br/>
-        Qty: <input type="text" id="qty-3"><br/>
-        <a href="{{ url_for('test.remove_cart', id=loop.index0) }}">Remove</a><br/><br/>
-    {% endif %}
+<form method="POST">
+{% for d in data %}
+    <img src="/static/images/bt/{{ d['image'] }}" alt="" width="120"><br>
+    <span id="price-{{loop.index0}}">${{ d['price'] }}</span><br>
+    Qty: <input type="text" name="qty{{loop.index0}}" value="{{ d['qty'] }}">
+    <button type="submit" formaction="{{ url_for('test.update_cart',id=loop.index0) }}">Update</button>
+    <button type="submit" formaction="{{ url_for('test.remove_cart',id=loop.index0) }}">Remove</button><br/><br/>
 {% endfor %}
+</form>
+
+<h4>Total number of items: {{ total_no_items }}</h4>
+<h3>Total ${{ total }}</h3>
 
 <a href="{{ url_for('test.new_checkout') }}">Checkout</a>
-<br/>
-<a href="{{ url_for('test.clear_cart') }}">Clear cart</a>
-
 
 {% endblock %}
