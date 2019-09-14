@@ -28,57 +28,11 @@ TRANSACTION_SUCCESS_STATUSES = [
     braintree.Transaction.Status.SubmittedForSettlement
 ]
 
-
-@bp.route('/shop', methods=['GET'])
-@login_required
-def shop():
-    return render_template('test/shop.html', data=dummy_db)
-
-
-@bp.route('/checkout/new', methods=['GET'])
-@login_required
-def new_checkout():
-    client_token = generate_client_token()
-    return render_template('test/new_checkout.html',client_token=client_token)
-
-
-@bp.route('/checkouts/<transaction_id>', methods=['GET'])
-@login_required
-def show_checkout(transaction_id):
-    transaction = find_transaction(transaction_id)
-    result = {}
-    if transaction.status in TRANSACTION_SUCCESS_STATUSES:
-        result = {
-            'header': 'Sweet Success!',
-            'icon': 'success',
-            'message': 'Your test transaction has been successfully processed. See the Braintree API response and try again.'
-        }
-    else:
-        result = {
-            'header': 'Transaction Failed',
-            'icon': 'fail',
-            'message': 'Your test transaction has a status of ' + transaction.status + '. See the Braintree API response and try again.'
-        }
-    return render_template('test/show_checkout.html', transaction=transaction, result=result)
-
-
-@bp.route('/checkout', methods=['POST'])
-@login_required
-def create_checkout():
-    result = transact({
-        'amount': request.form['amount'],
-        'payment_method_nonce': request.form['payment_method_nonce'],
-        'options': {
-            "submit_for_settlement": True
-        }
-    })
-
-    if result.is_success or result.transaction:
-        return redirect(url_for('test.show_checkout',transaction_id=result.transaction.id))
-    else:
-        for x in result.errors.deep_errors:
-            flash('Error: %s: %s' % (x.code, x.message))
-        return redirect(url_for('test.new_checkout'))
+def get_item(id):
+    for d in dummy_db:
+        if d['id'] == id:
+            return d
+    return None
 
 
 def update_cart_qty(id,qty):
@@ -89,6 +43,46 @@ def update_cart_qty(id,qty):
             session.modified = True
             return True
     return False
+
+
+def get_data():
+    data = []
+    for c in session['cart']:
+        item = get_item(c['id'])
+        if item:
+            item['qty'] = c['qty']
+            data.append(item)
+    return data
+
+
+def get_total(data):
+    total = 0
+    for d in data:
+        total = total + (d['qty'] * d['price'])
+    return round(total,2)
+
+
+def get_total_no_items(data):
+    total_no_items = 0
+    for d in data:
+        total_no_items += d['qty']
+    return total_no_items
+
+
+@bp.route('/shop', methods=['GET'])
+@login_required
+def shop():
+    return render_template('test/shop.html', data=dummy_db)
+
+
+@bp.route('/cart', methods=['GET'])
+@login_required
+def cart():
+    if 'cart' not in session:
+        session['cart'] = []
+    data = get_data()
+
+    return render_template('test/cart.html', data=data, total=get_total(data), total_no_items=get_total_no_items(data))
 
 
 # AJAX call to add item to cart
@@ -132,35 +126,55 @@ def update_cart(id):
     return redirect(url_for('test.cart'))
 
 
-def get_item(id):
-    for d in dummy_db:
-        if d['id'] == id:
-            return d
-    return None
-
-
-@bp.route('/cart', methods=['GET'])
-@login_required
-def cart():
-    if 'cart' not in session:
-        session['cart'] = []
-    data = []
-    for c in session['cart']:
-        item = get_item(c['id'])
-        if item:
-            item['qty'] = c['qty']
-            data.append(item)
-    total = 0
-    total_no_items = 0
-    for d in data:
-        total = total + (d['qty'] * d['price'])
-        total_no_items += d['qty']
-    total = round(total,2)
-    return render_template('test/cart.html',data=data,total=total,total_no_items=total_no_items)
-
-
 @bp.route('/clear_cart', methods=['GET'])
 @login_required
 def clear_cart():
     session.pop('cart', None)
     return ('', 204)
+
+
+@bp.route('/checkout', methods=['GET'])
+@login_required
+def checkout():
+    client_token = generate_client_token()
+    data = get_data()
+    return render_template('test/checkout.html', client_token=client_token, data=data, total=get_total(data), total_no_items=get_total_no_items(data))
+
+
+@bp.route('/checkout/result/<transaction_id>', methods=['GET'])
+@login_required
+def result_checkout(transaction_id):
+    transaction = find_transaction(transaction_id)
+    result = {}
+    if transaction.status in TRANSACTION_SUCCESS_STATUSES:
+        result = {
+            'header': 'Sweet Success!',
+            'icon': 'success',
+            'message': 'Your test transaction has been successfully processed. See the Braintree API response and try again.'
+        }
+    else:
+        result = {
+            'header': 'Transaction Failed',
+            'icon': 'fail',
+            'message': 'Your test transaction has a status of ' + transaction.status + '. See the Braintree API response and try again.'
+        }
+    return render_template('test/result_checkout.html', transaction=transaction, result=result)
+
+
+@bp.route('/checkout/create', methods=['POST'])
+@login_required
+def create_checkout():
+    result = transact({
+        'amount': request.form['total_amt'],
+        'payment_method_nonce': request.form['payment_method_nonce'],
+        'options': {
+            "submit_for_settlement": True
+        }
+    })
+
+    if result.is_success or result.transaction:
+        return redirect(url_for('test.result_checkout',transaction_id=result.transaction.id))
+    else:
+        for x in result.errors.deep_errors:
+            flash('Error: %s: %s' % (x.code, x.message))
+        return redirect(url_for('test.checkout'))

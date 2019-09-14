@@ -6,29 +6,30 @@
 {% endblock %}
 
 {% block app_content %}
-<h2>Braintree payment testing</h2>
+<h2>Payment details</h2>
 
 <h4>Drop in UI</h4>
 <p>Make a test payment with Braintree using PayPal or a card</p>
 
 <p><img class="cart" src="{{ url_for('static', filename='images/bt/shopping-cart-solid.svg') }}" width="20"></p>
 
+<p>Enter your address....</p>
+
+{% for d in data %}
+    {{ d['title'] }} Qty: {{ d['qty'] }} Price: ${{ d['price'] }}<br/>
+{% endfor %}
+{{ total_no_items }} number of items, total: {{ total }}
+<br/><br/>
+
+<div class="bt-drop-in-wrapper">
+  <div id="bt-dropin"></div>
+</div>
+
 <form id="payment-form" method="post" action="{{ url_for('test.create_checkout') }}">
-    <div class="formgrid">
-        <label for="amount">Amount</label>
-        <div class="form-group">
-            <input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="10">
-        </div>
-
-        <div class="bt-drop-in-wrapper">
-          <div id="bt-dropin"></div>
-        </div>
-
-        <input type="hidden" id="nonce" name="payment_method_nonce" />
-        <button class="submit-btn" type="submit">Submit</button>
-    </div>
+    <input type="hidden" name="total_amt" value="{{ total }}" />
+    <input type="hidden" id="nonce" name="payment_method_nonce" />
+    <button class="submit-btn" type="submit">Submit Payment</button>
 </form>
-
 
 
 
