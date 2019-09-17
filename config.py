@@ -46,3 +46,6 @@ class Config(object):
 
     # Dev only so browser doesnt cache for CSS
     SEND_FILE_MAX_AGE_DEFAULT = 0
+
+    DOMAIN_CLIENT_ID = os.environ.get('DOMAIN_CLIENT_ID')
+    DOMAIN_CLIENT_SECRET = os.environ.get('DOMAIN_CLIENT_SECRET')

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Rental property generator - results{% endblock %}
+
+{% block app_content %}
+<h2>Results</h2>
+
+{% for d in data %}
+<a href="http://www.domain.com.au/{{ d['listing']['listingSlug'] }}">http://www.domain.com.au/{{ d['listing']['listingSlug'] }}</a><br/>
+{% endfor %}
+
+{% endblock %}

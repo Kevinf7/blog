@@ -7,7 +7,7 @@ from flask_login import LoginManager
 import logging
 from logging.handlers import RotatingFileHandler
 from flask_moment import Moment
-from config import Config
+
 
 db = SQLAlchemy()
 migrate = Migrate()

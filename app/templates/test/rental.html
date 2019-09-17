@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Rental property generator{% endblock %}
+
+{% block app_content %}
+<h2>Domain.com.au - Excel</h2>
+
+<form action="{{ url_for('test.rental') }}"  method="post">
+    {{ form.csrf_token }}
+
+    {{ form.min_bedrooms.label }}
+    {% for error in form.min_bedrooms.errors %}
+        <span class="error-msg">[ {{ error }} ]</span>
+    {% endfor %}
+    {{ form.min_bedrooms }}<br/>
+
+    {{ form.max_bedrooms.label }}
+    {% for error in form.max_bedrooms.errors %}
+        <span class="error-msg">[ {{ error }} ]</span>
+    {% endfor %}
+    {{ form.max_bedrooms }}<br/>
+
+    {{ form.postcode.label }}
+    {% for error in form.postcode.errors %}
+        <span class="error-msg">[ {{ error }} ]</span>
+    {% endfor %}
+    {{ form.postcode }}<br/>
+    {{ form.submit }}
+</form>
+
+{% endblock %}
