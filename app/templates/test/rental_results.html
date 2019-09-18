@@ -4,6 +4,8 @@
 {% block app_content %}
 <h2>Results</h2>
 
+<p>For this test shows up to 100 rental listings</p>
+
 {% for d in data %}
 <a href="http://www.domain.com.au/{{ d['listing']['listingSlug'] }}">http://www.domain.com.au/{{ d['listing']['listingSlug'] }}</a><br/>
 {% endfor %}

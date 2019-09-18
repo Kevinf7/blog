@@ -6,5 +6,6 @@ from wtforms.validators import InputRequired
 class SearchForm(FlaskForm):
     min_bedrooms = IntegerField('Minimum Bedrooms', validators=[InputRequired()])
     max_bedrooms = IntegerField('Maximum Bedrooms', validators=[InputRequired()])
+    max_price = IntegerField('Maximum Rental Price per week', validators=[InputRequired()])
     postcode = IntegerField('Postcode', validators=[InputRequired()])
     submit = SubmitField('Submit')

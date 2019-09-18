@@ -19,6 +19,12 @@
     {% endfor %}
     {{ form.max_bedrooms }}<br/>
 
+    {{ form.max_price.label }}
+    {% for error in form.max_price.errors %}
+        <span class="error-msg">[ {{ error }} ]</span>
+    {% endfor %}
+    {{ form.max_price }}<br/>
+
     {{ form.postcode.label }}
     {% for error in form.postcode.errors %}
         <span class="error-msg">[ {{ error }} ]</span>

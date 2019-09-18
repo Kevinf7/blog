@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, current_ap
 from app.test import bp
 from app.test.forms import SearchForm
 from authlib.client import OAuth2Session
+import pandas as pd
 
 
 # oauth2 domain
@@ -16,14 +17,23 @@ def rental():
     if form.validate_on_submit():
         resp=domain.post('https://api.domain.com.au/v1/listings/residential/_search',\
             json={\
+                'page':1,\
+                'pageSize':100,\
+                'listingType':'Rent',\
                 'minBedrooms':int(form.min_bedrooms.data),\
                 'maxBedrooms':int(form.max_bedrooms.data),\
+                'maxPrice':int(form.max_price.data),\
                 'locations':[\
                 {\
                     'postcode':form.postcode.data\
                 }\
                 ]\
             })
-        print(resp.json())
+        data = []
+        json_resp = resp.json()
+        for j in json_resp:
+            data.append(j['listing']['listingSlug'])
+        df = pd.DataFrame(data)
+        df.to_csv(current_app.config['RENTAL_FOLDER'] / 'test.csv', index=False)
         return render_template('test/rental_results.html',data=resp.json())
     return render_template('test/rental.html',form=form)

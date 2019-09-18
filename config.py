@@ -36,6 +36,9 @@ class Config(object):
     # Processing folder
     PROCESSING_FOLDER = basedir / 'app/static/processing'
 
+    # Rental folder
+    RENTAL_FOLDER = basedir / 'app/static/rental'
+
     # custom app settings
     FORGOT_PASSWORD_TOKEN_EXPIRE = 3600 # in seconds, 3600 = 1 hour
     SEARCH_RESULTS_RETURN = 12
