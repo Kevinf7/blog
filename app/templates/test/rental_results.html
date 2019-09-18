@@ -6,6 +6,8 @@
 
 <p>For this test shows up to 100 rental listings</p>
 
+<p><a href="{{ url_for('static', filename='rental/test.csv') }}">Link to Excel (csv)</a></p>
+
 {% for d in data %}
 <a href="http://www.domain.com.au/{{ d['listing']['listingSlug'] }}">http://www.domain.com.au/{{ d['listing']['listingSlug'] }}</a><br/>
 {% endfor %}
