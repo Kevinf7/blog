@@ -4,6 +4,15 @@
 {% block app_content %}
 <h2>Projects</h2>
 <div class="projects">
+    <img src="{{ url_for('static',filename='images/rentalprop_web_1100.jpg') }}">
+    <div class="proj-descrip">
+        <h4>Rental Properties</h4>
+        <p><a href="http://k7rental.pythonanywhere.com"><i>k7rental.pythonanywhere.com</i></a> - Lead developer</p>
+        <p>Built for a non-profit organisation to make scouring the internet
+        for rental properties for crisis accommodation more efficient. Features
+        full search capabilities to domain.com.au API using oauth2 authentication
+        and returns result on the web page and in an Excel spreadsheet (in progress Nov 2019).</p>
+    </div>
     <img src="{{ url_for('static',filename='images/arisa_web_1100.jpg') }}">
     <div class="proj-descrip">
         <h4>Arisa</h4>
@@ -28,15 +37,6 @@
             <li>Auto-generated sitemap.xml</li>
             <li>Hand coded and designed using CSS3</li>
         </ul>
-    </div>
-    <img src="{{ url_for('static',filename='images/rentalprop_web_1100.jpg') }}">
-    <div class="proj-descrip">
-        <h4>Rental Properties</h4>
-        <p><a href="http://k7rental.pythonanywhere.com"><i>k7rental.pythonanywhere.com</i></a> - Lead developer</p>
-        <p>Built for a non-profit organisation to make scouring the internet
-        for rental properties for crisis accommodation more efficient. Features
-        full search capabilities to domain.com.au API and returns result on the web page and
-        in an Excel spreadsheet (in progress Nov 2019).</p>
     </div>
 </div>
 {% endblock %}
