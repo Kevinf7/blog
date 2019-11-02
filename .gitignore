@@ -9,9 +9,9 @@ runenv.bat
 uploads
 test.py
 test.html
-static/uploads
+static/uploads/
 logs
 .env
 migrations
 __pycache__
-static/rental
+static/rental/

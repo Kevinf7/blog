@@ -42,6 +42,7 @@
                 <h1 class="site-title"><a href="{{ url_for('main.index') }}">kevin7.net</a></h1>
                 <nav class="site-nav">
                     <a href="{{ url_for('main.index') }}">Home</a>
+                    <a href="{{ url_for('main.projects') }}">Projects</a>
                     <a href="{{ url_for('main.about') }}">About</a>
                     <a href="{{ url_for('main.contact') }}">Contact</a>
                     {% if current_user.is_anonymous %}

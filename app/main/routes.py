@@ -64,6 +64,11 @@ def about():
     return render_template('main/about.html',about_html=about_html)
 
 
+@bp.route('/projects', methods=['GET'])
+def projects():
+    return render_template('main/projects.html')
+
+
 @bp.route('/contact', methods=['GET','POST'])
 def contact():
     contact_html = db.session.query(Content).join(Page).filter(Page.name=='contact',Content.name=='content1').first()

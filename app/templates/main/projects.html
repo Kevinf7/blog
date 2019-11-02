@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+
+{% block app_content %}
+<h2>Projects</h2>
+<div class="projects">
+    <img src="{{ url_for('static',filename='images/arisa_web_1100.jpg') }}">
+    <div class="proj-descrip">
+        <h4>Arisa</h4>
+        <p><a href="https://www.arisa.com.au"><i>www.arisa.com.au</i></a> - Lead developer</p>
+        <p>A student lead generation website built on Flask and incorporating a
+            Google Dialogflow chatbot. Responses are saved into a Mysql database
+            where agencies can then view questions and responses via the backend.
+            Users are also emailed a copy of recommended education institutes and courses.
+            A web scraper using Python / Selenium has also been developed which
+            crawls the CRICOS wesite.</p>
+    </div>
+    <img src="{{ url_for('static',filename='images/kevin7_web_1100.jpg') }}">
+    <div class="proj-descrip">
+        <h4>Kevin7.net</h4>
+        <p><a href="https://www.kevin7.net"><i>www.kevin7.net</i></a> - Sole developer</p>
+        <p>This blog! Built on Flask and incorporates many features including:</p>
+        <ul>
+            <li>Content management system - uploading and managing images, tags and content</li>
+            <li>Search - custom built site search using SQLalchemy</li>
+            <li>Integration with TinyMCE editor, Sendgrid, Google analytics, Recaptcha</li>
+            <li>MySQL backend</li>
+            <li>Auto-generated sitemap.xml</li>
+            <li>Hand coded and designed using CSS3</li>
+        </ul>
+    </div>
+    <img src="{{ url_for('static',filename='images/rentalprop_web_1100.jpg') }}">
+    <div class="proj-descrip">
+        <h4>Rental Properties</h4>
+        <p><a href="http://k7rental.pythonanywhere.com"><i>k7rental.pythonanywhere.com</i></a> - Lead developer</p>
+        <p>Built for a non-profit organisation to make scouring the internet
+        for rental properties for crisis accommodation more efficient. Features
+        full search capabilities to domain.com.au API and returns result on the web page and
+        in an Excel spreadsheet (in progress Nov 2019).</p>
+    </div>
+</div>
+{% endblock %}

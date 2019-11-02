@@ -381,6 +381,26 @@ th, td {
 }
 
 
+/*** Projects page ***/
+.projects {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: start;
+}
+
+.projects img {
+    grid-column: 1/1;
+    margin: 20px 0 20px 0;
+    min-width: 300px
+    max-width: 500px;
+}
+
+.projects .proj-descrip {
+    grid-column: 1/1;
+    margin: 10px 0 20px 0;
+}
+
+
 /*** Desktop screen size ***/
 @media only screen and (min-width: 768px) {
     .head-section {
@@ -420,5 +440,20 @@ th, td {
     .g-recaptcha, .form-group {
         grid-column: 2/3;
         max-width: 700px;
+    }
+    /*** Projects page ***/
+    .projects {
+        display: grid;
+        grid-template-columns: minmax(300px, 500px) auto;
+        align-items: start;
+    }
+    .projects img {
+        grid-column: 1/2;
+        margin: 20px 0 20px 0;
+    }
+    .projects .proj-descrip {
+        grid-column: 2/2;
+        padding-left: 10px;
+        margin: 20px 0 20px 0;
     }
 }
