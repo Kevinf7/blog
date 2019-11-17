@@ -196,6 +196,7 @@ input:-webkit-autofill:active  {
     background-color:white;
     margin: 10px 0 10px 0;
     padding: 10px;
+    border-radius: 10px;
 }
 
 
