@@ -1,0 +1,13 @@
+<p>Someone has commented on one of your post on kevin7.net</p>
+{% if current_user.is_authenticated %}
+    <p>From: {{ current_user.firstname }} {{ current_user.lastname }}</p>
+    <p>Email: {{ current_user.email }}</p>
+{% else %}
+    <p>From: {{ comment.name }}</p>
+    <p>Email: {{ comment.email }}</p>
+{% endif %}
+<p>Date: {{ create_date }}</p>
+<p>Post:</p>
+{{ post.id }} - {{ post.heading }}
+<p>Message:</p>
+{{ comment.comment }}

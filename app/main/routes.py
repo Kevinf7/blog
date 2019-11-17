@@ -4,7 +4,7 @@ from app import db
 from app.main import bp
 from app.main.forms import ContactForm
 from app.models import Tag, Tagged, Post, Content, Page, Contact, Comment
-from app.main.email import send_contact_email
+from app.main.email import send_contact_email, send_comment_email
 from app.post.forms import CommentFormAnon, CommentFormReg
 
 ##############################################################################
@@ -107,6 +107,10 @@ def post_detail(id):
         db.session.add(comment)
         db.session.commit()
         flash('Your comments have been posted','success')
+
+        #send email to admin that someone has commented
+        send_comment_email(post, comment)
+
         return redirect(url_for('main.post_detail',id=id))
     return render_template('main/post_det.html',post=post, form=form, comments=comments)
 

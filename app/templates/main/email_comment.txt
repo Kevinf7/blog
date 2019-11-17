@@ -1,0 +1,19 @@
+Someone has commented on one of your post on kevin7.net
+
+{% if current_user.is_authenticated %}
+    From: {{ current_user.firstname }} {{ current_user.lastname }}
+
+    Email: {{ current_user.email }}
+{% else %}
+    From: {{ comment.name }}
+
+    Email: {{ comment.email }}
+{% endif %}
+
+Date: {{ create_date }}
+
+Post:
+{{ post.id }} - {{ post.heading }}
+
+Message:
+{{ comment.comment }}

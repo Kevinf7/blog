@@ -10,3 +10,13 @@ def send_contact_email(contact):
                                          contact=contact, create_date=create_date),
                html_body=render_template('main/email_contact.html',
                                          contact=contact, create_date=create_date))
+
+def send_comment_email(post, comment):
+    create_date = comment.create_date.strftime('%d/%m/%y %H:%M')
+    return send_email('Someone has made a comment on kevin7.net',
+               sender=current_app.config['MAIL_FROM'],
+               recipients=current_app.config['MAIL_ADMINS'],
+               text_body=render_template('main/email_comment.txt',
+                                         comment=comment, post=post, create_date=create_date),
+               html_body=render_template('main/email_comment.html',
+                                         comment=comment, post=post, create_date=create_date))
