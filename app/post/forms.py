@@ -12,13 +12,13 @@ class PostForm(FlaskForm):
 class CommentFormAnon(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=20)])
     email = StringField('Email', validators=[Length(max=50), Email()])
-    comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
+    comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=1000)])
     submit = SubmitField('Submit')
     recaptcha = RecaptchaField()
 
 # Another form if user is logged in
 class CommentFormReg(FlaskForm):
-    comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=200)])
+    comment = TextAreaField('Leave a comment', validators=[InputRequired(), Length(max=1000)])
     submit = SubmitField('Submit')
     recaptcha = RecaptchaField()
 
