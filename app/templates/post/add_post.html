@@ -21,11 +21,6 @@
             <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
         </div>
 
-        {% for error in form.post.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.post(rows=12) }}
-
         {{ form.tags.label }}
         <div class="minor-text">Hint: Separate tags by , (comma)</div>
         {% for error in form.tags.errors %}

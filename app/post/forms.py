@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import InputRequired, Email, Length, Optional
 
 class PostForm(FlaskForm):
     heading = StringField('Title', validators=[InputRequired(), Length(max=100)])

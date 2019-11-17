@@ -35,7 +35,7 @@
                  on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</span></p>
         {% endif %}
     {% endif %}
-    <p>{{ comment.comment }}</p>
+    <p style="white-space: pre-line">{{ comment.comment }}</p>
     <hr/>
 {% endfor %}
 
