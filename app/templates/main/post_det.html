@@ -26,7 +26,9 @@
 
 <hr/>
 <h3>Comments</h3>
+
 {% for comment in comments %}
+<div class="comments">
     {% if comment.name is not none %}
         <p><span class="minor-text">{{ comment.name }} on {{ moment(comment.create_date).format('DD/MM/YYYY LT') }}</span></p>
     {% else %}
@@ -36,9 +38,10 @@
         {% endif %}
     {% endif %}
     <p style="white-space: pre-line">{{ comment.comment }}</p>
-    <hr/>
+</div>
 {% endfor %}
 
+<hr/>
 <form action="{{ url_for('main.post_detail',id=post.id) }}" method="post">
     {{ form.csrf_token }}
     <div class="formgrid">
