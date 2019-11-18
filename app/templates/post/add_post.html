@@ -20,6 +20,10 @@
             <span class="minor-text" id="copyclip-1" style="display:none;"><p>br<a id="br"></a></p></span>
             <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
         </div>
+        {% for error in form.post.errors %}
+            <span class="error-msg">[ {{ error }} ]</span>
+        {% endfor %}
+        {{ form.post(rows=16) }}
 
         {{ form.tags.label }}
         <div class="minor-text">Hint: Separate tags by , (comma)</div>
