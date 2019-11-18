@@ -158,6 +158,7 @@ input:-webkit-autofill:active  {
     font-size: 0.8rem;
     padding: 2px;
     margin: 2px;
+    border-radius: 4px;
 }
 .post-btn > a:hover {
     background-color: #C85A13;
