@@ -15,7 +15,7 @@
         <div class="minor-text">{{ img.file_width }}x{{ img.file_height }}</div>
         <div class="minor-text">{{ img.file_size }} bytes</div>
         <div class="minor-text">Uploaded: {{ moment(img.create_date).format('DD/MM/YY') }}</div>
-        <div><a href="{{ url_for('admin_image.del_image',id=img.id) }}" class="fas fa-trash-alt fa-sm"></a></div>
+        <div><a href="{{ url_for('admin_image.del_image',id=img.id) }}"><i class="fas fa-trash-alt"></i></a></div>
     </div>
     {% endfor %}
 </div>
