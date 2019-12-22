@@ -9,9 +9,13 @@
         <h4>Rental Properties</h4>
         <p><a href="http://k7rental.pythonanywhere.com"><i>k7rental.pythonanywhere.com</i></a> - Lead developer</p>
         <p>Built for a non-profit organisation to make scouring the internet
-        for rental properties for crisis accommodation more efficient. Features
-        full search capabilities to domain.com.au API using oauth2 authentication
-        and returns result on the web page and in an Excel spreadsheet (in progress Nov 2019).</p>
+        for rental properties for crisis accommodation more efficient. Uses two
+        techniques to obtain data:</p>
+        <ul>
+            <li>API (via oauth2 authentication).</li>
+            <li>Web scraping using Python Scrapy. Data hosted on Scrapy Cloud and accessed using Flask website.</li>
+        </ul>
+        <p>Data is automatically downloadable into an Excel spreadsheet (in progress Dec 2019).</p>
     </div>
     <img src="{{ url_for('static',filename='images/arisa_web_1100.jpg') }}">
     <div class="proj-descrip">
