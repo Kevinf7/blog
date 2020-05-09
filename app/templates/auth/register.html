@@ -2,61 +2,96 @@
 {% block title %}Register{% endblock %}
 
 {% block app_content %}
-<h2>Register</h2>
-<form action="{{ url_for('auth.register') }}"  method="post">
-    {{ form.csrf_token }}
-    <div class="formgrid">
-        {{ form.email.label }}
+<div class="section">
+  <div class="content">
+    <h2>Register</h2>
+  </div>
+  <form action="{{ url_for('auth.register') }}"  method="post">
+  {{ form.csrf_token }}
 
-        <div class="form-group">
-            {% for error in form.email.errors %}
-                <span class="error-msg">[ {{ error }} ]</span>
-            {% endfor %}
-            {{ form.email }}
-            <div class="minor-text">Your email will be your username</div>
+    <div class="columns">
+      <div class="column is-5">
+        <div class="field">
+          {{ form.email.label(class_='label') }}
+          <p class="control has-icons-left">
+            {{ form.email(class_='input') }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+          {% for error in form.email.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
+          <p class="help is-info">Your email will be your username</p>
         </div>
-
-
-        {{ form.firstname.label }}
-        <div class="form-group">
-        {% for error in form.firstname.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.firstname }}
-        </div>
-
-        {{ form.lastname.label }}
-        <div class="form-group">
-        {% for error in form.lastname.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.lastname }}
-        </div>
-
-        {{ form.password.label }}
-        <div class="form-group">
-        {% for error in form.password.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.password }}
-        </div>
-
-        {{ form.password2.label }}
-        <div class="form-group">
-        {% for error in form.password2.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.password2 }}
-        </div>
-
-        <div class="form-group">
-        {% for error in form.recaptcha.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.recaptcha }}
-        </div>
-
-        {{ form.submit(class_="submit-btn") }}
+      </div>
     </div>
-</form>
+
+    <div class="columns">
+      <div class="column is-5">
+        <div class="field">
+          {{ form.firstname.label(class_='label') }}
+          <p class="control">
+            {{ form.firstname(class_='input') }}
+          </p>
+          {% for error in form.firstname.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="column is-5">
+        <div class="field">
+          {{ form.lastname.label(class_='label') }}
+          <p class="control">
+            {{ form.lastname(class_='input') }}
+          </p>
+          {% for error in form.lastname.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-5">
+        <div class="field">
+          {{ form.password.label(class_='label') }}
+          <p class="control">
+            {{ form.password(class_='input') }}
+          </p>
+          {% for error in form.password.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="column is-5">
+        <div class="field">
+          {{ form.password2.label(class_='label') }}
+          <p class="control">
+            {{ form.password2(class_='input') }}
+          </p>
+          {% for error in form.password2.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="control">
+        {{ form.recaptcha }}
+      </p>
+      {% for error in form.recaptcha.errors %}
+      <p class="help is-danger">{{ error }} ]</p>
+      {% endfor %}
+    </div>
+
+    <div class="field">
+      <div class="control">
+        {{ form.submit(class_="button is-link") }}
+      </div>
+    </div>
+
+  </form>
+</div>
 {% endblock %}

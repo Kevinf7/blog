@@ -2,41 +2,68 @@
 {% block title %}Admin | Manage Tags{% endblock %}
 
 {% block app_content %}
-<h2>Manage Tags</h2>
+<div class="section">
+  <div class="content">
+    <h2>Manage Tags</h2>
+  </div>
 
-<div class="tab">
-    <button id="defaultOpen" class="tablinks" onclick="openTab(event,'tagused-tab')">Tags used</button>
-    <button class="tablinks" onclick="openTab(event,'tagnotused-tab')">Tags not used</button>
-</div>
+  <div class="tabs">
+    <ul>
+      <li><a id="defaultOpen" href="#" onclick="openTab(event,'tagused-tab')">Tags used</a></li>
+      <li><a href="#" onclick="openTab(event,'tagnotused-tab')">Tags not used</a></li>
+    </ul>
+  </div>
 
-<div id="tagused-tab" class="tabcontent">
+  <div id="tagused-tab" class="tabcontent">
     <p>To delete these tags, first remove them from all blog postings</p>
-    <table class="table-stripe">
-        {% for tu in tag_used %}
-            <tr>
-                <td>{{ tu.name }}</td>
-                <td><a href="{{ url_for('admin_tag.edit_tag',id=tu.id) }}">edit</a></td>
-            </tr>
-        {% endfor %}
+    <table class="table is-striped is-fullwidth">
+      {% for tu in tag_used %}
+        <tr>
+          <td>{{ tu.name }}</td>
+          <td><a href="{{ url_for('admin_tag.edit_tag',id=tu.id) }}">edit</a></td>
+        </tr>
+      {% endfor %}
     </table>
-</div>
+  </div>
 
-<div id="tagnotused-tab" class="tabcontent">
-    <table class="table-stripe">
-        {% for tnu in tag_notused %}
-            <tr>
-                <td>{{ tnu.name }}</td>
-                <td><a href="{{ url_for('admin_tag.edit_tag',id=tnu.id) }}">edit</a>
-                <a href="{{ url_for('admin_tag.del_tag',id=tnu.id) }}">delete</a></td>
-            </tr>
-        {% endfor %}
+  <div id="tagnotused-tab" class="tabcontent">
+    <table class="table is-striped is-fullwidth">
+      {% for tnu in tag_notused %}
+        <tr>
+          <td>{{ tnu.name }}</td>
+          <td><a href="{{ url_for('admin_tag.edit_tag',id=tnu.id) }}">edit</a>
+          <a href="{{ url_for('admin_tag.del_tag',id=tnu.id) }}">delete</a></td>
+        </tr>
+      {% endfor %}
     </table>
-</div>
+  </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
+  // Function for tabbing
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
 </script>
 {% endblock %}

@@ -2,44 +2,60 @@
 {% block title %}Projects{% endblock %}
 
 {% block app_content %}
-<h2>Projects</h2>
-<div class="projects">
-    <img src="{{ url_for('static',filename='images/propextr_web_1100.jpg') }}">
-    <div class="proj-descrip">
-        <h4>Property Extractor</h4>
-        <p><a href="http://propertyextractor.com.au"><i>propertyextractor.com.au</i></a> - Lead developer</p>
-        <p>Utilises the domain.com.au API to search for rental properties
-            in Australia in real-time and to have the results available as a
-            downloadable Excel (csv) file. This website was built for a
-            non-profit org. Users previously spent alot of time copy and pasting
-            search results. This solution provides all search result information
-            in Excel that they can download. The website was built using
-            Python/Flask.</p>
+<div class="section">
+  <div class="content">
+    <h2>Projects</h2>
+    <div class="tile is-ancestor">
+      <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+          <img src="{{ url_for('static',filename='images/propextr_web_1100.jpg') }}">
+          <h4>Property Extractor</h4>
+          <p><a href="http://propertyextractor.com.au"><i>propertyextractor.com.au</i></a> - Lead developer</p>
+          <p>Utilises the domain.com.au API to search for rental properties
+              in Australia in real-time and to have the results available as a
+              downloadable Excel (csv) file. This website was built for a
+              non-profit org. Users previously spent alot of time copy and pasting
+              search results. This solution provides all search result information
+              in Excel that they can download. The website was built using
+              Python/Flask.
+          </p>
+        </div>
+      </div>
+      <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+          <img src="{{ url_for('static',filename='images/arisa_web_1100.jpg') }}">
+          <div class="proj-descrip">
+            <h4>Arisa</h4>
+            <p><a href="https://www.arisa.com.au"><i>www.arisa.com.au</i></a> - Lead developer</p>
+            <p>A student lead generation website built on Flask and incorporating a
+                Google Dialogflow chatbot. Responses are saved into a Mysql database
+                where agencies can then view questions and responses via the backend.
+                Users are also emailed a copy of recommended education institutes and courses.
+                A web scraper using Python / Selenium has also been developed which
+                crawls the CRICOS wesite.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="tile is-4 is-vertical is-parent">
+        <div class="tile is-child box">
+          <img src="{{ url_for('static',filename='images/kevin7_web_1100.jpg') }}">
+          <div class="proj-descrip">
+            <h4>Kevin7.net</h4>
+            <p><a href="https://www.kevin7.net"><i>www.kevin7.net</i></a> - Sole developer</p>
+            <p>This blog! Built on Flask and incorporates many features including:</p>
+            <ul>
+                <li>Content management system - uploading and managing images, tags and content</li>
+                <li>Search - custom built site search using SQLalchemy</li>
+                <li>Integration with TinyMCE editor, Sendgrid, Google analytics, Recaptcha</li>
+                <li>MySQL backend</li>
+                <li>Auto-generated sitemap.xml</li>
+                <li>Hand coded and designed using CSS3</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <img src="{{ url_for('static',filename='images/arisa_web_1100.jpg') }}">
-    <div class="proj-descrip">
-        <h4>Arisa</h4>
-        <p><a href="https://www.arisa.com.au"><i>www.arisa.com.au</i></a> - Lead developer</p>
-        <p>A student lead generation website built on Flask and incorporating a
-            Google Dialogflow chatbot. Responses are saved into a Mysql database
-            where agencies can then view questions and responses via the backend.
-            Users are also emailed a copy of recommended education institutes and courses.
-            A web scraper using Python / Selenium has also been developed which
-            crawls the CRICOS wesite.</p>
-    </div>
-    <img src="{{ url_for('static',filename='images/kevin7_web_1100.jpg') }}">
-    <div class="proj-descrip">
-        <h4>Kevin7.net</h4>
-        <p><a href="https://www.kevin7.net"><i>www.kevin7.net</i></a> - Sole developer</p>
-        <p>This blog! Built on Flask and incorporates many features including:</p>
-        <ul>
-            <li>Content management system - uploading and managing images, tags and content</li>
-            <li>Search - custom built site search using SQLalchemy</li>
-            <li>Integration with TinyMCE editor, Sendgrid, Google analytics, Recaptcha</li>
-            <li>MySQL backend</li>
-            <li>Auto-generated sitemap.xml</li>
-            <li>Hand coded and designed using CSS3</li>
-        </ul>
-    </div>
+  </div>
 </div>
 {% endblock %}

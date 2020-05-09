@@ -2,35 +2,62 @@
 {% block title %}Login{% endblock %}
 
 {% block app_content %}
-<h2>Login</h2>
-<form action="" method="post">
-    {{ form.csrf_token }}
-    <div class="formgrid">
-        {{ form.email.label }}
-        <div class="form-group">
-        {% for error in form.email.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.email }}
+<div class="section">
+
+  <div class="columns">
+    <div class="column is-5">
+      <div class="content">
+        <h2>Login</h2>
+      </div>
+      <form action="" method="post">
+      {{ form.csrf_token }}
+        <div class="field">
+          {{ form.email.label(class_='label') }}
+          <p class="control has-icons-left">
+            {{ form.email(class_='input') }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+          {% for error in form.email.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
         </div>
 
-        {{ form.password.label }}
-        <div class="form-group">
-        {% for error in form.password.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.password }}
+        <div class="field">
+          {{ form.password.label(class_='label') }}
+          <p class="control has-icons-left">
+            {{ form.password(class_='input') }}
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+          {% for error in form.password.errors %}
+          <p class="help is-danger">{{ error }} ]</p>
+          {% endfor %}
         </div>
 
-        {{ form.remember_me }}
-        {{ form.remember_me.label }}
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              {{ form.remember_me }}
+              Remember me
+            </label>
+          </div>
+        </div>
 
-        {{ form.submit(class_="submit-btn") }}
+        <div class="field">
+          <div class="control is-expanded">
+            {{ form.submit(class_="button is-link") }}
+          </div>
+        </div>
+      </form>
+      <p class="help">
+          <a href="{{ url_for('auth.forgot_password') }}">Forgot Password</a> |
+          <a href="{{ url_for('auth.register') }}">Register</a>
+      </p>
     </div>
-</form>
-<div class="login-footer">
-    <small><a href="{{ url_for('auth.forgot_password') }}">Forgot Password</a> |
-    <a href="{{ url_for('auth.register') }}">Register</a></small>
+  </div>
 </div>
 
 {% endblock %}

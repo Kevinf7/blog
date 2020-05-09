@@ -2,21 +2,29 @@
 {% block title %}Admin | Edit Tag{% endblock %}
 
 {% block app_content %}
-<h2>Edit Tag</h2>
+<div class="section">
+  <div class="content">
+    <h2>Edit Tag</h2>
 
-<form action="{{ url_for('admin_tag.edit_tag',id=tag.id) }}"  method="post">
+    <form action="{{ url_for('admin_tag.edit_tag',id=tag.id) }}"  method="post">
     {{ form.csrf_token }}
-    <div class="formgrid">
-        {{ form.tag_name.label }}
-        <div class="form-group">
+      <div class="field">
+        {{ form.tag_name.label(class_="label") }}
+        <p class="control">
+          {% set t = form.tag_name.process_data(tag.name) %}
+          {{ form.tag_name(class_="input") }}
+        </p>
         {% for error in form.tag_name.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
+        <p class="help is-danger">{{ error }}</p>
         {% endfor %}
-        {% set t = form.tag_name.process_data(tag.name) %}
-        {{ form.tag_name }}
-        </div>
+      </div>
 
-        {{ form.submit(class="submit-btn") }}
-    </div>
-</form>
+      <div class="field">
+        <div class="control">
+          {{ form.submit(class_="button is-link") }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

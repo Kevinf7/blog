@@ -2,11 +2,21 @@
 {% block title %}Admin | Delete Tag{% endblock %}
 
 {% block app_content %}
-<h2>Delete Tag</h2>
+<div class="section">
+  <div class="content">
+    <h2>Delete Tag</h2>
 
-<form action="{{ url_for('admin_tag.del_tag',id=tag.id) }}"  method="post">
+    <form action="{{ url_for('admin_tag.del_tag',id=tag.id) }}"  method="post">
     {{ form.csrf_token }}
-    <p>Are you sure you want to delete the tag <strong>{{ tag.name }}</strong>?</p>
-    {{ form.submit(class="delete-btn") }}
-</form>
+      <p>Are you sure you want to delete the tag
+        <span class="has-text-weight-bold">{{ tag.name }}</span>?
+      </p>
+      <div class="field">
+        <div class="control">
+          {{ form.submit(class_="button is-link") }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

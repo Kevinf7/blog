@@ -6,7 +6,7 @@ from app.models import User
 
 # usermixin provides some handy functions for user class
 class LoginForm(FlaskForm, UserMixin):
-    email = StringField('Email', validators=[InputRequired()])
+    email = StringField('Username (email)', validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')

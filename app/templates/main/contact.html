@@ -2,43 +2,85 @@
 {% block title %}Contact Me{% endblock %}
 
 {% block app_content %}
-<h2>Contact</h2>
-{{ contact_html.content|safe }}
-<form action="{{ url_for('main.contact') }}"  method="post">
+<div class="section">
+  <div class="content">
+    <h2>Contact</h2>
+    {{ contact_html.content|safe }}
+
+    <form action="{{ url_for('main.contact') }}"  method="post">
     {{ form.csrf_token }}
-    <div class="formgrid">
-        {{ form.name.label }}
-        <div class="form-group">
-        {% for error in form.name.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.name }}
-        </div>
 
-        {{ form.email.label }}
-        <div class="form-group">
-        {% for error in form.email.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.email }}
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          {{ form.name.label(class_='label') }}
         </div>
-
-        {{ form.message.label }}
-        <div class="form-group">
-        {% for error in form.message.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.message(rows=6) }}
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              {{ form.name(class_='input', placeholder="Name") }}
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </p>
+            {% for error in form.name.errors %}
+            <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="field">
+            <p class="control is-expanded has-icons-left">
+              {{ form.email(class_='input', placeholder="Email") }}
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
+            {% for error in form.email.errors %}
+            <p class="help is-danger">{{ error }} ]</p>
+            {% endfor %}
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-        {% for error in form.recaptcha.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
-        {{ form.recaptcha }}
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          {{ form.message.label(class_='label') }}
         </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control is-expanded">
+              {{ form.message(rows=6, class_='textarea') }}
+            </div>
+            {% for error in form.message.errors %}
+            <p class="help is-danger">[ {{ error }} ]</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
 
-        {{ form.submit(class_="submit-btn") }}
-    </div>
-</form>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+        </div>
+        <div class="field-body">
+          <div class="field">
+            {{ form.recaptcha }}
+            {% for error in form.recaptcha.errors %}
+            <p class="help is-danger">[ {{ error }} ]</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control is-expanded">
+              {{ form.submit(class_="button is-link") }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

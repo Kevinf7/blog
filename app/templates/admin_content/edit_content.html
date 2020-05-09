@@ -2,21 +2,28 @@
 {% block title %}Admin | Edit Content{% endblock %}
 
 {% block app_content %}
-<h2>Edit Content</h2>
-<p>You are editing the <i>{{ content.name }}</i> area on the {{ content.page.name|capitalize }} page.
-<form action="{{ url_for('admin_content.edit_content',id=content.id) }}"  method="post">
+<div class="section">
+  <div class="content">
+    <h2>Edit Content</h2>
+    <p>You are editing the <span class="has-text-weight-bold">{{ content.name }}</span> area on the {{ content.page.name|capitalize }} page.
+    <form action="{{ url_for('admin_content.edit_content',id=content.id) }}"  method="post">
     {{ form.csrf_token }}
-    <div class="formstacked">
-        {{ form.post.label }}
-        {% for error in form.post.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
-        {% endfor %}
+      <div class="field">
+        {{ form.post.label(class_="label") }}
         {% set p = form.post.process_data(content.content) %}
         {{ form.post(rows=16) }}
-
-        {{ form.submit(class="submit-btn") }}
-    </div>
-</form>
+        {% for error in form.post.errors %}
+        <p class="help is-danger">{{ error }} ]</p>
+        {% endfor %}
+      </div>
+      <div class="field">
+        <div class="control">
+          {{ form.submit(class_="button is-link") }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

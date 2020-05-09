@@ -2,41 +2,56 @@
 {% block title %}Admin | Edit Post{% endblock %}
 
 {% block app_content %}
-<h2>Edit Post</h2>
-<form action="{{ url_for('post.edit_post',id=post.id) }}"  method="post">
+<div class="section">
+  <div class="content">
+    <h2>Edit Post</h2>
+    <form action="{{ url_for('post.edit_post',id=post.id) }}"  method="post">
     {{ form.csrf_token }}
-    <div class="formstacked">
-        {{ form.heading.label }}
+      <div class="field">
+        {{ form.heading.label(class_='label') }}
+        <p class="control">
+          {% set h = form.heading.process_data(post.heading) %}
+          {{ form.heading(class_="input") }}
+        </p>
         {% for error in form.heading.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
+        <p class="help is-danger">{{ error }} ]</p>
         {% endfor %}
-        {% set h = form.heading.process_data(post.heading) %}
-        {{ form.heading }}
+      </div>
 
-        {{ form.post.label }}
-        <div class="minor-text">
-            Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;
-            <span class="minor-text" id="copyclip-1" style="display:none;"><p>br<a id="br"></a></p></span>
-            <a href="#" class="far fa-clipboard" id="1" onClick="copyText(this.id);"></a>
-        </div>
-
+      <div class="field">
+        {{ form.post.label(class_='label') }}
+        <p class="help is-info"">
+          Hint: Add a summary break by adding &lt;p&gt;br&lt;a id="br"&gt;&lt;/a&gt;&lt;/p&gt;
+        </p>
+        <p class="control">
+          {% set p = form.post.process_data(post.post) %}
+          {{ form.post(rows=16) }}
+        </p>
         {% for error in form.post.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
+        <p class="help is-danger">{{ error }} ]</p>
         {% endfor %}
-        {% set p = form.post.process_data(post.post) %}
-        {{ form.post(rows=16) }}
+      </div>
 
-        {{ form.tags.label }}
-        <div class="minor-text">Hint: Separate tags by , (comma)</div>
+      <div class="field">
+        {{ form.tags.label(class_='label') }}
+        <p class="help is-info">Hint: Separate tags by , (comma)</p>
+        <p class="control">
+          {% set t = form.tags.process_data(tags) %}
+          {{ form.tags(class_="input") }}
+        </p>
         {% for error in form.tags.errors %}
-            <span class="error-msg">[ {{ error }} ]</span>
+        <p class="help is-danger">{{ error }} ]</p>
         {% endfor %}
-        {% set t = form.tags.process_data(tags) %}
-        {{ form.tags }}
+      </div>
 
-        {{ form.submit(class="submit-btn") }}
-    </div>
-</form>
+      <div class="field">
+        <div class="control">
+          {{ form.submit(class_="button is-link") }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

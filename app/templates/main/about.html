@@ -2,5 +2,9 @@
 {% block title %}About Me{% endblock %}
 
 {% block app_content %}
-{{ about_html.content|safe }}
+<div class="section">
+  <div class="content">
+    {{ about_html.content|safe }}
+  </div>
+</div>
 {% endblock %}

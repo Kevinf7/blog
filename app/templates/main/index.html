@@ -2,81 +2,101 @@
 {% block title %}Kevin Foong | Web & App Developer{% endblock %}
 
 {% block app_content %}
-<div class="content-wrapper">
-    <div class="content-main">
+<div class="columns">
+  <div class="column is-9">
+
     {% for post in posts.items %}
-        <h2 class="post-title"><a href="{{ url_for('main.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
-        <p><span class="minor-text">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</span></p>
+    <div class="section">
+      <div class="container content">
+        <h2><a href="{{ url_for('main.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
+        <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}
-            <p><span class="minor-text">Tags:
-                {% for tag_name in post.getTagNames() %}
-                    {% if not loop.last %}
-                    <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>,
-                    {% else %}
-                    <a href="{{ url_for('main.index',tag=tag_name) }}">{{ tag_name }}</a>
-                    {% endif %}
-                {% endfor %}
-            </span></p>
+          <p class="is-size-7">Tags:
+            {% for tag_name in post.getTagNames() %}
+              <span class="tag is-info">
+                <a href="{{ url_for('main.index',tag=tag_name) }}">
+                  {{ tag_name }}
+                </a>
+              </span>
+            {% endfor %}
+          </p>
         {% endif %}
         {% if current_user.is_authenticated and current_user == post.author %}
-            <div class="post-btn">
-                <a href="{{ url_for('post.edit_post',id=post.id) }}">edit</a>
-                <a href="{{ url_for('post.del_post',id=post.id) }}">delete</a>
-            </div>
+          <span class="tag is-dark">
+            <a href="{{ url_for('post.edit_post',id=post.id) }}" class="has-text-white">edit</a>
+          </span>
+          <span class="tag is-dark">
+            <a href="{{ url_for('post.del_post',id=post.id) }}" class="has-text-white">delete</a>
+          </span>
         {% endif %}
-        {% if not loop.last %}
-            <hr/>
-        {% endif %}
+      </div>
+    </div>
     {% endfor %}
 
     {% if posts.pages > 1 %}
-        <nav class="paging">
-          <ul>
-            {% if posts.has_prev %}
-                <li><a href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a></li>
+    <div class="section">
+      <div class="container">
+        <nav class="pagination" role="navigation" aria-label="pagination">
+          {% if posts.has_prev%}
+            <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a>
+          {% else %}
+            <a class="pagination-previous" disabled>Previous</a>
+          {% endif %}
+          {% if posts.has_next %}
+            <a class="pagination-next" href="{{ url_for('main.index',page=posts.next_num) }}">Next Page</a>
+          {% else %}
+            <a class="pagination-next" disabled>Next Page</a>
+          {% endif %}
+          <ul class="pagination-list">
+          {% for page_num in posts.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
+            {% if page_num %}
+              {% if page_num != posts.page %}
+                <li>
+                  <a class="pagination-link" aria-label="Goto page {{ page_num }}" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                </li>
+              {% else %}
+                <li class="pagination-link is-current" aria-label="Page {{ page_num }}" aria-current="page">{{ page_num }}</li>
+              {% endif %}
+            {% else %}
+              <span class="pagination-ellipsis">&hellip;</span>
             {% endif %}
-            {% for page_num in posts.iter_pages(left_edge=1, left_current=3, right_current=3, right_edge=1) %}
-                {% if page_num %}
-                    {% if page_num != posts.page %}
-                        <li>
-                            <a href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
-                        </li>
-                    {% else %}
-                        <li class="active">{{ page_num }}</li>
-                    {% endif %}
-                {% else %}
-                    <li>...</li>
-                {% endif %}
-            {% endfor %}
-            {% if posts.has_next %}
-            <li>
-                <a href="{{ url_for('main.index',page=posts.next_num) }}">Next</a>
-            </li>
-            {% endif %}
+          {% endfor %}
           </ul>
         </nav>
-    {% endif %}
+      </div>
     </div>
+    {% endif %}
 
-    <aside class="content-sidebar">
-        <h3>Tags</h3>
-        <ul>
+  </div>
+  <div class="column is-3">
+    <div class="section">
+      <div class="container content">
+        <h3 class="title is-3">Tags</h3>
         {% for tag_tup in tag_list %}
-            <li>
-                <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">{{ tag_tup[0].name }}</a> <span class="tag_num">({{ tag_tup[1] }})</span>
-            </li>
-        {% endfor %}
-        </ul>
-        <h3>I'm bored</h3>
-        <div class="side-images">
-            <p>Try these interactive sketches I made. Click ... move your mouse ...</p>
-            <a href="{{ url_for('main.processing', name='garden') }}"><img src="{{ url_for('static', filename='images/garden_smallx2.png') }}" width="100" height="100"></a>
-            <a href="{{ url_for('main.processing', name='stars') }}"><img src="{{ url_for('static', filename='images/stars_smallx2.png') }}" width="100" height="100"></a>
-            <a href="{{ url_for('main.processing', name='snake_game') }}"><img src="{{ url_for('static', filename='images/snakegame_smallx2.png') }}" width="100" height="100"></a>
-            <a href="{{ url_for('main.processing', name='sun_moon') }}"><img src="{{ url_for('static', filename='images/sunmoon_smallx2.png') }}" width="100" height="100"></a>
-            <a href="{{ url_for('main.processing', name='robots') }}"><img src="{{ url_for('static', filename='images/robots_smallx2.png') }}" width="100" height="100"></a>
+        <div style="padding: 0.2rem 0 0.2rem 0;">
+          <span class="tag is-info">
+            <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
+            {{ tag_tup[0].name }} ({{ tag_tup[1] }})
+            </a>
+          </span>
         </div>
-    </aside>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <h3 class="title is-3">Play</h3>
+        <div class="side-images">
+          <p>Sketches created using Processing.. enjoy!</p>
+          <a href="{{ url_for('main.processing', name='garden') }}"><img src="{{ url_for('static', filename='images/garden_smallx2.png') }}" width="100" height="100"></a>
+          <a href="{{ url_for('main.processing', name='stars') }}"><img src="{{ url_for('static', filename='images/stars_smallx2.png') }}" width="100" height="100"></a>
+          <a href="{{ url_for('main.processing', name='snake_game') }}"><img src="{{ url_for('static', filename='images/snakegame_smallx2.png') }}" width="100" height="100"></a>
+          <a href="{{ url_for('main.processing', name='sun_moon') }}"><img src="{{ url_for('static', filename='images/sunmoon_smallx2.png') }}" width="100" height="100"></a>
+          <a href="{{ url_for('main.processing', name='robots') }}"><img src="{{ url_for('static', filename='images/robots_smallx2.png') }}" width="100" height="100"></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

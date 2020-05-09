@@ -13,13 +13,10 @@
         <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
         <!-- Font Awesome -->
         <script src="{{ url_for('static', filename='scripts/fa/all.js') }}"></script>
-        <!-- Google fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Anton|Roboto+Slab:300,400,700&display=swap" rel="stylesheet">
         <!-- CSS -->
-        <!--prism is for displaying code from the blog-->
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/prism.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/mybulma.css') }}" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/app.css') }}" type="text/css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/test.css') }}" type="text/css">
         <!-- Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139072308-1"></script>
         <script>
@@ -45,65 +42,89 @@
         {% block scripts %}
         {% endblock %}
     </head>
-    <body>
-        <div class="page-container">
+    <body class="site">
 
-            <header class="head-section">
-                <h1 class="site-title"><a href="{{ url_for('main.index') }}">kevin7.net</a></h1>
-                <nav class="site-nav">
-                    <a href="{{ url_for('main.index') }}">Home</a>
-                    <a href="{{ url_for('main.projects') }}">Projects</a>
-                    <a href="{{ url_for('main.about') }}">About</a>
-                    <a href="{{ url_for('main.contact') }}">Contact</a>
-                    {% if current_user.is_anonymous %}
-                    <a href="{{ url_for('auth.login') }}">Login</a>
-                    {% else %}
-                    <a href="{{ url_for('auth.logout') }}">Logout</a>
-                        {% if current_user.is_admin() %}
-                        <div class="nav-dropdown">
-                            <a href="#"><i class="fas fa-wrench"></i>Admin</a>
-                            <div class="nav-dropdown-content">
-                                <a href="{{ url_for('post.add_post') }}">Add Post</a>
-                                <a href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
-                                <a href="{{ url_for('admin_message.manage_messages') }}">Manage Messages</a>
-                                <a href="{{ url_for('admin_tag.manage_tags') }}">Manage Tags</a>
-                                <a href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endif %}
-                </nav>
-                <form class="site-search" action="{{ url_for('search.search') }}" method="post">
-                    <input type="text" name="search_txt" >
-                    <input type="submit" value="Search">
-                </form>
-            </header>
+        <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="{{ url_for('main.index') }}">
+              <h3 class="title is-size-3 site-title has-text-white">
+              kevin7.net
+              </h3>
+            </a>
 
-            <main class="main-section">
-                {% block content %}
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert-msg msg-{{ category }}">{{ message }}</div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                    {% block app_content %}{% endblock %}
-                {% endblock %}
-            </main>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
 
-            <footer class="footer-section">
-                <div class="footer-icons">
-                    <a href="https://github.com/Kevinf7">
-                    <i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/kevin-foong-044794/">
-                    <i class="fab fa-linkedin"></i></a>
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-end">
+              {% if current_user.is_admin() %}
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link has-text-white">Admin</a>
+                <div class="navbar-dropdown">
+                  <a class="navbar-item" href="{{ url_for('post.add_post') }}">Add Post</a>
+                  <a class="navbar-item" href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
+                  <a class="navbar-item" href="{{ url_for('admin_message.manage_messages') }}">Manage Messages</a>
+                  <a class="navbar-item" href="{{ url_for('admin_tag.manage_tags') }}">Manage Tags</a>
+                  <a class="navbar-item" href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
                 </div>
-                <small>&#169; 2019 kevin7.net</small>
-            </footer>
-        </div>
+              </div>
+              {% endif %}
+              <a class="navbar-item has-text-white" href="{{ url_for('main.projects') }}">Projects</a>
+              <a class="navbar-item has-text-white" href="{{ url_for('main.about') }}">About</a>
+              <a class="navbar-item has-text-white" href="{{ url_for('main.contact') }}">Contact</a>
+              {% if current_user.is_anonymous %}
+              <a class="navbar-item has-text-white" href="{{ url_for('auth.login') }}">Login</a>
+              {% else %}
+              <a class="navbar-item has-text-white" href="{{ url_for('auth.logout') }}">Logout</a>
+              {% endif %}
+              <form class="navbar-item" action="{{ url_for('search.search') }}" method="post">
+                <div class="field has-addons">
+                  <div class="control">
+                    <input class="input" id="search_txt" name="search_txt" placeholder="Site Search">
+                  </div>
+                  <div class="control">
+                    <button class="button is-info" type="submit" value="Search">Search</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <main class="site-main">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <article class="message is-warning">
+                <div class="message-body">{{ message }}</div>
+              </article>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% block app_content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+          <div class="content has-text-centered has-text-white">
+            <span class="icon is-large">
+              <a href="https://github.com/Kevinf7">
+                <i class="fab fa-2x fa-github"></i>
+              </a>
+            </span>
+            <span>
+              <a href="https://www.linkedin.com/in/kevin-foong-044794/">
+                <i class="fab fa-2x fa-linkedin"></i>
+              </a>
+            </span>
+            <p class="is-size-7">&#169; 2020 kevin7.net</p>
+          </div>
+        </footer>
 
         <script src="{{ url_for('static',filename='scripts/prism.js') }}"></script>
-        <script src="{{ url_for('static',filename='scripts/app.js') }}"></script>
+        <script src="{{ url_for('static',filename='scripts/bulmanav.js') }}"></script>
     </body>
 </html>
