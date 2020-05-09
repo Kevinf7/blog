@@ -16,3 +16,25 @@
 .footer a:hover {
   color: #0E0E0E;
 }
+
+/*fixes Prism Bulma bug */
+pre  {
+  background-color: #002b36;
+}
+pre code {
+  background: unset;
+  color: unset;
+}
+pre code .tag, pre code .number, pre code .label {
+  display: inline;
+  padding: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  vertical-align: inherit;
+  border-radius: inherit;
+  font-weight: inherit;
+  white-space: inherit;
+  background: inherit;
+  margin: inherit;
+}
