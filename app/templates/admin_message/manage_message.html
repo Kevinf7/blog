@@ -8,19 +8,23 @@
     <p>Here are all the messages you have received via the contact form.</p>
     <table class="table">
     {% for msg in contacts.items %}
-      <tr>
-        <th colspan="2">Message on {{ moment(msg.create_date).format('DD/MM/YY LT') }}</th
-      </tr>
-      <tr>
-        <td>From:</td>
-        <td>{{ msg.name }}</td>
-      </tr><tr>
-        <td>Email:</td>
-        <td>{{ msg.email }}</td>
-      </tr><tr>
-        <td>Message:</td>
-        <td>{{ msg.message }}</td>
-      </tr>
+      <thead>
+        <tr>
+          <th colspan="2">Message on {{ moment(msg.create_date).format('DD/MM/YY LT') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>From:</td>
+          <td>{{ msg.name }}</td>
+        </tr><tr>
+          <td>Email:</td>
+          <td>{{ msg.email }}</td>
+        </tr><tr>
+          <td>Message:</td>
+          <td>{{ msg.message }}</td>
+        </tr>
+      </tbody>
     {% endfor %}
     </table>
   </div>

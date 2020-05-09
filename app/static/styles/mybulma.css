@@ -2510,7 +2510,7 @@ a.box:active {
     background-position: -200% 0; } }
 
 .table {
-  background-color: #EFEFEF;
+  background-color: #FFFFFF;
   color: #363636; }
   .table td,
   .table th {
@@ -2596,7 +2596,7 @@ a.box:active {
       border-color: findColorInvert(#6983aa);
       color: currentColor; }
   .table thead {
-    background-color: transparent; }
+    background-color: #8ec6c5; }
     .table thead td,
     .table thead th {
       border-width: 0 0 2px;
@@ -2630,7 +2630,7 @@ a.box:active {
   .table.is-narrow th {
     padding: 0.25em 0.5em; }
   .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-    background-color: #dddddd; }
+    background-color: #f4f4f4; }
 
 .table-container {
   -webkit-overflow-scrolling: touch;

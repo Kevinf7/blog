@@ -17,27 +17,47 @@
   <div id="tagused-tab" class="tabcontent">
     <p>To delete these tags, first remove them from all blog postings</p>
     <table class="table is-striped is-fullwidth">
-      {% for tu in tag_used %}
+    {% if tag_used|length > 0 %}
+      <thead>
+        <tr>
+          <th class="has-text-weight-bold">Name of Tag</th>
+          <th class="has-text-weight-bold">Action</th>
+        </tr>
+      </thead>
+    {% endif %}
+    {% for tu in tag_used %}
+      <tbody>
         <tr>
           <td>{{ tu.name }}</td>
           <td><a href="{{ url_for('admin_tag.edit_tag',id=tu.id) }}">edit</a></td>
         </tr>
-      {% endfor %}
+      </tbody>
+    {% endfor %}
     </table>
   </div>
 
   <div id="tagnotused-tab" class="tabcontent">
     <table class="table is-striped is-fullwidth">
-      {% for tnu in tag_notused %}
+    {% if tag_notused|length > 0 %}
+      <thead>
+        <tr>
+          <th class="has-text-weight-bold">Name of Tag</th>
+          <th class="has-text-weight-bold">Action</th>
+        </tr>
+      </thead>
+    {% endif %}
+    {% for tnu in tag_notused %}
+      <tbody>
         <tr>
           <td>{{ tnu.name }}</td>
           <td><a href="{{ url_for('admin_tag.edit_tag',id=tnu.id) }}">edit</a>
           <a href="{{ url_for('admin_tag.del_tag',id=tnu.id) }}">delete</a></td>
         </tr>
-      {% endfor %}
+      </tbody>
+    {% endfor %}
     </table>
   </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
