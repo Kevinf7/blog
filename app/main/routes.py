@@ -20,7 +20,7 @@ def getSummaryPosts(posts):
         p = post.post.split('<p>br<a id="br"></a></p>',1)[0]
         # add a more... to the end of the post
         if p != post.post:
-            p += '<p>...</p>'
+            p += '<p>... more ...</p>'
         posts.items[index].post = p
     return posts
 
