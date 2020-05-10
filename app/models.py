@@ -215,7 +215,7 @@ class Content(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # naming convention used by template to identify, not user changeable - "content1", "content2" etc
     name = db.Column(db.String(20), nullable=False)
-    content = db.Column(db.String(4000), nullable=False)
+    content = db.Column(db.String(12000), nullable=False)
     page_id = db.Column(db.Integer, db.ForeignKey('page.id'), nullable=False)
     update_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
 

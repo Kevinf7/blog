@@ -10,7 +10,8 @@ from flask_moment import Moment
 
 
 db = SQLAlchemy()
-migrate = Migrate()
+# compare_type = true - this is so that flask migrate detect changes to columns like size
+migrate = Migrate(compare_type=True)
 moment = Moment()
 login_manager = LoginManager()
 
