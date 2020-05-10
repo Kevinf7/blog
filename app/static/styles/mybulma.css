@@ -2630,7 +2630,7 @@ a.box:active {
   .table.is-narrow th {
     padding: 0.25em 0.5em; }
   .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-    background-color: #f4f4f4; }
+    background-color: #EEEEEE; }
 
 .table-container {
   -webkit-overflow-scrolling: touch;
