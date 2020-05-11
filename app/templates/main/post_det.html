@@ -4,9 +4,12 @@
 {% block app_content %}
 <div class="section">
   <div class="content">
-    <h2>{{ post.heading }}</h2>
-    <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
-    <p>{{ post.post|safe }}</p>
+    <div class="normal-links">
+      <h2>{{ post.heading }}</h2>
+      <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
+      <p>{{ post.post|safe }}</p>
+    </div>
+
     {% if post.getTagNames() %}
       <p class="is-size-7">Tags:
         {% for tag_name in post.getTagNames() %}
@@ -20,12 +23,13 @@
     {% endif %}
     {% if current_user.is_authenticated and current_user == post.author %}
       <span class="tag is-dark">
-        <a href="{{ url_for('post.edit_post',id=post.id) }}" class="has-text-white">edit</a>
+        <a href="{{ url_for('post.edit_post',slug=post.slug) }}" class="has-text-white">edit</a>
       </span>
       <span class="tag is-dark">
-        <a href="{{ url_for('post.del_post',id=post.id) }}" class="has-text-white">delete</a>
+        <a href="{{ url_for('post.del_post',slug=post.slug) }}" class="has-text-white">delete</a>
       </span>
     {% endif %}
+
   </div>
 </div>
 
@@ -50,13 +54,11 @@
     </td></tr>
   {% endfor %}
   </table>
-</div>
 
-<div class="section">
   <div class="content">
     <h4>Leave a Comment</h4>
   </div>
-  <form action="{{ url_for('main.post_detail',id=post.id) }}" method="post">
+  <form action="{{ url_for('main.post_detail',slug=post.slug) }}" method="post">
   {{ form.csrf_token }}
 
     {% if current_user.is_anonymous %}

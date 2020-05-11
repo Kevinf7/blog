@@ -94,6 +94,7 @@ class Post(db.Model):
     __tablename__='post'
 
     id = db.Column(db.Integer, primary_key=True)
+    slug = db.Column(db.String(50), nullable=False)
     heading = db.Column(db.String(100), nullable=False)
     post = db.Column(db.String(12000), nullable=False)
     current = db.Column(db.Boolean, default=True, nullable=False)
@@ -110,7 +111,10 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
     def getPost(id):
-        return Post.query.filter(Post.id==id).first()
+        return Post.query.filter(Post.id==id, Post.current.is_(True)).first()
+
+    def getPostBySlug(slug):
+        return Post.query.filter(Post.slug==slug, Post.current.is_(True)).first()
 
     #return a list of tag names for this post
     def getTagNames(self):

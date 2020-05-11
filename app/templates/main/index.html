@@ -8,7 +8,7 @@
     {% for post in posts.items %}
     <div class="section">
       <div class="container content">
-        <h2><a href="{{ url_for('main.post_detail',id=post.id) }}">{{ post.heading }}</a></h2>
+        <h2><a href="{{ url_for('main.post_detail',slug=post.slug) }}">{{ post.heading }}</a></h2>
         <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
         <p>{{ post.post|safe }}</p>
         {% if post.getTagNames() %}
@@ -24,10 +24,10 @@
         {% endif %}
         {% if current_user.is_authenticated and current_user == post.author %}
           <span class="tag is-dark">
-            <a href="{{ url_for('post.edit_post',id=post.id) }}" class="has-text-white">edit</a>
+            <a href="{{ url_for('post.edit_post',slug=post.slug) }}" class="has-text-white">edit</a>
           </span>
           <span class="tag is-dark">
-            <a href="{{ url_for('post.del_post',id=post.id) }}" class="has-text-white">delete</a>
+            <a href="{{ url_for('post.del_post',slug=post.slug) }}" class="has-text-white">delete</a>
           </span>
         {% endif %}
       </div>

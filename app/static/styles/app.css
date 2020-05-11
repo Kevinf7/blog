@@ -16,6 +16,12 @@
 .footer a:hover {
   color: #0E0E0E;
 }
+.normal-links a {
+  color: #fa744f;
+}
+.normal-links a:hover {
+  color: #f79071;
+}
 
 /*fixes Prism Bulma bug */
 pre  {

@@ -36,7 +36,7 @@
     </table>
   </div>
 
-  <form action="{{ url_for('post.del_post',id=post.id) }}"  method="post">
+  <form action="{{ url_for('post.del_post',slug=post.slug) }}"  method="post">
   {{ form.csrf_token }}
     <div class="field">
       <div class="control is-expanded">

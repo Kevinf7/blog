@@ -3,9 +3,9 @@
 
 {% block app_content %}
 <div class="section">
-  <div class="content">
+  <div class="content normal-links">
     <h2>Edit Post</h2>
-    <form action="{{ url_for('post.edit_post',id=post.id) }}"  method="post">
+    <form action="{{ url_for('post.edit_post',slug=post.slug) }}"  method="post">
     {{ form.csrf_token }}
       <div class="field">
         {{ form.heading.label(class_='label') }}

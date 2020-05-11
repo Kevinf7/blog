@@ -87,9 +87,9 @@ def contact():
     return render_template('main/contact.html',form=form, contact_html=contact_html)
 
 
-@bp.route('/post_detail/<id>', methods=['GET','POST'])
-def post_detail(id):
-    post = Post.query.filter_by(id=id).first()
+@bp.route('/post_detail/<slug>', methods=['GET','POST'])
+def post_detail(slug):
+    post = Post.getPostBySlug(slug)
     post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     comments = post.comments.order_by(Comment.create_date.desc()).all()
     if current_user.is_authenticated:
@@ -112,7 +112,7 @@ def post_detail(id):
         #send email to admin that someone has commented
         send_comment_email(post, comment)
 
-        return redirect(url_for('main.post_detail',id=id))
+        return redirect(url_for('main.post_detail',slug=slug))
     return render_template('main/post_det.html',post=post, form=form, comments=comments)
 
 

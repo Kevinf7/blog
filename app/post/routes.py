@@ -8,6 +8,7 @@ from werkzeug.urls import url_parse
 import os
 from PIL import Image
 from datetime import datetime
+from slugify import slugify
 
 ##############################################################################
 # Post blueprint
@@ -52,29 +53,32 @@ def processTags(tags_new,post):
 def add_post():
     form = PostForm()
     if form.validate_on_submit():
-        # write post to db
-        post = Post(heading=form.heading.data,post=form.post.data,author=current_user)
-        db.session.add(post)
-        db.session.commit()
+        heading = form.heading.data
+        slug = slugify(heading)
+        if Post.getPostBySlug(slug) is None:
+            # write post to db
+            post = Post(heading=heading,slug=slug,post=form.post.data,author=current_user)
+            db.session.add(post)
+            db.session.commit()
 
-        # tags should be separated by commas (,) and start with hash (#)
-        tags = form.tags.data
-        tag_list = [t.strip() for t in tags.split(',')]
-        processTags(tag_list,post)
+            # tags should be separated by commas (,) and start with hash (#)
+            tags = form.tags.data
+            tag_list = [t.strip() for t in tags.split(',')]
+            processTags(tag_list,post)
 
-        flash('Your post has been published!','success')
+            flash('Your post has been published!','success')
+            return redirect(url_for('main.index'))
+        flash('Error post not created as title already exists in database.','error')
         return redirect(url_for('main.index'))
     return render_template('post/add_post.html',form=form)
 
 # edit an existing post which you posted
-@bp.route('/edit_post/<id>',methods=['GET','POST'])
+@bp.route('/edit_post/<slug>',methods=['GET','POST'])
 @login_required
-def edit_post(id):
-    # keeps track of whether user came from home page or detail page
-    if request.method == 'GET':
-        session['edit_post'] = request.referrer
-    post = Post.getPost(id)
-    # id is wrong
+def edit_post(slug):
+    old_slug = slug
+    post = Post.getPostBySlug(slug)
+    # slug is wrong
     if post is None:
         flash('No such post exists.','error')
         return redirect(url_for('index'))
@@ -85,32 +89,36 @@ def edit_post(id):
 
     form = PostForm()
     if form.validate_on_submit():
-        post.heading = form.heading.data
-        post.post = form.post.data
-        post.update_date = datetime.utcnow()
-        db.session.add(post)
-        db.session.commit()
+        heading = form.heading.data
+        slug = slugify(heading)
+        if Post.getPostBySlug(slug) is None:
+            post.heading = heading
+            post.slug = slug
+            post.post = form.post.data
+            post.update_date = datetime.utcnow()
+            db.session.add(post)
+            db.session.commit()
 
-        # tags should be separated by commas (,) and start with hash (#)
-        tags = form.tags.data
-        tag_list = [t.strip() for t in tags.split(',')]
-        processTags(tag_list,post)
+            # tags should be separated by commas (,) and start with hash (#)
+            tags = form.tags.data
+            tag_list = [t.strip() for t in tags.split(',')]
+            processTags(tag_list,post)
 
-        flash('Your post has been updated!','success')
-        if session['edit_post'] is not None:
-            return redirect(session['edit_post'])
+            flash('Your post has been updated!','success')
+            return redirect('/post_detail/' + slug)
         else:
-            return redirect(url_for('main.index'))
+            flash('Error post not created as title already exists in database.','error')
+            return redirect('/post_detail/' + old_slug)
 
     tags = post.getTagNamesStr()
     return render_template('post/edit_post.html',form=form,post=post,tags=tags)
 
 # delete an existing post - only admin can perform
-@bp.route('/del_post/<id>',methods=['GET','POST'])
+@bp.route('/del_post/<slug>',methods=['GET','POST'])
 @login_required
-def del_post(id):
-    post = Post.getPost(id)
-    # id is wrong
+def del_post(slug):
+    post = Post.getPostBySlug(slug)
+    # slug is wrong
     if post is None:
         flash('No such post exists.','error')
         return redirect(url_for('index'))

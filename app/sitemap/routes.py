@@ -22,9 +22,9 @@ def sitemap():
             pages.append(['https://www.kevin7.net' + rule.rule, lastmod])
 
     # get dynamic routes
-    posts = Post.query.order_by(Post.update_date).all()
+    posts = Post.query.filter(Post.current.is_(True)).all()
     for post in posts:
-        url = 'https://www.kevin7.net' + url_for('main.post_detail', id=post.id)
+        url = 'https://www.kevin7.net' + url_for('main.post_detail', slug=post.slug)
         last_updated = post.update_date.strftime('%Y-%m-%d')
         pages.append([url, last_updated])
 
