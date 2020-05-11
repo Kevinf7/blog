@@ -10,7 +10,9 @@
       <div class="container content">
         <h2><a href="{{ url_for('main.post_detail',slug=post.slug) }}">{{ post.heading }}</a></h2>
         <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
-        <p class="normal-links">{{ post.post|safe }}</p>
+        <div class="normal-links">
+          <p>{{ post.post|safe }}</p>
+        </div>
         {% if post.getTagNames() %}
           <p class="is-size-7">Tags:
             {% for tag_name in post.getTagNames() %}
