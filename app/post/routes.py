@@ -91,7 +91,9 @@ def edit_post(slug):
     if form.validate_on_submit():
         heading = form.heading.data
         slug = slugify(heading)
-        if Post.getPostBySlug(slug) is None:
+        # check if heading already exists
+        check_post = Post.getPostBySlug(slug)
+        if (check_post.slug is not None and check_post.id == post.id) or check_post.slug is None:
             post.heading = heading
             post.slug = slug
             post.post = form.post.data
