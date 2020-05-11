@@ -93,24 +93,25 @@ def edit_post(slug):
         slug = slugify(heading)
         # check if heading already exists
         check_post = Post.getPostBySlug(slug)
-        if (check_post.slug is not None and check_post.id == post.id) or check_post.slug is None:
-            post.heading = heading
-            post.slug = slug
-            post.post = form.post.data
-            post.update_date = datetime.utcnow()
-            db.session.add(post)
-            db.session.commit()
+        if (check_post is not None):
+            if (check_post.id != post.id):
+                flash('Error post not created as title already exists in database.','error')
+                return redirect('/post_detail/' + old_slug)
 
-            # tags should be separated by commas (,) and start with hash (#)
-            tags = form.tags.data
-            tag_list = [t.strip() for t in tags.split(',')]
-            processTags(tag_list,post)
+        post.heading = heading
+        post.slug = slug
+        post.post = form.post.data
+        post.update_date = datetime.utcnow()
+        db.session.add(post)
+        db.session.commit()
 
-            flash('Your post has been updated!','success')
-            return redirect('/post_detail/' + slug)
-        else:
-            flash('Error post not created as title already exists in database.','error')
-            return redirect('/post_detail/' + old_slug)
+        # tags should be separated by commas (,) and start with hash (#)
+        tags = form.tags.data
+        tag_list = [t.strip() for t in tags.split(',')]
+        processTags(tag_list,post)
+
+        flash('Your post has been updated!','success')
+        return redirect('/post_detail/' + slug)
 
     tags = post.getTagNamesStr()
     return render_template('post/edit_post.html',form=form,post=post,tags=tags)
