@@ -17,10 +17,10 @@
   color: #0E0E0E;
 }
 .normal-links a {
-  color: #fa744f;
+  color: #1F57BC;
 }
 .normal-links a:hover {
-  color: #f79071;
+  color: #6983aa;
 }
 
 /*fixes Prism Bulma bug */
