@@ -14,7 +14,7 @@ class Config(object):
     SQLALCHEMY_POOL_RECYCLE = 299
     SQLALCHEMY_TRACK_MODIFICATIONS=False
     # number of blog posts to show per page
-    POSTS_PER_PAGE = 5
+    POSTS_PER_PAGE = 6
     # auto reload template without needing to restart Flask
     TEMPLATES_AUTO_RELOAD = True
 
