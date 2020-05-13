@@ -44,3 +44,9 @@ pre code .tag, pre code .number, pre code .label {
   background: inherit;
   margin: inherit;
 }
+/* make the font size in prism smaller */
+code[class*="language-"],
+pre[class*="language-"] {
+	font-size: 0.9em;
+	line-height: 1.3;
+}
