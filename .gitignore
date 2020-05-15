@@ -10,7 +10,7 @@ uploads
 test.py
 test.html
 static/uploads/
-logs
+logs/
 .env
 migrations
 __pycache__
