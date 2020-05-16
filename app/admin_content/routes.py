@@ -21,7 +21,7 @@ def manage_content():
 def edit_content(id):
     content = Content.query.filter_by(id=id).first()
     if content is None:
-        flash('No such content exists.','error')
+        flash('No such content exists.','danger')
         return redirect(url_for('main.index'))
     form=ContentManageForm()
     if form.validate_on_submit():

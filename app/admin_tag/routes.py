@@ -44,7 +44,7 @@ def del_tag(id):
     form = DeleteTagForm()
     tag = Tag.getTag(id)
     if tag is None:
-        flash('No such tag.','error')
+        flash('No such tag.','danger')
         return redirect(url_for('main.index'))
     if form.validate_on_submit():
         db.session.delete(tag)

@@ -20,7 +20,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password','error')
+            flash('Invalid username or password','danger')
             return redirect(url_for('auth.login',next=next_page))
 
         # username/password is valid. sets current_user to the user
@@ -71,9 +71,9 @@ def forgot_password():
             if send_password_reset_email(user):
                 flash('Check your email for instructions to reset your password','success')
             else:
-                flash('Sorry system error','error')
+                flash('Sorry system error','danger')
         else:
-            flash('Email does not exist in our database','error')
+            flash('Email does not exist in our database','danger')
             return redirect(url_for('auth.forgot_password'))
     return render_template('auth/forgot_password.html',form=form)
 
@@ -85,7 +85,7 @@ def reset_password(token):
         return redirect(url_for('main.index'))
     user = User.verify_reset_password_token(token)
     if not user:
-        flash('Token has expired or is no longer valid','error')
+        flash('Token has expired or is no longer valid','danger')
         return redirect(url_for('main.index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
@@ -99,5 +99,5 @@ def reset_password(token):
 # handler when you are trying to access a page but you are not logged in
 @login_manager.unauthorized_handler
 def unauthorized():
-    flash('You must be logged in to view that page.','error')
+    flash('You must be logged in to view that page.','danger')
     return redirect(url_for('auth.login',next=request.endpoint))

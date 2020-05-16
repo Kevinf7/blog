@@ -106,7 +106,7 @@ pagead/js/adsbygoogle.js"></script>
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
-              <article class="message is-warning">
+              <article class="message is-{{ category }}">
                 <div class="message-body">{{ message }}</div>
               </article>
               {% endfor %}

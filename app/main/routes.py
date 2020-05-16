@@ -82,7 +82,7 @@ def contact():
         if send_contact_email(contact):
             flash('Message has been sent!', 'success')
         else:
-            flash('Sorry system error', 'error')
+            flash('Sorry system error', 'danger')
         return redirect(url_for('main.index'))
     return render_template('main/contact.html',form=form, contact_html=contact_html)
 

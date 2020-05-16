@@ -68,7 +68,7 @@ def add_post():
 
             flash('Your post has been published!','success')
             return redirect(url_for('main.index'))
-        flash('Error post not created as title already exists in database.','error')
+        flash('Error post not created as title already exists in database.','danger')
         return redirect(url_for('main.index'))
     return render_template('post/add_post.html',form=form)
 
@@ -80,11 +80,11 @@ def edit_post(slug):
     post = Post.getPostBySlug(slug)
     # slug is wrong
     if post is None:
-        flash('No such post exists.','error')
+        flash('No such post exists.','danger')
         return redirect(url_for('index'))
     # users's cannot edit other user's post, not needed in this blog but there anyways
     if post.author.id != current_user.id:
-        flash("You are not authorised to edit someone else's post",'error')
+        flash("You are not authorised to edit someone else's post",'danger')
         return redirect(url_for('main.index'))
 
     form = PostForm()
@@ -95,7 +95,7 @@ def edit_post(slug):
         check_post = Post.getPostBySlug(slug)
         if (check_post is not None):
             if (check_post.id != post.id):
-                flash('Error post not created as title already exists in database.','error')
+                flash('Error post not created as title already exists in database.','danger')
                 return redirect('/post_detail/' + old_slug)
 
         post.heading = heading
@@ -123,11 +123,11 @@ def del_post(slug):
     post = Post.getPostBySlug(slug)
     # slug is wrong
     if post is None:
-        flash('No such post exists.','error')
+        flash('No such post exists.','danger')
         return redirect(url_for('index'))
     # only admin can delete post
     if not current_user.is_admin():
-        flash('You do not have permission to perform this function','error')
+        flash('You do not have permission to perform this function','danger')
         return redirect(url_for('main.index'))
 
     # user confirms he wants to delete
@@ -140,7 +140,7 @@ def del_post(slug):
         for t in tagged:
             db.session.delete(t)
         db.session.commit()
-        flash('The post has been deleted','error')
+        flash('The post has been deleted','danger')
         return redirect(url_for('main.index'))
     form = DeletePostForm()
     tags = post.getTagNamesStr()
