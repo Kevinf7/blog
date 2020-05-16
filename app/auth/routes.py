@@ -25,6 +25,7 @@ def login():
 
         # username/password is valid. sets current_user to the user
         login_user(user, remember=form.remember_me.data)
+        flash('You are now logged in','success')
 
         # in case url is absolute we will ignore, we only want a relative url
         # netloc returns the www.website.com part
