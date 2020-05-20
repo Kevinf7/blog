@@ -2,9 +2,9 @@
 *.db
 env
 secret.txt
-.zip
-.sql
-.tar.gz
+*.zip
+*.sql
+*.tar.gz
 runenv.bat
 uploads
 test.py

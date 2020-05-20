@@ -75,7 +75,7 @@ def forgot_password():
             else:
                 flash('Sorry system error','danger')
         else:
-            flash('Email does not exist in our database','danger')
+            flash('That email does not exist in our database','danger')
             return redirect(url_for('auth.forgot_password'))
     return render_template('auth/forgot_password.html',form=form)
 
