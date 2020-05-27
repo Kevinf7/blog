@@ -8,3 +8,8 @@ def test_vue():
         data = {'message': 'ok'}
         return jsonify(data)
     return render_template('test/test_vue.html')
+
+
+@bp.route('/')
+def index():
+    return bp.send_static_file('index.html')

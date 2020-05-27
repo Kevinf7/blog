@@ -90,6 +90,9 @@ def contact():
 @bp.route('/post_detail/<slug>', methods=['GET','POST'])
 def post_detail(slug):
     post = Post.getPostBySlug(slug)
+    if post is None:
+        flash('This post does not exist', 'danger')
+        return redirect(url_for('main.index'))
     post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     comments = post.comments.order_by(Comment.create_date.desc()).all()
     if current_user.is_authenticated:
