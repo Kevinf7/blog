@@ -63,6 +63,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User {}>'.format(self.email)
 
+
 # This allows application to freely call these methods even if you're not logged in
 class AnonymousUser(AnonymousUserMixin):
     def set_password(self, password):
@@ -78,6 +79,7 @@ class AnonymousUser(AnonymousUserMixin):
 # This tells flask login which class to use if user is not logged in
 login_manager.anonymous_user = AnonymousUser
 
+
 class Role(db.Model):
     __tablename__='role'
     id = db.Column(db.Integer, primary_key=True)
@@ -85,6 +87,7 @@ class Role(db.Model):
     # only one role must be set to true, we use this role as the default role
     default = db.Column(db.Boolean, default=False, index=True, nullable=False)
     users = db.relationship('User',backref='role',lazy='dynamic')
+
 
 class Tagged(db.Model):
     __tablename__ = 'tagged'
@@ -182,6 +185,7 @@ class Tag(db.Model):
     def getTag(tag_id):
         return Tag.query.filter_by(id=tag_id).first()
 
+
 class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True)
@@ -193,6 +197,7 @@ class Comment(db.Model):
     email = db.Column(db.String(50), nullable=True)
     create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
 
+
 class Contact(db.Model):
     __tablename__ = 'contact'
     id = db.Column(db.Integer, primary_key=True)
@@ -200,6 +205,7 @@ class Contact(db.Model):
     email = db.Column(db.String(50), nullable=False)
     message = db.Column(db.String(400), nullable=False)
     create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+
 
 class Images(db.Model):
     __tablename__ = 'images'
@@ -214,6 +220,7 @@ class Images(db.Model):
     def getImage(image_id):
         return Images.query.filter_by(id=image_id).first()
 
+
 # Content Management
 class Content(db.Model):
     __tablename__ = 'content'
@@ -224,11 +231,13 @@ class Content(db.Model):
     page_id = db.Column(db.Integer, db.ForeignKey('page.id'), nullable=False)
     update_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
 
+
 class Page(db.Model):
     __tablename__ = 'page'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     content = db.relationship('Content',backref='page',lazy='dynamic')
+
 
 # Used by flask-login
 # This callback is used to reload the user object from the user ID stored in the session

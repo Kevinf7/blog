@@ -2,11 +2,13 @@ from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length, Optional
 
+
 class PostForm(FlaskForm):
     heading = StringField('Title', validators=[InputRequired(), Length(max=100)])
     post = TextAreaField('Write something')
     tags = StringField('Tags')
     submit = SubmitField('Submit')
+
 
 # Two forms for commeting, one if user is not logged in
 class CommentFormAnon(FlaskForm):

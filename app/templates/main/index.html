@@ -76,13 +76,11 @@
       <div class="container content">
         <h3 class="title is-3">Tags</h3>
         {% for tag_tup in tag_list %}
-        <div style="padding: 0.2rem 0 0.2rem 0;">
-          <span class="tag is-info">
+          <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
             <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
             {{ tag_tup[0].name }} ({{ tag_tup[1] }})
             </a>
           </span>
-        </div>
         {% endfor %}
       </div>
     </div>
