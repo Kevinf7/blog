@@ -2,7 +2,6 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  overflow-wrap: break-word;
 }
 .site-main {
   flex: 1 0 auto;
@@ -21,6 +20,9 @@
 }
 .normal-links a:hover {
   color: #00217B;
+}
+.content {
+  overflow-wrap: break-word;
 }
 
 /*fixes Prism Bulma bug */
