@@ -3,10 +3,10 @@
 
 {% block app_content %}
 <div class="section">
-  <div class="columns">
+  <div class="columns is-variable is-8">
     <div class="column is-9">
       {% for post in posts.items %}
-        <div class="content sub-section">
+        <div class="content" style="padding-bottom:1.8rem;">
           <h2><a href="{{ url_for('main.post_detail',slug=post.slug) }}">{{ post.heading }}</a></h2>
           <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
           <div class="normal-links">
@@ -35,7 +35,7 @@
       {% endfor %}
 
       {% if posts.pages > 1 %}
-        <nav class="pagination sub-section" role="navigation" aria-label="pagination">
+        <nav class="pagination" role="navigation" aria-label="pagination">
           {% if posts.has_prev%}
             <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a>
           {% else %}
@@ -65,8 +65,8 @@
       {% endif %}
     </div>
   
-    <div class="column is-3" style="margin-left:1.5rem;">
-      <div class="content sub-section">
+    <div class="column is-3">
+      <div class="content" style="padding-bottom:1.8rem;">
         <h3 class="title is-3">Tags</h3>
         {% for tag_tup in tag_list %}
           <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
@@ -77,7 +77,7 @@
         {% endfor %}
       </div>
 
-      <div class="content sub-section">
+      <div class="content">
         <h3 class="title is-3">Play</h3>
         <div class="side-images">
           <p>Sketches created using Processing.. enjoy!</p>
