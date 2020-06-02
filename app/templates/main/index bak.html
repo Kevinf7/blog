@@ -2,40 +2,44 @@
 {% block title %}Kevin Foong | Web & App Developer{% endblock %}
 
 {% block app_content %}
-<div class="section">
-  <div class="columns">
-    <div class="column is-9">
-      {% for post in posts.items %}
-        <div class="content sub-section">
-          <h2><a href="{{ url_for('main.post_detail',slug=post.slug) }}">{{ post.heading }}</a></h2>
-          <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
-          <div class="normal-links">
-            <p>{{ post.post|safe }}</p>
-          </div>
-          {% if post.getTagNames() %}
-            <p class="is-size-7">Tags:
-              {% for tag_name in post.getTagNames() %}
-                <span class="tag is-info">
-                  <a href="{{ url_for('main.index',tag=tag_name) }}">
-                    {{ tag_name }}
-                  </a>
-                </span>
-              {% endfor %}
-            </p>
-          {% endif %}
-          {% if current_user.is_authenticated and current_user == post.author %}
-            <span class="tag is-dark">
-              <a href="{{ url_for('post.edit_post',slug=post.slug) }}" class="has-text-white">edit</a>
-            </span>
-            <span class="tag is-dark">
-              <a href="{{ url_for('post.del_post',slug=post.slug) }}" class="has-text-white">delete</a>
-            </span>
-          {% endif %}
-        </div>
-      {% endfor %}
+<div class="columns">
+  <div class="column is-9">
 
-      {% if posts.pages > 1 %}
-        <nav class="pagination sub-section" role="navigation" aria-label="pagination">
+    {% for post in posts.items %}
+    <div class="section">
+      <div class="container content">
+        <h2><a href="{{ url_for('main.post_detail',slug=post.slug) }}">{{ post.heading }}</a></h2>
+        <p class="help">Posted on {{ moment(post.create_date).format('DD/MM/YYYY') }} by {{ post.author.firstname }} {{ post.author.lastname }}</p>
+        <div class="normal-links">
+          <p>{{ post.post|safe }}</p>
+        </div>
+        {% if post.getTagNames() %}
+          <p class="is-size-7">Tags:
+            {% for tag_name in post.getTagNames() %}
+              <span class="tag is-info">
+                <a href="{{ url_for('main.index',tag=tag_name) }}">
+                  {{ tag_name }}
+                </a>
+              </span>
+            {% endfor %}
+          </p>
+        {% endif %}
+        {% if current_user.is_authenticated and current_user == post.author %}
+          <span class="tag is-dark">
+            <a href="{{ url_for('post.edit_post',slug=post.slug) }}" class="has-text-white">edit</a>
+          </span>
+          <span class="tag is-dark">
+            <a href="{{ url_for('post.del_post',slug=post.slug) }}" class="has-text-white">delete</a>
+          </span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if posts.pages > 1 %}
+    <div class="section">
+      <div class="container">
+        <nav class="pagination" role="navigation" aria-label="pagination">
           {% if posts.has_prev%}
             <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a>
           {% else %}
@@ -62,11 +66,14 @@
           {% endfor %}
           </ul>
         </nav>
-      {% endif %}
+      </div>
     </div>
-  
-    <div class="column is-3" style="margin-left:1.5rem;">
-      <div class="content sub-section">
+    {% endif %}
+
+  </div>
+  <div class="column is-3">
+    <div class="section">
+      <div class="container content">
         <h3 class="title is-3">Tags</h3>
         {% for tag_tup in tag_list %}
           <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
@@ -76,8 +83,10 @@
           </span>
         {% endfor %}
       </div>
+    </div>
 
-      <div class="content sub-section">
+    <div class="section">
+      <div class="container">
         <h3 class="title is-3">Play</h3>
         <div class="side-images">
           <p>Sketches created using Processing.. enjoy!</p>
@@ -88,7 +97,6 @@
           <a href="{{ url_for('main.processing', name='robots') }}"><img src="{{ url_for('static', filename='images/robots_smallx2.png') }}" width="100" height="100"></a>
         </div>
       </div>
-
     </div>
   </div>
 </div>

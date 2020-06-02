@@ -24,6 +24,9 @@
 .content {
   overflow-wrap: break-word;
 }
+.sub-section {
+  margin: 0 1.5rem 1.8rem 0;
+}
 
 /*fixes Prism Bulma bug */
 pre  {
