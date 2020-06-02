@@ -24,6 +24,11 @@
 .content {
   overflow-wrap: break-word;
 }
+@media only screen and (min-width: 769px) {
+  .add-gap {
+    padding-left: 1.8rem;
+  }
+}
 
 /*fixes Prism Bulma bug */
 pre  {
