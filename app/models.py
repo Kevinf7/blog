@@ -100,7 +100,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(50), nullable=False)
     heading = db.Column(db.String(100), nullable=False)
-    post = db.Column(db.String(12000), nullable=False)
+    post = db.Column(db.String(15000), nullable=False)
     current = db.Column(db.Boolean, default=True, nullable=False)
     update_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
