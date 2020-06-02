@@ -66,29 +66,32 @@
     </div>
   
     <div class="column is-3">
-      <div class="content" style="padding-bottom:1.8rem;">
-        <h3 class="title is-3">Tags</h3>
-        {% for tag_tup in tag_list %}
-          <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
-            <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
-            {{ tag_tup[0].name }} ({{ tag_tup[1] }})
-            </a>
-          </span>
-        {% endfor %}
-      </div>
 
-      <div class="content">
-        <h3 class="title is-3">Play</h3>
-        <div class="side-images">
-          <p>Sketches created using Processing.. enjoy!</p>
-          <a href="{{ url_for('main.processing', name='garden') }}"><img src="{{ url_for('static', filename='images/garden_smallx2.png') }}" width="100" height="100"></a>
-          <a href="{{ url_for('main.processing', name='stars') }}"><img src="{{ url_for('static', filename='images/stars_smallx2.png') }}" width="100" height="100"></a>
-          <a href="{{ url_for('main.processing', name='snake_game') }}"><img src="{{ url_for('static', filename='images/snakegame_smallx2.png') }}" width="100" height="100"></a>
-          <a href="{{ url_for('main.processing', name='sun_moon') }}"><img src="{{ url_for('static', filename='images/sunmoon_smallx2.png') }}" width="100" height="100"></a>
-          <a href="{{ url_for('main.processing', name='robots') }}"><img src="{{ url_for('static', filename='images/robots_smallx2.png') }}" width="100" height="100"></a>
+      <div style="padding-left:1.8rem;">
+        <div class="content" style="padding-bottom:1.8rem;">
+          <h3 class="title is-3">Tags</h3>
+          {% for tag_tup in tag_list %}
+            <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
+              <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
+              {{ tag_tup[0].name }} ({{ tag_tup[1] }})
+              </a>
+            </span>
+          {% endfor %}
+        </div>
+
+        <div class="content">
+          <h3 class="title is-3">Play</h3>
+          <div class="side-images">
+            <p>Sketches created using Processing.. enjoy!</p>
+            <a href="{{ url_for('main.processing', name='garden') }}"><img src="{{ url_for('static', filename='images/garden_smallx2.png') }}" width="100" height="100"></a>
+            <a href="{{ url_for('main.processing', name='stars') }}"><img src="{{ url_for('static', filename='images/stars_smallx2.png') }}" width="100" height="100"></a>
+            <a href="{{ url_for('main.processing', name='snake_game') }}"><img src="{{ url_for('static', filename='images/snakegame_smallx2.png') }}" width="100" height="100"></a>
+            <a href="{{ url_for('main.processing', name='sun_moon') }}"><img src="{{ url_for('static', filename='images/sunmoon_smallx2.png') }}" width="100" height="100"></a>
+            <a href="{{ url_for('main.processing', name='robots') }}"><img src="{{ url_for('static', filename='images/robots_smallx2.png') }}" width="100" height="100"></a>
+          </div>
         </div>
       </div>
-
+      
     </div>
   </div>
 </div>
