@@ -21,9 +21,6 @@
 .normal-links a:hover {
   color: #00217B;
 }
-.content {
-  overflow-wrap: break-word;
-}
 
 /*fixes Prism Bulma bug */
 pre  {
