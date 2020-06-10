@@ -1,10 +1,10 @@
-from flask import render_template, redirect, url_for, flash, request, current_app
+import os
+from flask import (current_app, flash, redirect, render_template, request, url_for)
 from flask_login import login_required
 from app import db
 from app.admin_image import bp
 from app.admin_image.forms import DeleteImageForm
 from app.models import Images
-import os
 
 ##############################################################################
 # Admin Images blueprint

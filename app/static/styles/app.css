@@ -24,11 +24,17 @@
 .content {
   overflow-wrap: break-word;
 }
+.tag_num {
+  background-color: #CEE8E1;
+  border-radius: 3px;
+  padding: 0px 3px 0px 3px;
+}
 @media only screen and (min-width: 769px) {
   .add-gap {
     padding-left: 1.8rem;
   }
 }
+
 
 /*fixes Prism Bulma bug */
 pre  {

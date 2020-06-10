@@ -1,11 +1,11 @@
-from flask import render_template, redirect, url_for, flash, request, current_app
-from flask_login import current_user
 from app import db
 from app.main import bp
+from app.main.email import send_contact_email, send_comment_email
 from app.main.forms import ContactForm
 from app.models import Tag, Tagged, Post, Content, Page, Contact, Comment
-from app.main.email import send_contact_email, send_comment_email
 from app.post.forms import CommentFormAnon, CommentFormReg
+from flask import render_template, redirect, url_for, flash, request, current_app
+from flask_login import current_user
 
 ##############################################################################
 # Main blueprint

@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import Email, InputRequired, Length
+
 
 class ContactForm(FlaskForm):
     name = StringField('Please enter your details', validators=[InputRequired(), Length(max=20)])

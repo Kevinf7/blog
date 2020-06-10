@@ -73,7 +73,7 @@
           {% for tag_tup in tag_list %}
             <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
               <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
-              {{ tag_tup[0].name }} ({{ tag_tup[1] }})
+              {{ tag_tup[0].name }} <span class="tag_num">{{ tag_tup[1] }}</span>
               </a>
             </span>
           {% endfor %}
