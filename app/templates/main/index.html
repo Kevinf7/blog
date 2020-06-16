@@ -37,12 +37,20 @@
       {% if posts.pages > 1 %}
         <nav class="pagination" role="navigation" aria-label="pagination">
           {% if posts.has_prev%}
-            <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a>
+            {% if tag_name is defined %}
+              <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num, tag=tag_name) }}">Previous</a>
+            {% else %}
+              <a class="pagination-previous" href="{{ url_for('main.index', page=posts.prev_num) }}">Previous</a>
+            {% endif %}
           {% else %}
             <a class="pagination-previous" disabled>Previous</a>
           {% endif %}
           {% if posts.has_next %}
-            <a class="pagination-next" href="{{ url_for('main.index',page=posts.next_num) }}">Next Page</a>
+            {% if tag_name is defined %}
+              <a class="pagination-next" href="{{ url_for('main.index',page=posts.next_num, tag=tag_name) }}">Next Page</a>
+            {% else %}
+              <a class="pagination-next" href="{{ url_for('main.index',page=posts.next_num) }}">Next Page</a>
+            {% endif %}
           {% else %}
             <a class="pagination-next" disabled>Next Page</a>
           {% endif %}
@@ -51,7 +59,11 @@
             {% if page_num %}
               {% if page_num != posts.page %}
                 <li>
-                  <a class="pagination-link" aria-label="Goto page {{ page_num }}" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                  {% if tag_name is defined %}
+                    <a class="pagination-link" aria-label="Goto page {{ page_num }}" href="{{ url_for('main.index', page=page_num, tag=tag_name) }}">{{ page_num }}</a>
+                  {% else %}
+                    <a class="pagination-link" aria-label="Goto page {{ page_num }}" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                  {% endif %}
                 </li>
               {% else %}
                 <li class="pagination-link is-current" aria-label="Page {{ page_num }}" aria-current="page">{{ page_num }}</li>

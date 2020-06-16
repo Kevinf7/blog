@@ -29,7 +29,8 @@ def getSummaryPosts(posts):
 @bp.route('/index')
 def index():
     # check if there is tag in url, get the id given the tag name
-    tag_id = Tag.getTagId(request.args.get('tag'))
+    tag_name = request.args.get('tag')
+    tag_id = Tag.getTagId(tag_name)
     if tag_id == -1:
         # get page number from url. If no page number use page 1
         page = request.args.get('page',1,type=int)
@@ -55,7 +56,7 @@ def index():
     tag_list = db.session.query(Tag, db.func.count(Tagged.tag_id)) \
                         .join(Tagged).group_by(Tagged.tag_id).all()
 
-    return render_template('main/index.html',posts=posts,tag_list=tag_list)
+    return render_template('main/index.html',posts=posts,tag_list=tag_list,tag_name=tag_name)
 
 
 @bp.route('/about', methods=['GET'])
