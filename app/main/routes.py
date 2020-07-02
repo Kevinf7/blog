@@ -125,3 +125,9 @@ def post_detail(slug):
 def processing(name):
     script_name = name + '.js'
     return render_template('main/processing.html', script_name=script_name)
+
+
+# ads.txt for adsense
+@bp.route('/ads.txt', methods=['GET'])
+def ads():
+    return current_app.send_static_file('ads.txt')
