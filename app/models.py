@@ -238,6 +238,7 @@ class Page(db.Model):
     name = db.Column(db.String(20), nullable=False)
     content = db.relationship('Content',backref='page',lazy='dynamic')
 
+
 # Used by flask-login
 # This callback is used to reload the user object from the user ID stored in the session
 @login_manager.user_loader
