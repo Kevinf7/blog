@@ -82,6 +82,7 @@
       <div class="add-gap">
         <div class="content" style="padding-bottom:1.8rem;">
           <h3 class="title is-3">Tags</h3>
+          <div style="text-align: center;">
           {% for tag_tup in tag_list %}
             <span class="tag is-info" style="margin: 4px 2px 4px 2px;">
               <a href="{{ url_for('main.index',tag=tag_tup[0].name) }}">
@@ -89,6 +90,7 @@
               </a>
             </span>
           {% endfor %}
+          </div>
         </div>
 
         <div class="content">
