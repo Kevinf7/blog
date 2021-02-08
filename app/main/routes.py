@@ -18,9 +18,9 @@ def getSummaryPosts(posts):
     for index, post in enumerate(posts.items):
         # split first occcurence of below string and keep everything on the left
         p = post.post.split('<p>br<a id="br"></a></p>',1)[0]
-        # add a more... to the end of the post
+        # add a Read more... to the end of the post
         if p != post.post:
-            p += '<p>.. <a href="' + url_for('main.post_detail',slug=post.slug) + '">more</a> ..</p>'
+            p += '<p><a href="' + url_for('main.post_detail',slug=post.slug) + '">Read more</a> ...</p>'
         posts.items[index].post = p
     return posts
 
