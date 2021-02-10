@@ -55,3 +55,6 @@ class Config(object):
 
     DOMAIN_CLIENT_ID = os.environ.get('DOMAIN_CLIENT_ID')
     DOMAIN_CLIENT_SECRET = os.environ.get('DOMAIN_CLIENT_SECRET')
+
+    # Banned keywords in comments
+    BANNED_LIST = os.environ.get('BANNED_LIST').split(' ')

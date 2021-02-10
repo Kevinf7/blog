@@ -101,13 +101,18 @@ def post_detail(slug):
     else:
         form = CommentFormAnon()
     if form.validate_on_submit():
+        comment_data = form.comment.data
+        current_app.config['BANNED_LIST']
+        if any(b in comment_data for b in current_app.config['BANNED_LIST']):
+            flash('Sorry your comments was not accepted','danger')
+            return redirect(url_for('main.post_detail',slug=slug))
         if current_user.is_authenticated:
-            comment = Comment(comment=form.comment.data,commenter=current_user,post=post)
+            comment = Comment(comment=comment_data,commenter=current_user,post=post)
         else:
             if form.email.data == '':
-                comment = Comment(comment=form.comment.data,name=form.name.data,post=post)
+                comment = Comment(comment=comment_data,name=form.name.data,post=post)
             else:
-                comment = Comment(comment=form.comment.data,name=form.name.data,\
+                comment = Comment(comment=comment_data,name=form.name.data,\
                                 email=form.email.data,post=post)
         db.session.add(comment)
         db.session.commit()
