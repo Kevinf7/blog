@@ -94,7 +94,6 @@ def post_detail(slug):
     if post is None:
         flash('This post does not exist', 'danger')
         return redirect(url_for('main.index'))
-    post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     comments = post.comments.order_by(Comment.create_date.desc()).all()
     if current_user.is_authenticated:
         form = CommentFormReg()
@@ -122,6 +121,7 @@ def post_detail(slug):
         send_comment_email(post, comment)
 
         return redirect(url_for('main.post_detail',slug=slug))
+        post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     return render_template('main/post_det.html',post=post, form=form, comments=comments)
 
 
