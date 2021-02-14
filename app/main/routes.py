@@ -121,7 +121,7 @@ def post_detail(slug):
         send_comment_email(post, comment)
 
         return redirect(url_for('main.post_detail',slug=slug))
-        post.post = post.post.replace('<p>br<a id="br"></a></p>','')
+    post.post = post.post.replace('<p>br<a id="br"></a></p>','')
     return render_template('main/post_det.html',post=post, form=form, comments=comments)
 
 
