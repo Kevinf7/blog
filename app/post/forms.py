@@ -10,7 +10,7 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-# Two forms for commeting, one if user is not logged in
+# Two forms for commenting, one if user is not logged in
 class CommentFormAnon(FlaskForm):
     name = StringField('Name', validators=[InputRequired(), Length(max=20)])
     email = StringField('Email', validators=[Length(max=50), Email()])
