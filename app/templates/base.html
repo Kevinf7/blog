@@ -71,7 +71,16 @@
                   <a class="navbar-item" href="{{ url_for('admin_image.manage_images') }}">Manage Uploaded Images</a>
                 </div>
               </div>
+              {% elif current_user.is_special() %}
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link has-text-white is-hidden-touch">Admin</a>
+                <a class="navbar-link is-hidden-desktop">Admin</a>
+                <div class="navbar-dropdown">
+                  <a class="navbar-item" href="{{ url_for('admin_content.manage_content') }}">Manage Content</a>
+                </div>
+              </div>
               {% endif %}
+
               <a class="navbar-item has-text-white is-hidden-touch" href="{{ url_for('main.projects') }}">Projects</a>
               <a class="navbar-item has-text-white is-hidden-touch" href="{{ url_for('main.about') }}">About</a>
               <a class="navbar-item has-text-white is-hidden-touch" href="{{ url_for('main.contact') }}">Contact</a>

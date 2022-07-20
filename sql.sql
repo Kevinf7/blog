@@ -6,13 +6,13 @@ UPDATE role
 SET `default` = 1
 WHERE name = 'user';
 
-INSERT INTO role (name, `default`)
-VALUES ('special',0);
-
 INSERT INTO content (name,content,page_id,update_date)
 VALUES ('content1','test',1,now()),('content1','test',2,now());
 
 INSERT INTO page (name) VALUES ('about'),('contact');
+
+INSERT INTO role (name, `default`)
+VALUES ('special',0);
 
 INSERT INTO user
     (email, role_id, last_seen,create_date, firstname, lastname)

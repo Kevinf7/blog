@@ -39,9 +39,11 @@ class User(db.Model, UserMixin):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=monsterid&s={}'.format(digest, size)
 
-    # return true if user is admin, false otherwise
     def is_admin(self):
         return self.role.name == 'admin'
+
+    def is_special(self):
+        return self.role.name == 'special'
 
     # creates token of user object
     # decode('utf-8') converts token to string
@@ -73,6 +75,8 @@ class AnonymousUser(AnonymousUserMixin):
     def avatar(self, size):
         return False
     def is_admin(self):
+        return False
+    def is_special(self):
         return False
     def get_reset_password_token(self, expires_in=current_app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return False
