@@ -101,7 +101,7 @@ def post_detail(slug):
         form = CommentFormAnon()
     if form.validate_on_submit():
         comment_data = form.comment.data
-        if any(b in comment_data for b in current_app.config['BANNED_LIST']):
+        if any(b in comment_data for b in current_app.config['BANNED_LIST']) or comment_data.isspace():
             flash('Sorry your comments was not accepted','danger')
             return redirect(url_for('main.post_detail',slug=slug))
         if current_user.is_authenticated:
