@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@700');
+
+$family-sans-serif: "Nunito", sans-serif;
+$body-background-color: #f4f4f4;
+
+$primary: #6983aa;
+$primary-invert: findColorInvert($primary);
+$info: #8ec6c5;
+$info-invert: findColorInvert($info);
+$link: #000000;
+$link-hover: #666666;
+$footer-background-color: $primary;
+$section-padding: 1.8rem 1.5rem;
+
+$table-head-background-color: #8ec6c5;
+$table-background-color: #FFFFFF;
+$table-striped-row-even-background-color: #EEEEEE;
+
+@import "../node_modules/bulma/bulma.sass";
+
+
+//4th color #8566aa
+// white color #f4f4f4
