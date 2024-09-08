@@ -5,7 +5,7 @@ from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, ResetPasswordForm, ForgotPasswordForm
 from app.auth.email import send_password_reset_email
 from app.models import User
-from werkzeug.urls import url_parse
+
 
 ##############################################################################
 # Authentication blueprint

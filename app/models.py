@@ -1,6 +1,6 @@
 from flask import current_app
 from flask_login import UserMixin, AnonymousUserMixin
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from hashlib import md5
 from bs4 import BeautifulSoup
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,12 +14,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(50), index=True, unique=True, nullable=False)
     firstname = db.Column(db.String(20), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
-    password_hash = db.Column(db.String(100))
+    password_hash = db.Column(db.String(200))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='commenter', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
-    last_seen = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
-    create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    last_seen = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
+    create_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
 
     # override constructor so we can assign default role to user
     def __init__(self,**kwargs):
@@ -49,8 +49,8 @@ class User(db.Model, UserMixin):
     # decode('utf-8') converts token to string
     def get_reset_password_token(self, expires_in=current_app.config['FORGOT_PASSWORD_TOKEN_EXPIRE']):
         return jwt.encode(
-            {'reset_password': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expires_in)},
-            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            {'reset_password': self.id, 'exp': datetime.now(timezone.utc) + timedelta(seconds=expires_in)},
+            current_app.config['SECRET_KEY'], algorithm='HS256')
 
     # decodes token and returns user object
     @staticmethod
@@ -106,8 +106,8 @@ class Post(db.Model):
     heading = db.Column(db.String(100), nullable=False)
     post = db.Column(db.String(15000), nullable=False)
     current = db.Column(db.Boolean, default=True, nullable=False)
-    update_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    create_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    update_date = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
+    create_date = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     #joined means all rows returned
     #dynamic means return query objects instead of items so you can use filter
@@ -168,8 +168,8 @@ class Tag(db.Model):
     __tablename__ = 'tag'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    update_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
-    create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    update_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
+    create_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
     #joined means all rows returned
     #dynamic means return query objects instead of items so you can use filter
     #cascade delete-orphan means if student object is deleted then association table row is also deleted
@@ -199,7 +199,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     name = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(50), nullable=True)
-    create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    create_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
 
 
 class Contact(db.Model):
@@ -208,7 +208,7 @@ class Contact(db.Model):
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     message = db.Column(db.String(1000), nullable=False)
-    create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    create_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
 
 
 class Images(db.Model):
@@ -219,7 +219,7 @@ class Images(db.Model):
     file_size = db.Column(db.Integer, nullable=False)
     file_width = db.Column(db.Integer, nullable=False)
     file_height = db.Column(db.Integer, nullable=False)
-    create_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    create_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
 
     def getImage(image_id):
         return Images.query.filter_by(id=image_id).first()
@@ -233,7 +233,7 @@ class Content(db.Model):
     name = db.Column(db.String(20), nullable=False)
     content = db.Column(db.String(12000), nullable=False)
     page_id = db.Column(db.Integer, db.ForeignKey('page.id'), nullable=False)
-    update_date = db.Column(db.DateTime,default=datetime.utcnow, nullable=False)
+    update_date = db.Column(db.DateTime,default=datetime.now(timezone.utc), nullable=False)
 
 
 class Page(db.Model):

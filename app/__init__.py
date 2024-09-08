@@ -58,8 +58,8 @@ def create_app(config_class=Config):
         from app.special import bp as special_bp
         app.register_blueprint(special_bp)
 
-        from app.test import bp as test_bp
-        app.register_blueprint(test_bp, url_prefix='/test')
+        '''from app.test import bp as test_bp
+        app.register_blueprint(test_bp, url_prefix='/test')'''
 
         #setup log files
         if not app.debug:

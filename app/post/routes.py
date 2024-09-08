@@ -4,7 +4,6 @@ from app import db
 from app.post import bp
 from app.post.forms import PostForm, DeletePostForm
 from app.models import Post, Tag, Tagged, Images
-from werkzeug.urls import url_parse
 import os
 from PIL import Image
 from datetime import datetime

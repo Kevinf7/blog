@@ -21,7 +21,7 @@ VALUES
 
 from app import db
 from app.models import User
-u = User.query.filter_by(email='mfoong109@gmail.com').first()
+u = User.query.filter_by(email='kevin_foong@yahoo.com').first()
 u.set_password('abc')
 db.session.add(u)
 db.session.commit()

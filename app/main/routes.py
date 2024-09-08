@@ -36,7 +36,7 @@ def index():
         page = request.args.get('page',1,type=int)
         # True means 404 error is returned if page is out of range. False means an empty list is returned
         posts = Post.query.filter(Post.current==True).order_by(Post.create_date.desc()) \
-                .paginate(page,current_app.config['POSTS_PER_PAGE'],False)
+                .paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
         posts = getSummaryPosts(posts)
     else:
         # get page number from url. If no page number use page 1
@@ -44,7 +44,7 @@ def index():
         # True means 404 error is returned if page is out of range. False means an empty list is returned
         posts = Post.query.filter(Post.current==True,Post.tags.any(tag_id=tag_id)) \
                 .order_by(Post.create_date.desc()) \
-                .paginate(page,current_app.config['POSTS_PER_PAGE'],False)
+                .paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
         posts = getSummaryPosts(posts)
 
     # get all tags and count of how many times its been tagged
