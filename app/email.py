@@ -9,7 +9,7 @@ from sendgrid.helpers.mail import Mail, Content, Personalization, Email
 def send_email(subject, sender, recipients, text_body, html_body):
     message = Mail(
         from_email=sender,
-        # to_emails=recipients,
+        to_emails=recipients,
         subject=subject,
         html_content=Content('text/html',html_body))
     txt_content=Content('text/txt',text_body)
