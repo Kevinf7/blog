@@ -13,8 +13,9 @@ class Config(object):
     # Flask-SQLAlchemy settings
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     # recommended by Pythonanywhere otherwise you get mysql timeout
-    SQLALCHEMY_POOL_RECYCLE = 299
-    SQLALCHEMY_POOL_TIMEOUT = 20
+    #SQLALCHEMY_POOL_RECYCLE = 299
+    #SQLALCHEMY_POOL_TIMEOUT = 20
+    SQLALCHEMY_ENGINE_OPTIONS = {'pool_recycle' : 299, 'pool_timeout' : 20}
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # number of blog posts to show per page
     POSTS_PER_PAGE = 6
