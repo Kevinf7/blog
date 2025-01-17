@@ -76,8 +76,12 @@ def contact():
     contact_html = db.session.query(Content).join(Page).filter(Page.name=='contact',Content.name=='content1').first()
     form = ContactForm()
     if form.validate_on_submit():
+        contact_data = form.message.data
+        if any(b in contact_data for b in current_app.config['BANNED_LIST']) or contact_data.isspace():
+            flash('Sorry your comments was not accepted','danger')
+            return redirect(url_for('main.index'))
         contact = Contact(name=form.name.data, email=form.email.data, \
-                        message=form.message.data)
+                        message=contact_data)
         db.session.add(contact)
         db.session.commit()
         if send_contact_email(contact):
